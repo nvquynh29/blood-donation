@@ -7,7 +7,6 @@ import initAPIs from './routes/api.js'
 
 dotenv.config()
 const app = express()
-const router = express.Router()
 const PORT = process.env.PORT || 5000
 const URI = process.env.DATABASE_URL
 
