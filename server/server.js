@@ -1,14 +1,30 @@
-import mongoose from 'mongoose'
 import express from 'express'
+import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
-import os from 'os'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import initAPIs from './routes/api.js'
 
-const port = 3000
+dotenv.config()
 const app = express()
-app.get('/', (req, res) => {
-  res.send('Hello')
-})
-app.listen(port)
-// app.use(bodyParser.json({ limit: '30mb', extend: true }))
-// app.use(bodyParser.json({ limit: '30mb', extend: true }))
-// console.log(os.type())
+const PORT = process.env.PORT || 5000
+const URI = process.env.DATABASE_URL
+
+// middleware
+app.use(bodyParser.json({ limit: '30mb' }))
+app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }))
+app.use(cors())
+
+initAPIs(app)
+
+mongoose
+  .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to DB')
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`)
+    })
+  })
+  .catch((err) => {
+    console.error(err)
+  })
