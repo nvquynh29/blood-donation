@@ -1,9 +1,13 @@
 import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import 'antd/dist/antd.css'
+import { useRouter } from 'next/router'
+
 const Login = () => {
+  const router = useRouter()
+
   const onFinish = (values) => {
+    router.push('/')
     console.log('Received values of form: ', values)
   }
 
@@ -30,7 +34,7 @@ const Login = () => {
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="Tên đăng nhập "
             />
           </Form.Item>
           <Form.Item
@@ -45,15 +49,15 @@ const Login = () => {
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="Mật khẩu"
             />
           </Form.Item>
           <Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox>Ghi nhớ</Checkbox>
             </Form.Item>
             <a className="login-form-forgot" href="">
-              Forgot password
+              Quên mật khẩu
             </a>
           </Form.Item>
           <Form.Item>
@@ -63,9 +67,9 @@ const Login = () => {
               htmlType="submit"
               className="login-form-button mx-2"
             >
-              Log in
+              Đăng nhập
             </Button>
-            Or <a href="">register now!</a>
+            Hoặc <a href=""> Đăng ký ngay!</a>
           </Form.Item>
         </Form>
       </div>

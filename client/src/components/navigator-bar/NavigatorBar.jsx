@@ -1,18 +1,18 @@
-import { Layout, Menu } from "antd";
-import React from "react";
-import Link from "next/link";
-import { useState } from "react";
+import { Layout, Menu } from 'antd'
+import React from 'react'
+import Link from 'next/link'
+import { useState } from 'react'
 
 function NavigatorBar() {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false)
 
   const handleClick = () => {
-    setActive(!active);
-  };
+    setActive(!active)
+  }
   return (
     <>
       <nav>
-        <div className="flex  z-50 shadow-lg w-full items-center flex-wrap bg-white p-3 transform transition duration-500 ease-in-out px-20">
+        <div className="flex  z-50 shadow-lg w-full items-center flex-wrap bg-white p-3 transform transition duration-500 ease-in-out px-16">
           <Link href="/">
             <a className="inline-flex items-center p-2 mr-4 ">
               <img srcSet="/images/logo.png" alt="" />
@@ -38,29 +38,27 @@ function NavigatorBar() {
             </svg>
           </button>
           <div
-            className={`${
-              active ? "" : "hidden"
-            }   w-full md:inline-flex md:flex-grow md:w-auto`}
+            className={`${active ? '' : 'hidden'}   w-full md:inline-flex md:flex-grow md:w-auto`}
           >
             <div className="md:inline md:flex-row md:ml-auto md:w-auto w-full md:items-center items-start  flex flex-col md:h-auto">
               <Link href="/">
                 <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white ">
-                  Home
+                  Trang chủ
                 </a>
               </Link>
               <Link href="/">
                 <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
-                  Services
+                  Liên hệ
                 </a>
               </Link>
               <Link href="/">
                 <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
-                  About us
+                  Đăng ký
                 </a>
               </Link>
-              <Link href="/">
+              <Link href="/login">
                 <a className="lg:inline lg:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
-                  Contact us
+                  Đăng nhập
                 </a>
               </Link>
             </div>
@@ -68,7 +66,7 @@ function NavigatorBar() {
         </div>
       </nav>
     </>
-  );
+  )
 }
 
-export default NavigatorBar;
+export default NavigatorBar
