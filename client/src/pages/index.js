@@ -1,5 +1,4 @@
-import Head from 'next/head'
-
+import MainLayout from '../layouts/main-layout/Default'
 export default function Home() {
-  return <h1 className="bg-red-400 text-5xl">Hello</h1>
+  return <p className="">a</p>
 }
