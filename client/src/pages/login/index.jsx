@@ -1,10 +1,25 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
+import * as auth from '../../api/auth'
+
 const Login = () => {
+  const router = useRouter()
   const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+    login(values)
+  }
+
+  // TODO: signup check status code 400, 409
+
+  const login = async (credential) => {
+    const res = await auth.login(credential)
+    if (res.status === 401) {
+      console.log('Error 401, check credential')
+    } else if (res.status == 200) {
+      router.push('/home')
+    }
   }
 
   return (
@@ -20,7 +35,7 @@ const Login = () => {
           onFinish={onFinish}
         >
           <Form.Item
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,
@@ -28,10 +43,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
-            />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
           </Form.Item>
           <Form.Item
             name="password"
