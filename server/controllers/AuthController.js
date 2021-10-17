@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { jwtHelper } from '../helpers/jwt.helper.js'
+import { validationResult } from 'express-validator'
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 
@@ -43,8 +44,13 @@ const login = async (req, res) => {
 const signup = async (req, res) => {
   const salt = 10
   try {
-    const { name, email, password } = req.body
+    const { name, email, password, phone, role } = req.body
     const validInput = email && password && name
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
     if (!validInput) {
       res.status(400).send('All input is required')
     }
@@ -58,6 +64,8 @@ const signup = async (req, res) => {
       name: name,
       email: email,
       password: hashedPassword,
+      phone: phone,
+      role: role
     })
     await newUser.save()
     return res.status(200).json({ message: 'Account created' })
