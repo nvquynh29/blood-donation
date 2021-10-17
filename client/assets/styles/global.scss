@@ -1,0 +1,187 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+*:focus {
+  outline: 0;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+}
+body,
+input,
+button {
+  font: 14px "Roboto", sans-serif;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+button {
+  cursor: pointer;
+}
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+/* top bar progress*/
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: rgb(255, 35, 35);
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+  display: none;
+  position: fixed;
+  z-index: 1031;
+  top: 15px;
+  right: 15px;
+}
+
+#nprogress .spinner-icon {
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+}
+.carousel {
+  .ant-carousel .slick-prev,
+  .ant-carousel .slick-next {
+    background: red;
+    object-fit: contain;
+    height: auto;
+    width: auto;
+    padding: 10px;
+  }
+  .ant-carousel .slick-next:focus {
+    background-color: red;
+    color: white;
+  }
+  .ant-carousel .slick-prev,
+  .ant-carousel .slick-prev:hover,
+  .ant-carousel .slick-prev:focus {
+    left: 10px;
+    z-index: 2;
+    background: red;
+    font-size: 30px;
+    color: white;
+  }
+
+  .ant-carousel .slick-next,
+  .ant-carousel .slick-next:hover {
+    right: 10px;
+    background: red;
+    z-index: 2;
+    font-size: 30px;
+    color: white;
+  }
+  .slider-info {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 24px 0px 48px;
+    z-index: 1;
+    .content {
+    }
+    .content h3 {
+      font-family: "Source Sans Pro", sans-serif;
+      color: #1a1a1a;
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5em;
+      line-height: 50px;
+      margin: 16px 0 0;
+    }
+    .content h2 {
+      letter-spacing: 0.03em;
+      position: relative;
+      overflow: hidden;
+      font-family: "Source Sans Pro", sans-serif;
+      font-size: 60px;
+      line-height: 70px;
+      font-weight: 700;
+      margin: 24px 0 0;
+      color: #1a1a1a;
+      text-transform: uppercase;
+    }
+    .btn-slider {
+      font-size: 18px;
+      margin-top: 40px;
+      background: #fe3c47;
+      border: 2px solid #fe3c47;
+      color: #ffffff;
+      line-height: 32px;
+      padding: 10px 24px;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-align: left;
+      letter-spacing: 0.03em;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+      -webkit-background-clip: padding-box;
+      -moz-background-clip: padding;
+      background-clip: padding-box;
+    }
+  }
+
+  .slider-info:before,
+  .slider-info:after {
+    content: "";
+    width: 130px;
+    height: 130px;
+    background: transparent;
+    border: 5px solid #fe3c47;
+    position: absolute;
+    z-index: -1;
+  }
+  .slider-info:after {
+    bottom: 0;
+    left: 0;
+    border-top: 0;
+    border-right: 0;
+  }
+  .slider-info:before {
+    top: 0;
+    right: 0;
+    border-bottom: 0;
+    border-left: 0;
+  }
+}
+.stuck {
+  position: fixed;
+  top: 0;
+  left: 0px;
+  right: 0px;
+  z-index: 99;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease-out;
+  -moz-transition: opacity 0.3s ease-out;
+  -o-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
+  background: rgba(255, 255, 255, 0.97);
+  width: 100%;
+  padding: 0px;
+  margin: 0 !important;
+}
