@@ -43,8 +43,8 @@ const login = async (req, res) => {
 const signup = async (req, res) => {
   const salt = 10
   try {
-    const { name, email, password } = req.body
-    const validInput = email && password && name
+    const { name, email, password, phone, role } = req.body
+    const validInput = email && password && name && phone && role
     if (!validInput) {
       res.status(400).send('All input is required')
     }
@@ -58,6 +58,8 @@ const signup = async (req, res) => {
       name: name,
       email: email,
       password: hashedPassword,
+      phone: phone,
+      role: role,
     })
     await newUser.save()
     return res.status(200).json({ message: 'Account created' })
