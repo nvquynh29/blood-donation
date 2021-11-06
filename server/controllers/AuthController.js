@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { jwtHelper } from '../helpers/jwt.helper.js'
+import { validationResult } from 'express-validator'
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 
@@ -44,6 +45,11 @@ const signup = async (req, res) => {
   const salt = 10
   try {
     const { name, email, password, phone, role } = req.body
+    //validate input
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
     const validInput = email && password && name && phone && role
     if (!validInput) {
       res.status(400).send('All input is required')

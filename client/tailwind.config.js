@@ -4,6 +4,13 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
+    fontFamily: {
+      SourceSans: ['Source Sans Pro', 'sans-serif'],
+      Dosis: ['Dosis', 'sans-serif'],
+    },
+    backgroundImage: {
+      separator: "url('/images/separator.png')",
+    },
   },
   variants: {
     extend: {},

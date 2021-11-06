@@ -1,3 +1,4 @@
+@import '../fonts/fonts.scss';
 * {
   margin: 0;
   padding: 0;
@@ -19,7 +20,7 @@ body {
 body,
 input,
 button {
-  font: 14px "Roboto", sans-serif;
+  font: 14px 'Roboto', sans-serif;
 }
 a {
   color: black;
@@ -102,11 +103,11 @@ img {
     padding: 24px 0px 48px;
     z-index: 1;
     .content {
+      padding: 10px;
     }
     .content h3 {
-      font-family: "Source Sans Pro", sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       color: #1a1a1a;
-      font-size: 32px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5em;
@@ -117,38 +118,18 @@ img {
       letter-spacing: 0.03em;
       position: relative;
       overflow: hidden;
-      font-family: "Source Sans Pro", sans-serif;
-      font-size: 60px;
+      font-family: 'Source Sans Pro', sans-serif;
       line-height: 70px;
       font-weight: 700;
       margin: 24px 0 0;
       color: #1a1a1a;
       text-transform: uppercase;
     }
-    .btn-slider {
-      font-size: 18px;
-      margin-top: 40px;
-      background: #fe3c47;
-      border: 2px solid #fe3c47;
-      color: #ffffff;
-      line-height: 32px;
-      padding: 10px 24px;
-      text-transform: uppercase;
-      font-weight: 600;
-      text-align: left;
-      letter-spacing: 0.03em;
-      -webkit-border-radius: 0px;
-      -moz-border-radius: 0px;
-      border-radius: 0px;
-      -webkit-background-clip: padding-box;
-      -moz-background-clip: padding;
-      background-clip: padding-box;
-    }
   }
 
   .slider-info:before,
   .slider-info:after {
-    content: "";
+    content: '';
     width: 130px;
     height: 130px;
     background: transparent;
@@ -240,4 +221,28 @@ img {
 }
 .loginBtn:hover {
   background-color: rgb(211, 6, 6);
+.social {
+  cursor: pointer;
+  margin: 0 10px;
+}
+.custom-btn {
+  font-size: 18px;
+  background: #fe3c47;
+  border: 2px solid #fe3c47;
+  color: #ffffff;
+  line-height: 32px;
+  padding: 10px 24px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: 0.03em;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+.custom-btn:hover {
+  color: white;
 }

@@ -2,46 +2,44 @@ import React from 'react'
 import { Carousel } from 'antd'
 import { LeftOutlined, RightOutlined, SwapRightOutlined } from '@ant-design/icons'
 import Link from 'next/link'
+
 // import './styles.scss'
 function MyCarousel() {
   const events = [
     {
       id: 1,
-      name: 'Donate blood,save life1 !',
-      sologan: 'Your Donation Can bring smile at others face',
+      name: 'Hiến máu, cứu người !',
+      sologan: 'Sự đóng góp của bạn Có thể mang lại cơ hội cho người khác',
       imgUrl: '/images/slider-1.jpg',
     },
     {
       id: 2,
-      name: 'Donate blood,save life2 !',
-      sologan: 'Your Donation Can bring smile at others face',
+      name: 'Hiến máu, cứu người !',
+      sologan: 'Sự đóng góp của bạn Có thể mang lại cơ hội cho người khác',
       imgUrl: '/images/slider-1.jpg',
     },
     {
       id: 3,
-      name: 'Donate blood,save life3 !',
-      sologan: 'Your Donation Can bring smile at others face',
+      name: 'Hiến máu, cứu người !',
+      sologan: 'Sự đóng góp của bạn Có thể mang lại cơ hội cho người khác',
       imgUrl: '/images/slider-1.jpg',
     },
   ]
   return (
     <div className="carousel">
-      <Carousel
-        // autoplay
-        arrows
-        prevArrow={<LeftOutlined />}
-        nextArrow={<RightOutlined />}
-      >
+      <Carousel autoplay arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />}>
         {events.map((event) => (
           <div className="relative" key={event.id}>
             <div className="slider-info absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50 h-1/2 w-3/4 ">
               <div className="content text-center">
-                <h3 className="text-5xl ">{event.name}</h3>
-                <h2>{event.sologan}</h2>
+                <h3 className="xl:text-5xl lg:text-3xl md:text-2xl text-base">{event.name}</h3>
+                <h2 className="font-SourceSans md:text-2xl lg:text-4xl lg:mt-[1rem] xl:text-[3.6rem]">
+                  {event.sologan}
+                </h2>
 
                 <Link href="/">
-                  <a className="btn-slider inline-flex items-center p-2 mr-4 ">
-                    <span className="px-2">Donate Now</span>{' '}
+                  <a className="custom-btn inline-flex items-center p-2 mr-4 mt-5">
+                    <span className="px-2">Đăng ký hiến máu</span>{' '}
                     <SwapRightOutlined className="text-3xl" />
                   </a>
                 </Link>
