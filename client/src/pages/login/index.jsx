@@ -40,7 +40,6 @@ const Login = () => {
             }}
             onFinish={onFinish}
           >
-<<<<<<< HEAD
             <Form.Item
               name="email"
               rules={[
@@ -91,34 +90,6 @@ const Login = () => {
             </Form.Item>
           </Form>
         </div>
-=======
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="Mật khẩu"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Ghi nhớ</Checkbox>
-            </Form.Item>
-            <a className="login-form-forgot" href="">
-              Quên mật khẩu
-            </a>
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              size="middle"
-              htmlType="submit"
-              className="login-form-button mx-2"
-            >
-              Đăng nhập
-            </Button>
-            Hoặc <a href=""> Đăng ký ngay!</a>
-          </Form.Item>
-        </Form>
->>>>>>> e7175038dd3776e18f1c8562f24707263eed2b2d
       </div>
     </div>
   )
