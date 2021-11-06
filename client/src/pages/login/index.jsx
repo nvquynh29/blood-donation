@@ -18,7 +18,7 @@ const Login = () => {
     if (res.status === 401) {
       console.log('Error 401, check credential')
     } else if (res.status == 200) {
-      router.push('/home')
+      router.push('/')
     }
   }
 
@@ -57,15 +57,15 @@ const Login = () => {
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="Mật khẩu"
             />
           </Form.Item>
           <Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox>Ghi nhớ</Checkbox>
             </Form.Item>
             <a className="login-form-forgot" href="">
-              Forgot password
+              Quên mật khẩu
             </a>
           </Form.Item>
           <Form.Item>
@@ -75,9 +75,9 @@ const Login = () => {
               htmlType="submit"
               className="login-form-button mx-2"
             >
-              Log in
+              Đăng nhập
             </Button>
-            Or <a href="">register now!</a>
+            Hoặc <a href=""> Đăng ký ngay!</a>
           </Form.Item>
         </Form>
       </div>

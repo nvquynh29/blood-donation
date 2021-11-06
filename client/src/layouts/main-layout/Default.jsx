@@ -7,20 +7,19 @@ const ContactBar = dynamic(() => import('../../components/contact-bar/ContactBar
 
 function MainLayout({ children }) {
   return (
-    <div className="bg-red-900 contents">
+    <div className="bg-red-900 ">
       <Head>
         <title>Hiến máu trao yêu thương</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="header ">
+      <div className="header block h-[fit-content]">
         <ContactBar />
-        <div className="navigator-bar  bg-black">
+        <div className="navigator-bar bg-black">
           <NavigatorBar />
         </div>
-        <div className="carousel h-16 bg-red-500">{<Carousel />}</div>
-        <div className="hero bg-red-600">h</div>
       </div>
-      <div className="content">{children}</div>
+
+      <div className="content block">{children}</div>
       <footer>
         <hr />
         <span>I'm here to stay (Footer)</span>
