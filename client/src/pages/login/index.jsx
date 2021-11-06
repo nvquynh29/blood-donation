@@ -5,6 +5,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
 
+
 const Login = () => {
   const router = useRouter()
   const onFinish = (values) => {
@@ -23,63 +24,72 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <div className="grid justify-center items-center h-screen">
-        <Form
-          size="large"
-          name="normal_login"
-          className="login-form"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your Username!',
-              },
-            ]}
+    <div className="loginContainer">
+      <div className="asidepic">
+        <img src='https://wallpapercave.com/wp/wp4323511.jpg' alt='pic' />
+      </div>
+      <div className="loginForm">
+        <div className="loginMain">
+          <h1 className="loginTitle">Log In</h1>
+          <Form
+            size="large"
+            name="normal_login"
+            className="login-form myLoginForm"
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your Password!',
-              },
-            ]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="Mật khẩu"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Ghi nhớ</Checkbox>
-            </Form.Item>
-            <a className="login-form-forgot" href="">
-              Quên mật khẩu
-            </a>
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              size="middle"
-              htmlType="submit"
-              className="login-form-button mx-2"
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your Username!',
+                },
+              ]}
             >
-              Đăng nhập
-            </Button>
-            Hoặc <a href=""> Đăng ký ngay!</a>
-          </Form.Item>
-        </Form>
+              <h2>Email</h2>
+              <Input prefix={<UserOutlined className="site-form-item-icon " />} placeholder="Email" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your Password!',
+                },
+              ]}
+            >
+              <h2>Password</h2>
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon " />}
+                type="password"
+                placeholder="Password"
+              />
+            </Form.Item>
+            <Form.Item >
+              <div className="loginDetail">
+                <Form.Item name="remember" valuePropName="checked" noStyle>
+                  <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+                <a className="login-form-forgot" href="">
+                  Forgot password
+                </a>
+              </div>
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                size="middle"
+                htmlType="submit"
+                className="loginBtn"
+              >
+                Log in
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </div>
   )
