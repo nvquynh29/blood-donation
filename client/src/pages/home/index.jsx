@@ -1,7 +1,16 @@
-import React from "react";
+import React from 'react'
 
+import dynamic from 'next/dynamic'
+
+const MultiStepForm = dynamic(() => import('../../components/multistep-form'), {
+  ssr: false,
+})
 function index() {
-  return <div></div>;
+  return (
+    <div>
+      <MultiStepForm />
+    </div>
+  )
 }
 
-export default index;
+export default index
