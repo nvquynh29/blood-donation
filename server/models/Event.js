@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
     name: {
@@ -18,9 +18,52 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    organization_id: mongoose.Schema.Types.ObjectId,
-    volunteers: Array,
-    donation_books: Array
+    organization_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organization'
+    },
+    volunteers: [
+        {
+            start_time: {
+                type: Date,
+                required: true
+            },
+            end_time: {
+                type: Date,
+                required: true,
+            },
+            volunteer_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            }
+        }
+    ],
+    donation_books: [
+        {
+            amount: {
+                type: Number,
+                required: true,
+            },
+            gift_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Gift',
+                required: true,
+            },
+            created_at: {
+                type: Date,
+                default: Date.now()
+            },
+            updated_at: {
+                type: Date,
+                default: Date.now()
+            },
+            is_done: {
+                type: Boolean,
+                required: true
+            }
+        }
+    ]
 })
 
 const Event = mongoose.model('Event', schema)

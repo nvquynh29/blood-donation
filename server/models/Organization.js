@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
     name: {
@@ -14,8 +14,29 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    admin: Array,
-    list_blood_requests: Array,
+    admin: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        }
+    ],
+    list_blood_requests: [
+        {
+            amount: {
+                type: Number,
+                required: true,
+            },
+            register_date: {
+                type: Date,
+                required: true,
+            },
+            user_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
+            }
+        }
+    ],
 })
 
 const Organization = mongoose.model('Organization', schema)

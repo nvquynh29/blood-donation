@@ -5,7 +5,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    writer: mongoose.Schema.Types.ObjectId,
+    writer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
 }, { collection: 'news', timestamps: true})
 
 const News = mongoose.model('News', schema)
