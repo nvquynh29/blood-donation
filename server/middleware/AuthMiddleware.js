@@ -1,5 +1,5 @@
-import { jwtHelper } from '../helpers/jwt.helper.js'
 import dotenv from 'dotenv'
+import { jwtHelper } from '../helpers/jwt.helper.js'
 
 dotenv.config()
 const isAuth = async (req, res, next) => {
