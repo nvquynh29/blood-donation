@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
-import { jwtHelper } from '../helpers/jwt.helper.js'
 import { validationResult } from 'express-validator'
-import User from '../models/User.js'
 import bcrypt from 'bcrypt'
+import { jwtHelper } from '../helpers/jwt.helper.js'
+import User from '../models/User.js'
 
 const updateRefreshToken = (id, refreshToken) => {
   User.findByIdAndUpdate(id, { refreshToken }, { new: true }, (err, _) => {
@@ -24,28 +24,29 @@ const login = async (req, res) => {
       const accessToken = await jwtHelper.generateToken(
         { _id: user._id },
         process.env.ACCESS_TOKEN_SECRET,
-        '1h'
+        '1h',
       )
       const refreshToken = await jwtHelper.generateToken(
         { _id: user._id },
         process.env.REFRESH_TOKEN_SECRET,
-        '365d'
+        '365d',
       )
       updateRefreshToken(user._id, refreshToken)
       return res.status(200).json({ accessToken, refreshToken })
-    } else {
-      return res.status(401).json('Password incorrect')
     }
+    return res.status(401).json('Password incorrect')
   } catch (error) {
-    return res.status(500).json(err)
+    return res.status(500).json(error)
   }
 }
 
 const signup = async (req, res) => {
   const salt = 10
   try {
-    const { name, email, password, phone, role } = req.body
-    //validate input
+    const {
+      name, email, password, phone, role,
+    } = req.body
+    // validate input
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
@@ -71,7 +72,7 @@ const signup = async (req, res) => {
     return res.status(200).json({ message: 'Account created' })
   } catch (error) {
     console.error(error)
-    res.status(500).json(error)
+    return res.status(500).json(error)
   }
 }
 
@@ -90,7 +91,7 @@ const refreshToken = async (req, res) => {
     return res.status(200).json({ accessToken })
   } catch (error) {
     console.error(error)
-    res.status(403).json({ message: 'Invalid refresh token' })
+    return res.status(403).json({ message: 'Invalid refresh token' })
   }
 }
 
