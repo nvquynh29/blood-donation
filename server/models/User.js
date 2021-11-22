@@ -24,7 +24,7 @@ const schema = new mongoose.Schema({
     required: false,
     default: null,
   },
-  citizenID: String, 
+  citizenID: String,
   phone: {
     type: String,
     required: true,
@@ -36,7 +36,7 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-  }
+  },
 })
 
 const User = mongoose.model('User', schema)

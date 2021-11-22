@@ -4,6 +4,11 @@ import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import initAPIs from './routes/api.js'
+import organizationRouter from './routes/organization.js'
+import eventRouter from './routes/event.js'
+import isAuth from './middleware/AuthMiddleware.js'
+import isAdmin from './middleware/AdminMiddleware.js'
+
 
 dotenv.config()
 const app = express()
@@ -16,7 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }))
 app.use(cors())
 
 initAPIs(app)
-
+app.use('/event', isAdmin ,eventRouter)
+app.use('/organization', isAdmin, organizationRouter)
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
