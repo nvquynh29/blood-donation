@@ -1,5 +1,5 @@
-import axios from 'axios'
+import instance from './axios'
 
 const API_URL = 'http://localhost:5000'
-export const signup = (credential) => axios.post(`${API_URL}/signup`, credential)
-export const login = (credential) => axios.post(`${API_URL}/login`, credential)
+export const signup = (credential) => instance.post(`${API_URL}/signup`, credential)
+export const login = (credential) => instance.post(`${API_URL}/login`, credential)
