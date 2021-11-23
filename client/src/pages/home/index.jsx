@@ -1,7 +1,13 @@
 import React from "react";
+import SideBar from "../../components/sidebar"
+
 
 function index() {
-  return <div>This is Homepage - Admin</div>;
+  return (
+    <div>
+      <SideBar />
+    </div>
+  );
 }
 
 export default index;
