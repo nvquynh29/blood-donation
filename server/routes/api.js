@@ -2,6 +2,7 @@ import express from 'express'
 import isAuth from '../middleware/AuthMiddleware.js'
 import { check } from 'express-validator'
 import { AuthController } from '../controllers/AuthController.js'
+import { sendOTP } from '../helpers/otp.helper.js'
 
 const router = express.Router()
 const initAPIs = (app) => {
@@ -25,6 +26,7 @@ const initAPIs = (app) => {
     ],
     AuthController.login
   )
+  router.post('/otp', sendOTP)
   router.get('/refresh-token', AuthController.refreshToken)
 
   // middleware routes
