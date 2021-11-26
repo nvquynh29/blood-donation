@@ -6,6 +6,7 @@ import Link from 'next/link'
 import MainLayout from '../layouts/main-layout/Default'
 import ResgiterForm from '../components/reg-form/ResgiterForm'
 import VolunteerForm from '../components/vonlunteer-form/VolunteerForm'
+import Advise from '../components/advise-section/Advise'
 const Home = () => {
   return (
     <MainLayout>
@@ -82,6 +83,7 @@ const Home = () => {
         <div className="register-form">{/* <ResgiterForm /> */}</div>
       </div>
       <VolunteerForm />
+      <Advise />
     </MainLayout>
   )
 }
