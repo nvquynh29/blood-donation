@@ -1,7 +1,9 @@
+import React from 'react'
+
 function index() {
   return (
     <div>
-      <h1 className="bg-red-500">Helll2</h1>
+      <h1>step=3</h1>
     </div>
   )
 }

@@ -4,14 +4,15 @@ import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
-
+import { useForm } from 'antd/lib/form/Form'
 
 const Login = () => {
   const router = useRouter()
   const onFinish = (values) => {
-    login(values)
+    console.log(values)
+    // login(values)
   }
-
+  const form = useForm()
   // TODO: signup check status code 400, 409
 
   const login = async (credential) => {
@@ -26,7 +27,7 @@ const Login = () => {
   return (
     <div className="loginContainer">
       <div className="asidepic">
-        <img src='https://wallpapercave.com/wp/wp4323511.jpg' alt='pic' />
+        <img src="https://wallpapercave.com/wp/wp4323511.jpg" alt="pic" />
       </div>
       <div className="loginForm">
         <div className="loginMain">
@@ -49,8 +50,10 @@ const Login = () => {
                 },
               ]}
             >
-              <h2>Email</h2>
-              <Input prefix={<UserOutlined className="site-form-item-icon " />} placeholder="Email" />
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon " />}
+                placeholder="Email"
+              />
             </Form.Item>
             <Form.Item
               name="password"
@@ -61,14 +64,13 @@ const Login = () => {
                 },
               ]}
             >
-              <h2>Password</h2>
               <Input
                 prefix={<LockOutlined className="site-form-item-icon " />}
                 type="password"
                 placeholder="Password"
               />
             </Form.Item>
-            <Form.Item >
+            <Form.Item>
               <div className="loginDetail">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>Remember me</Checkbox>
@@ -79,12 +81,7 @@ const Login = () => {
               </div>
             </Form.Item>
             <Form.Item>
-              <Button
-                type="primary"
-                size="middle"
-                htmlType="submit"
-                className="loginBtn"
-              >
+              <Button type="primary" size="middle" htmlType="submit" className="loginBtn">
                 Log in
               </Button>
             </Form.Item>

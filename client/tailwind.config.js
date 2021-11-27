@@ -7,6 +7,7 @@ module.exports = {
     fontFamily: {
       SourceSans: ['Source Sans Pro', 'sans-serif'],
       Dosis: ['Dosis', 'sans-serif'],
+      Barlow: ['Barlow', 'sans-serif'],
     },
     backgroundImage: {
       separator: "url('/images/separator.png')",
