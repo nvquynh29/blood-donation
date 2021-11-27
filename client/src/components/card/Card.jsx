@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 
 function CustomCard(props, { children }) {
-  console.log(props)
   return (
     <div>
       <div class="max-w-md h-full mx-auto bg-white  shadow-md overflow-hidden md:max-w-2xl">

@@ -1,5 +1,5 @@
-@import "../fonts/fonts.scss";
-@import "../../src/components/advise-section/advise.scss";
+@import '../fonts/fonts.scss';
+@import '../../src/components/advise-section/advise.scss';
 * {
   margin: 0;
   padding: 0;
@@ -21,11 +21,11 @@ body {
 body,
 input,
 button {
-  font: 14px "Roboto", sans-serif;
+  font: 14px 'Roboto', sans-serif;
 }
 a {
   color: black;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 ul {
   list-style: none;
@@ -107,7 +107,7 @@ img {
       padding: 10px;
     }
     .content h3 {
-      font-family: "Source Sans Pro", sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       color: #1a1a1a;
       font-weight: 700;
       text-transform: uppercase;
@@ -119,7 +119,7 @@ img {
       letter-spacing: 0.03em;
       position: relative;
       overflow: hidden;
-      font-family: "Source Sans Pro", sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       line-height: 70px;
       font-weight: 700;
       margin: 24px 0 0;
@@ -130,7 +130,7 @@ img {
 
   .slider-info:before,
   .slider-info:after {
-    content: "";
+    content: '';
     width: 130px;
     height: 130px;
     background: transparent;
@@ -199,7 +199,7 @@ img {
   font-size: 40px;
   font-weight: 750;
   color: #1a1a1a;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 .loginDetail {
   display: flex;
@@ -226,27 +226,27 @@ img {
     cursor: pointer;
     margin: 0 10px;
   }
-  .custom-btn {
-    font-size: 18px;
-    background: #fe3c47;
-    border: 2px solid #fe3c47;
-    color: #ffffff;
-    line-height: 32px;
-    padding: 10px 24px;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-align: left;
-    letter-spacing: 0.03em;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-  }
-  .custom-btn:hover {
-    color: white;
-  }
+}
+.custom-btn {
+  font-size: 18px;
+  background: #fe3c47;
+  border: 2px solid #fe3c47;
+  color: #ffffff;
+  line-height: 32px;
+  padding: 10px 24px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: 0.03em;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+.custom-btn:hover {
+  color: white;
 }
 .volunteerForm {
   display: flex;
