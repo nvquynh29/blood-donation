@@ -7,6 +7,7 @@ import MainLayout from '../layouts/main-layout/Default'
 import ResgiterForm from '../components/reg-form/ResgiterForm'
 import VolunteerForm from '../components/vonlunteer-form/VolunteerForm'
 import Advise from '../components/advise-section/Advise'
+import HistorySearch from '../components/history-search/HistorySearch'
 const Home = () => {
   return (
     <MainLayout>
@@ -84,6 +85,7 @@ const Home = () => {
       </div>
       <VolunteerForm />
       <Advise />
+      <HistorySearch />
     </MainLayout>
   )
 }

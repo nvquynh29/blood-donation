@@ -1,5 +1,5 @@
 import React from 'react'
-import 'font-awesome/css/font-awesome.min.css';
+import 'font-awesome/css/font-awesome.min.css'
 
 export default function Advise() {
     return (
