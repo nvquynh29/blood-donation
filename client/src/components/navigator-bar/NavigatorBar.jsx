@@ -11,7 +11,7 @@ function NavigatorBar() {
   }
   return (
     <>
-      <nav>
+      <nav className="block sticky top-0 z-50">
         <div className="flex  z-50 shadow-lg w-full items-center flex-wrap bg-white p-3 transform transition duration-500 ease-in-out px-16">
           <Link href="/">
             <a className="inline-flex items-center p-2 mr-4 ">

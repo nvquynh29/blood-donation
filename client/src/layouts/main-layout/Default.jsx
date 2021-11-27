@@ -12,13 +12,11 @@ function MainLayout({ children }) {
         <title>Hiến máu trao yêu thương</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+
       <div className="header block h-[fit-content]">
         <ContactBar />
-        <div className="navigator-bar bg-black">
-          <NavigatorBar />
-        </div>
       </div>
-
+      <NavigatorBar />
       <div className="content block">{children}</div>
       <footer>
         <hr />
