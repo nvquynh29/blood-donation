@@ -21,7 +21,7 @@ const createEvent = async (req, res) => {
 
 const getAllEvent = async (req, res) => {
   try {
-    const events = await Event.find({
+    let events = Event.find({
       start_date: {
         $gt: new Date(new Date().getTime()),
         $lte: new Date(new Date().getTime() + 1000 * 86400 * 30),
@@ -29,10 +29,16 @@ const getAllEvent = async (req, res) => {
     }, {
       volunteers: 0,
       donation_books: 0,
+    }).sort({
+      start_date: 1,
     }).populate('organization_id', {
       admin: 0,
       list_blood_requests: 0,
-    }).exec()
+    })
+    if (req.query.limit) {
+      events = events.limit(parseInt(req.query.limit, 10))
+    }
+    events = await events.exec()
     return res.status(200).json(events)
   } catch (error) {
     return res.status(500).json(error)
