@@ -16,9 +16,8 @@ const Login = () => {
     // login(values)
   }
   const form = useForm()
+
   // TODO: signup check status code 400, 409
-    login(values)
-  
 
   const writeCookies = ({ accessToken, refreshToken }) => {
     cookies.set('accessToken', accessToken)
