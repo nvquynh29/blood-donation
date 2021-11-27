@@ -282,3 +282,15 @@ img {
   background-color: #eaedf1;
   padding: 50px;
 }
+
+.requestBloodForm {
+  .ant-select-selector {
+    height: 40px !important;
+  }
+  .ant-select-selection-item,
+  .ant-select-selection-placeholder {
+    display: table;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
