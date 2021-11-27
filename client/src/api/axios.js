@@ -18,7 +18,6 @@ const refreshToken = async () => {
 instance.interceptors.response.use(
   async (response) => {
     const config = response.config
-    console.log(response)
     if (config.url.indexOf('/login') >= 0 || config.url.indexOf('/refresh-token') >= 0) {
       return response
     }
@@ -34,6 +33,7 @@ instance.interceptors.response.use(
         }
       }
     }
+    return response
   },
   (err) => {
     return Promise.reject(err)

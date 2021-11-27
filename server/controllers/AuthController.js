@@ -29,7 +29,7 @@ const login = async (req, res) => {
       const refreshToken = await jwtHelper.generateToken(
         { _id: user._id },
         process.env.REFRESH_TOKEN_SECRET,
-        '30d'
+        '30d',
       )
       updateRefreshToken(user._id, refreshToken)
       return res.status(200).json({ accessToken, refreshToken })

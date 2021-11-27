@@ -9,6 +9,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  img_path: String,
   description: String,
   is_blood_bank: {
     type: String,
@@ -30,11 +31,32 @@ const schema = new mongoose.Schema({
         type: Date,
         required: true,
       },
-      user_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+      subscriber_info: {
+        name: {
+          type: String,
+          required: true,
+        },
+        identity_id: {
+          type: String,
+          required: true,
+        },
+        phone: {
+          type: String,
+          required: true,
+        },
+
+      },
+      blood_type: {
+        type: String,
         required: true,
       },
+    },
+  ],
+  volunteers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   ],
 })
