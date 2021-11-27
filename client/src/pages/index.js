@@ -78,7 +78,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-
         {/* RESGISTER FORM */}
         <div className="register-form">{/* <ResgiterForm /> */}</div>
       </div>

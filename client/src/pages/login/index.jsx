@@ -4,6 +4,7 @@ import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
+import { useForm } from 'antd/lib/form/Form'
 import Cookies from 'universal-cookie'
 
 const Login = () => {
@@ -12,8 +13,11 @@ const Login = () => {
 
   const onFinish = (values) => {
     console.log(values)
-    login(values)
+    // login(values)
   }
+  const form = useForm()
+
+  // TODO: signup check status code 400, 409
 
   const writeCookies = ({ accessToken, refreshToken }) => {
     cookies.set('accessToken', accessToken)
