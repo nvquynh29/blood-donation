@@ -1,8 +1,17 @@
 .historySearch {
-}
+    .ant-form-item-label > label {
+        float: left;
+    }
 
-.ant-form-item-label > label {
-    float: left;
+    .ant-select-selector {
+        height: calc(2.25rem + 2px) !important;
+        border-radius: 5px !important;
+    }
+
+    .ant-form-item-explain.ant-form-item-explain-error {
+        margin-left: 10px;
+        position: relative;
+    }
 }
 
 .historySearchForm {
@@ -35,10 +44,6 @@
     margin-bottom: 20px;
 }
 
-.ant-select-selector {
-    height: calc(2.25rem + 2px) !important;
-    border-radius: 5px !important;
-}
 .hisSearchFormBtns {
     width: 20%;
     display: flex;
@@ -56,10 +61,6 @@
     padding-left: 7px;
 }
 
-.ant-form-item-explain.ant-form-item-explain-error {
-    margin-left: 10px;
-    position: relative;
-}
 .hisSearchB:hover {
     background-color: #c71f27 !important;
 }
