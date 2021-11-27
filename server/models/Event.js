@@ -1,26 +1,59 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
+  name: {
+    type: String,
+    required: true,
+  },
+  start_date: {
+    type: Date,
+    required: true,
+  },
+  // number of days
+  duration: {
+    type: Number,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  organization_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization',
+  },
+  volunteers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
-    start_date: {
-        type: Date,
-        required: true,
-    },
-    // number of days
-    duration: {
+  ],
+  donation_books: [
+    {
+      amount: {
         type: Number,
         required: true,
-    },
-    address: {
-        type: String,
+      },
+      gift_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Gift',
         required: true,
+      },
+      created_at: {
+        type: Date,
+        default: Date.now(),
+      },
+      updated_at: {
+        type: Date,
+        default: Date.now(),
+      },
+      is_done: {
+        type: Boolean,
+        required: true,
+      },
     },
-    organization_id: mongoose.Schema.Types.ObjectId,
-    volunteers: Array,
-    donation_books: Array
+  ],
 })
 
 const Event = mongoose.model('Event', schema)

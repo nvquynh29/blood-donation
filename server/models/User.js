@@ -7,12 +7,12 @@ const schema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   password: {
     type: String,
-    required: true,
+    required: false,
   },
   photoUrl: {
     type: String,
@@ -24,7 +24,7 @@ const schema = new mongoose.Schema({
     required: false,
     default: null,
   },
-  citizenID: String, 
+  citizenID: String,
   phone: {
     type: String,
     required: true,
@@ -36,7 +36,7 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-  }
+  },
 })
 
 const User = mongoose.model('User', schema)
