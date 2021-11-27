@@ -7,17 +7,14 @@ const authToken = process.env.TWILIO_AUTH_TOKEN
 const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID
 const twilioClient = twilio(accountSid, authToken)
 
-const getRandomNumberBetween = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
+const getRandomNumberBetween = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
 
-const sendSMS = async (phoneNumber, message) => {
-  return await twilioClient.messages.create({
-    messagingServiceSid: messagingServiceSid,
-    to: `+84${phoneNumber}`,
-    body: message,
-  })
-}
+// eslint-disable-next-line no-return-await
+const sendSMS = async (phoneNumber, message) => await twilioClient.messages.create({
+  messagingServiceSid: messagingServiceSid,
+  to: `+84${phoneNumber}`,
+  body: message,
+})
 
 export const sendOTP = async (req, res) => {
   const { phoneNumber } = req.body
