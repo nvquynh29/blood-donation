@@ -1,21 +1,25 @@
-import dotenv from 'dotenv'
 import { jwtHelper } from '../helpers/jwt.helper.js'
 
-dotenv.config()
 const isAuth = async (req, res, next) => {
-  const tokenFromClient = req.body.token || req.query.token || req.headers['x-access-token']
+  const tokenFromClient = req.headers['x-access-token'] || req.headers['X-ACCESS-TOKEN']
   if (tokenFromClient) {
     try {
       const decoded = await jwtHelper.verifyToken(tokenFromClient, process.env.ACCESS_TOKEN_SECRET)
-      req.jwtDecoded = decoded
+      req.user = decoded
       next()
     } catch (error) {
-      console.log(error)
-      return res.status(401).json({ message: 'Unauthorized' })
+      if (error.name === 'TokenExpiredError') {
+        return res.status(401).json({
+          msg: error.message,
+        })
+      }
+
+      return res.status(500).json({ error })
     }
   } else {
-    return res.status(403).json({ message: 'No token provided' })
+    return res.sendStatus(403)
   }
+  return res.sendStatus(403)
 }
 
 export default isAuth

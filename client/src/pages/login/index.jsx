@@ -5,22 +5,37 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
 import { useForm } from 'antd/lib/form/Form'
+import Cookies from 'universal-cookie'
 
 const Login = () => {
   const router = useRouter()
+  const cookies = new Cookies()
+
   const onFinish = (values) => {
     console.log(values)
     // login(values)
   }
   const form = useForm()
   // TODO: signup check status code 400, 409
+    login(values)
+  
+
+  const writeCookies = ({ accessToken, refreshToken }) => {
+    cookies.set('accessToken', accessToken)
+    if (refreshToken) {
+      cookies.set('refreshToken', refreshToken)
+    }
+  }
 
   const login = async (credential) => {
-    const res = await auth.login(credential)
-    if (res.status === 401) {
-      console.log('Error 401, check credential')
-    } else if (res.status == 200) {
-      router.push('/')
+    try {
+      const res = await auth.login(credential)
+      if (res.status === 200) {
+        writeCookies(res.data)
+        router.push('/home')
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 

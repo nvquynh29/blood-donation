@@ -24,19 +24,9 @@ const schema = new mongoose.Schema({
   },
   volunteers: [
     {
-      start_time: {
-        type: Date,
-        required: true,
-      },
-      end_time: {
-        type: Date,
-        required: true,
-      },
-      volunteer_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   ],
   donation_books: [

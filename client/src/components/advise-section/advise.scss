@@ -1,0 +1,58 @@
+.adviseSection {
+    text-align: center !important;
+    width: 90%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.adviseTitle {
+    font-size: 31px;
+    font-weight: 600;
+    color: #24242a;
+    margin-bottom: 20px;
+}
+.widget-post {
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-flow: row;
+    justify-content: center;
+    // margin: 0 50px 0 50px;
+}
+
+.widget-post .box-item {
+    flex: 33.3333333333%;
+}
+.widget-post .box-item ul.item {
+    margin-right: 25px;
+}
+.widget-post .box-item ul.item li i.fa-check-circle {
+    padding-right: 10px;
+}
+
+.widget-post .box-item ul.item li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+    padding: 10px 3px;
+    font-size: 14px;
+    color: #24242a !important;
+    border-top: 1px solid #e1e1e1;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    transform: translate(0, 0);
+}
+.fa-check-circle:before {
+    content: "\f058";
+}

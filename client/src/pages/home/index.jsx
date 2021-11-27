@@ -1,4 +1,6 @@
-import React from 'react'
+import React from "react";
+import SideBar from "../../components/sidebar"
+
 
 import dynamic from 'next/dynamic'
 
@@ -8,6 +10,8 @@ const MultiStepForm = dynamic(() => import('../../components/multistep-form'), {
 function index() {
   return (
     <div>
+      <SideBar />
+
       <MultiStepForm />
     </div>
   )

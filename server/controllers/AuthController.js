@@ -29,7 +29,7 @@ const login = async (req, res) => {
       const refreshToken = await jwtHelper.generateToken(
         { _id: user._id },
         process.env.REFRESH_TOKEN_SECRET,
-        '365d',
+        '30d',
       )
       updateRefreshToken(user._id, refreshToken)
       return res.status(200).json({ accessToken, refreshToken })
@@ -77,7 +77,7 @@ const signup = async (req, res) => {
 }
 
 const refreshToken = async (req, res) => {
-  const refreshTokenFromClient = req.body.refreshToken
+  const refreshTokenFromClient = req.headers['x-refresh-token'] || req.body.refreshToken
   if (!refreshTokenFromClient) {
     return res.status(403).json({ message: 'No token provided' })
   }
@@ -86,7 +86,7 @@ const refreshToken = async (req, res) => {
     return res.status(403).json({ message: 'Invalid refresh token' })
   }
   try {
-    await jwt.verify(refreshTokenFromClient, process.env.REFRESH_TOKEN_SECRET)
+    jwt.verify(refreshTokenFromClient, process.env.REFRESH_TOKEN_SECRET)
     const accessToken = await jwtHelper.generateToken(user, process.env.ACCESS_TOKEN_SECRET, '1h')
     return res.status(200).json({ accessToken })
   } catch (error) {
