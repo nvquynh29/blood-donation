@@ -4,6 +4,7 @@ import isAuth from '../middleware/AuthMiddleware.js'
 import { AuthController } from '../controllers/AuthController.js'
 import { sendOTP } from '../helpers/otp.helper.js'
 import { OrganizationController } from '../controllers/OrganizationController.js'
+import { EventController } from '../controllers/EventController.js'
 
 const router = express.Router()
 const initAPIs = (app) => {
@@ -31,6 +32,7 @@ const initAPIs = (app) => {
   router.get('/refresh-token', AuthController.refreshToken)
   router.get('/organization', OrganizationController.getAllOrganizations)
   router.get('/getFile', OrganizationController.getImage)
+  router.get('/event', EventController.getAllEvent)
   // middleware routes
   router.use(isAuth)
   return app.use('/', router)

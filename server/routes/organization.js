@@ -9,13 +9,14 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const ext = mime.extension(file.mimetype)
-    cb(null, `${new Date().toISOString()}-${req.body.name.replace(/\s/g, '-')}.${ext}`)
+    cb(null, `${new Date().getTime()}-${req.body.name.replace(/\s/g, '-')}.${ext}`)
   },
 })
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg'
-  || file.mimetype === 'image/png') {
+  || file.mimetype === 'image/png'
+  || file.mimetype === 'image/jpg') {
     cb(null, true)
   } else {
     cb(null, false)

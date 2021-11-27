@@ -24,8 +24,8 @@ app.use(cors())
 
 app.use('/volunteer', volunteerRouter)
 app.use('/organization', organizationRouter)
+app.use('/event', eventRouter)
 initAPIs(app) // use isAuth middleware from this line
-app.use('/event', isAdmin, eventRouter)
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
