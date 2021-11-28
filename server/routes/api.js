@@ -30,7 +30,9 @@ const initAPIs = (app) => {
   )
   router.post('/otp', sendOTP)
   router.get('/refresh-token', AuthController.refreshToken)
+  // organization route
   router.get('/organization', OrganizationController.getAllOrganizations)
+  router.get('/organization/:id', OrganizationController.getOrganization)
   router.get('/getFile', OrganizationController.getImage)
   router.get('/event', EventController.getAllEvent)
   // middleware routes

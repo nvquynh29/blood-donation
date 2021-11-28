@@ -23,6 +23,7 @@ const Home = () => {
     }, [])
   return (
     <MainLayout>
+    <div className="landingPage">
       <div>
         {/* SLIDER */}
         <div className="carousel  bg-red-500">{<MyCarousel />}</div>
@@ -94,7 +95,12 @@ const Home = () => {
         {/* RESGISTER FORM */}
         <div className="register-form">{/* <ResgiterForm /> */}</div>
       </div>
-      <VolunteerForm />
+      <div className="flex justify-center">
+        <div className="asidePicRequestBloodForm">
+                  <img src="https://templates.bwlthemes.com/blood_donation/images/appointment.jpg" alt="appointment image" />
+              </div>
+        <VolunteerForm />
+      </div>
       <div className="mx-auto container">
             <div className="title mt-10 ml-10 text-red-400 text-4xl font-bold">Các sự kiện sắp diễn ra </div>
             <div className="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 px-10 py-10">
@@ -141,6 +147,7 @@ const Home = () => {
             </div>
             </div>
       <Advise />
+      </div>
     </MainLayout>
   )
 }

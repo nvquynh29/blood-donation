@@ -46,14 +46,24 @@ function NavigatorBar() {
                   Trang chủ
                 </a>
               </Link>
-              <Link href="/">
+              <Link href="/event">
                 <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
-                  Liên hệ
+                  Sự kiện
                 </a>
               </Link>
-              <Link href="/">
+              <Link href="/organization">
                 <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
-                  Đăng ký
+                  Tổ chức
+                </a>
+              </Link>
+              <Link href="/requestForBlood">
+                <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
+                 Đăng ký tiếp nhận máu
+                </a>
+              </Link>
+              <Link href="/donationHistory">
+                <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
+                  Tra cứu lịch sử hiến máu
                 </a>
               </Link>
               <Link href="/login">
