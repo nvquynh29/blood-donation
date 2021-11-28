@@ -8,7 +8,7 @@ import ResgiterForm from '../components/reg-form/ResgiterForm'
 import VolunteerForm from '../components/vonlunteer-form/VolunteerForm'
 import Advise from '../components/advise-section/Advise'
 import {getEvent} from '../api/event'
-import { API_URL } from '../api/auth'
+import {env} from '../../next.config'
 import React, { useState, useEffect } from 'react'
 const Home = () => {
   const [events, setEvents] = useState([])
@@ -115,7 +115,7 @@ const Home = () => {
                         <div class="flex-shrink-0">
                             <img
                             class=" w-full object-cover h-full"
-                            src={event?.organization_id?.img_path ? `${API_URL}/getFile?img_path=${event?.organization_id?.img_path}` : '../images/slider-1.jpg'}
+                            src={event?.organization_id?.img_path ? `${env.API_URL}/getFile?img_path=${event?.organization_id?.img_path}` : '../images/slider-1.jpg'}
                             alt="Man looking at item at a store"
                             />
                         </div>

@@ -2,8 +2,9 @@ import React, { useState, useEffect} from 'react'
 import CustomCard from '../../components/card/Card'
 import MainLayout from '../../layouts/main-layout/Default'
 import { getAllOrganizations, getFile } from '../../api/organization'
-import { API_URL } from '../../api/auth'
 import Link from 'next/link'
+import {env} from '../../../next.config'
+
 
 const Organization = () => {
     const [organizations, setOrganizations] = useState([])
@@ -29,7 +30,7 @@ const Organization = () => {
                         <div class="flex-shrink-0">
                             <img
                             class=" w-full object-cover h-full"
-                            src={organization.img_path ? `${API_URL}/getFile?img_path=${organization.img_path}` : '../images/slider-1.jpg'}
+                            src={organization.img_path ? `${env.API_URL}/getFile?img_path=${organization.img_path}` : '../images/slider-1.jpg'}
                             alt="Man looking at item at a store"
                             />
                         </div>
