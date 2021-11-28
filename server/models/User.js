@@ -7,12 +7,12 @@ const schema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   password: {
     type: String,
-    required: true,
+    required: false,
   },
   photoUrl: {
     type: String,
@@ -23,6 +23,19 @@ const schema = new mongoose.Schema({
     type: String,
     required: false,
     default: null,
+  },
+  citizenID: String,
+  phone: {
+    type: String,
+    required: true,
+  },
+  date_of_birth: {
+    type: Date,
+  },
+  blood_type: String,
+  role: {
+    type: String,
+    required: true,
   },
 })
 
