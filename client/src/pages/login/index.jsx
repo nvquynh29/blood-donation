@@ -12,12 +12,9 @@ const Login = () => {
   const cookies = new Cookies()
 
   const onFinish = (values) => {
-    console.log(values)
-    // login(values)
+    login(values)
   }
   const form = useForm()
-
-  // TODO: signup check status code 400, 409
 
   const writeCookies = ({ accessToken, refreshToken }) => {
     cookies.set('accessToken', accessToken)

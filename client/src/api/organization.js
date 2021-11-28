@@ -1,6 +1,8 @@
 import instance from './axios'
-// import axios from 'axios'
-import { API_URL } from './auth'
 
-export const getAllOrganizations = () => instance.get(`${API_URL}/organization`)
-export const getFile = (url) => instance.get(`${API_URL}/getFile`, url)
+export const getOrganization = (id) => {
+    return instance.get(`/organization/${id}`)
+}
+
+export const getAllOrganizations = () => instance.get('/organization')
+export const getFile = (url) => instance.get('/getFile', url)

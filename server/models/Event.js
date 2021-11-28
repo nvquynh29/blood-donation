@@ -31,27 +31,9 @@ const schema = new mongoose.Schema({
   ],
   donation_books: [
     {
-      amount: {
-        type: Number,
-        required: true,
-      },
-      gift_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Gift',
-        required: true,
-      },
-      created_at: {
-        type: Date,
-        default: Date.now(),
-      },
-      updated_at: {
-        type: Date,
-        default: Date.now(),
-      },
-      is_done: {
-        type: Boolean,
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Donation',
+      required: true,
     },
   ],
 })

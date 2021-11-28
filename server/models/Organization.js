@@ -52,13 +52,6 @@ const schema = new mongoose.Schema({
       },
     },
   ],
-  volunteers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-  ],
 })
 
 const Organization = mongoose.model('Organization', schema)

@@ -33,9 +33,22 @@ const getAllOrganizations = async (req, res) => {
     return res.status(500).json(err)
   }
 }
+const getOrganization = async (req, res) => {
+  try {
+    const organization = await Organization.findById(req.params.id, {
+      admin: 0,
+      list_blood_requests: 0,
+      volunteers: 0,
+    })
+    return res.status(200).json(organization)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
 const getImage = async (req, res) => res.sendFile(path.join(path.resolve(), req.query.img_path))
 export const OrganizationController = {
   createOrganization,
   getAllOrganizations,
   getImage,
+  getOrganization,
 }

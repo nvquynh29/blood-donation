@@ -1,9 +1,10 @@
 import axios from 'axios'
 import Cookies from 'universal-cookie'
+import { env } from '../../next.config'
 
 const cookies = new Cookies()
 const instance = axios.create({
-  baseURL: '/',
+  baseURL: env.API_URL,
   headers: {
     'Content-Type': 'application/json',
     'X-ACCESS-TOKEN': cookies.get('accessToken'),
