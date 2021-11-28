@@ -41,11 +41,6 @@ const schema = new mongoose.Schema({
     ref: 'Event',
     required: true,
   },
-  // gift_type: 1 => Gói xét nghiệm máu, 2 => Hiện vật
-  gift_type: {
-    type: Number,
-    required: true,
-  },
   gift_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Gift',

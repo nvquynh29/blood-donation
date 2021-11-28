@@ -47,7 +47,7 @@ export const verifyOTP = async (req, res) => {
         .exec()
       const realOTP = otps[0]
       if (otp === realOTP.otp && now < new Date(realOTP.expired)) {
-        OTP.updateOne({ otp: realOTP.otp, verified: false }, { verified: true })
+        await OTP.findOneAndDelete({ otp: realOTP.otp })
         return res.status(200).json({ valid: true })
       }
       return res.status(200).json({ valid: false })
