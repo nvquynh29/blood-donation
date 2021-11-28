@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import VolunteerForm from '../../../components/vonlunteer-form/VolunteerForm'
+import VolunteerForm from '../../../components/organization-volunteer-form'
 import MainLayout from '../../../layouts/main-layout/Default'
 import { getOrganization } from '../../../api/organization'
 import { useRouter } from 'next/router' 
@@ -8,7 +8,6 @@ import { API_URL } from '../../../api/auth'
  function OrganizationDetail(props) {
     
     const organization = props.organization
-    console.log(organization)
     return (
     <MainLayout>
         <div className="grid xl:grid-cols-2 grid-cols-1">

@@ -1,15 +1,26 @@
 import React, {useContext} from 'react'
-import { Form, Input, Button, Checkbox, DatePicker } from 'antd';
-import { ReactReduxContext } from 'react-redux'
-import { fillVolunteer }  from '../../store/actions/volunteerAction'
+import { Form, Input, Button, notification, DatePicker } from 'antd';
+import { ReactReduxContext, useSelector } from 'react-redux'
+import { removeVolunteer }  from '../../store/actions/volunteerAction'
 import router from 'next/router'
+import { AddVolunteer } from '../../api/volunteer'
 
 export default function VolunteerForm() {
     const { store } = useContext(ReactReduxContext)
+    const volunteer = useSelector((state) => state.volunteer)
+    const onFinish =async (values) => {
+        const { id } = router.query
+        values.organization_id = id
+        values.birthday = values.birthday._d.toLocaleDateString('en-CA')
+        await AddVolunteer(values)
 
-    const onFinish = (values) => {
-        store.dispatch(fillVolunteer(values))
-        router.push('/organization')
+        store.dispatch(removeVolunteer())
+        notification.open({
+            type: "success",
+            message: "Ghi nhận thành công",
+            description: "Tổ chức hiến máu đã nhận được đơn xin tình nguyện của bạn!"
+        })
+        router.push('/')
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -26,6 +37,7 @@ export default function VolunteerForm() {
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
+                        initialValues={volunteer===null ? {} : volunteer}
                     >
                         <Form.Item
                             name="name"
