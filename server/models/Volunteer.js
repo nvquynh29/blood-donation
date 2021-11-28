@@ -21,6 +21,10 @@ const schema = mongoose.Schema({
   address: String,
   gender: {
     type: String,
+  },
+  organization_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization',
     required: true,
   },
 })
