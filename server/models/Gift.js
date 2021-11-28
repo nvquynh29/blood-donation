@@ -5,6 +5,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: Number,
+    required: true,
+  },
   description: String,
   image_path: String,
   level: {
