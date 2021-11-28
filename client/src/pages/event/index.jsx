@@ -3,7 +3,8 @@ import CustomCard from '../../components/card/Card'
 import MainLayout from '../../layouts/main-layout/Default'
 import { getFile } from '../../api/organization'
 import {getAllEvent} from '../../api/event'
-import { API_URL } from '../../api/auth'
+import {env} from '../../../next.config'
+
 
 const Event = () => {
     const [events, setEvents] = useState([])
@@ -32,7 +33,7 @@ const Event = () => {
                         <div class="flex-shrink-0">
                             <img
                             class=" w-full object-cover h-full"
-                            src={event?.organization_id?.img_path ? `${API_URL}/getFile?img_path=${event?.organization_id?.img_path}` : '../images/slider-1.jpg'}
+                            src={event?.organization_id?.img_path ? `${env.API_URL}/getFile?img_path=${event?.organization_id?.img_path}` : '../images/slider-1.jpg'}
                             alt="Man looking at item at a store"
                             />
                         </div>

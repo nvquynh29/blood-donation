@@ -3,7 +3,7 @@ import VolunteerForm from '../../../components/organization-volunteer-form'
 import MainLayout from '../../../layouts/main-layout/Default'
 import { getOrganization } from '../../../api/organization'
 import { useRouter } from 'next/router' 
-import { API_URL } from '../../../api/auth'
+import {env} from '../../../../next.config'
 
  function OrganizationDetail(props) {
     
@@ -17,7 +17,7 @@ import { API_URL } from '../../../api/auth'
                 <div className="bg-[#eaedf1] p-3">
                 <img
                     class=" w-3/4 object-cover mx-auto"
-                    src={organization.img_path ? `${API_URL}/getFile?img_path=${organization.img_path}` : '../images/slider-1.jpg'}
+                    src={organization.img_path ? `${env.API_URL}/getFile?img_path=${organization.img_path}` : '../images/slider-1.jpg'}
                     alt="Man looking at item at a store"
                 />
                 <p className="mt-5 text-xl">

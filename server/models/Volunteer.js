@@ -12,7 +12,7 @@ const schema = mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   date_of_birth: {
     type: Date,
