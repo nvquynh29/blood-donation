@@ -14,8 +14,10 @@ const RequestBloodForm = () => {
     }
 
     return (
-        <div className="flex flex-row-reverse requestBloodForm">
-            
+        <div className="flex requestBloodForm">
+            <div className="asidePicRequestBloodForm">
+                <img src="https://templates.bwlthemes.com/blood_donation/images/appointment.jpg" alt="appointment image" />
+            </div>
             <div className="formContain">
                 <div className="formHeader"><h3 style={{ color: '#ffffff' }}>
                 Đăng ký nhận đơn vị máu</h3></div>
@@ -59,7 +61,7 @@ const RequestBloodForm = () => {
                                 ]}
                                 
                             >
-                                <Select placeholder="Giới tính" style={{ height: '40px', width: '96px' }}
+                                <Select placeholder="Giới tính" style={{ height: '40px', width: '90px' }}
                                     >
                                     <Option value="male">Nam</Option>
                                     <Option value="female">Nữ</Option>

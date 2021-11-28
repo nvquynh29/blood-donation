@@ -14,9 +14,6 @@ export default function VolunteerForm() {
 
     return (
         <div className="volunteerForm">
-            <div className="asidePicVolunterForm">
-                <img src="https://templates.bwlthemes.com/blood_donation/images/appointment.jpg" alt="appointment image" />
-            </div>
             <div className="formContain">
                 <div className="formHeader"><h3 style={{ color: '#ffffff' }}>Đăng ký tình nguyện viên</h3></div>
                 <div className="formMain">

@@ -3,6 +3,7 @@ import CustomCard from '../../components/card/Card'
 import MainLayout from '../../layouts/main-layout/Default'
 import { getAllOrganizations, getFile } from '../../api/organization'
 import { API_URL } from '../../api/auth'
+import Link from 'next/link'
 
 const Organization = () => {
     const [organizations, setOrganizations] = useState([])
@@ -18,11 +19,11 @@ const Organization = () => {
     }, [])
     return (
         <MainLayout>
-            <div className="mx-auto container">
+            <div className="mx-auto container organizationPage">
             <div className="title mt-10 ml-10 text-red-400 text-4xl font-bold">Các tổ chức</div>
-            <div className="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 px-10 py-10">
+            <div className="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 px-10 py-10 listOrganization">
                 { organizations.map((organization) => ( 
-                <div>
+                <Link href={`organization/${organization._id}`} className="cursor-pointer">
                     <div class="max-w-md h-full mx-auto bg-white  shadow-md overflow-hidden md:max-w-2xl">
                         <div class="md:flex flex-col">
                         <div class="flex-shrink-0">
@@ -42,12 +43,12 @@ const Organization = () => {
                                 {organization.name}
                             </p>
                             <p class="mt-2 font-Dosis text-gray-500 xl:text-xl lg:text-2xl md:text-base text-base h-auto ">
-                            {organization.description}
+                            {organization.address}
                             </p>
                         </div>
                         </div>
                     </div>
-                </div> )) }
+                </Link> )) }
                                   
             </div>
             </div>

@@ -1,5 +1,5 @@
-@import '../fonts/fonts.scss';
-@import '../../src/components/advise-section/advise.scss';
+@import "../fonts/fonts.scss";
+@import "../../src/components/advise-section/advise.scss";
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +21,7 @@ body {
 body,
 input,
 button {
-  font: 14px 'Roboto', sans-serif;
+  font: 14px "Roboto", sans-serif;
 }
 a {
   color: black;
@@ -107,7 +107,7 @@ img {
       padding: 10px;
     }
     .content h3 {
-      font-family: 'Source Sans Pro', sans-serif;
+      font-family: "Source Sans Pro", sans-serif;
       color: #1a1a1a;
       font-weight: 700;
       text-transform: uppercase;
@@ -119,7 +119,7 @@ img {
       letter-spacing: 0.03em;
       position: relative;
       overflow: hidden;
-      font-family: 'Source Sans Pro', sans-serif;
+      font-family: "Source Sans Pro", sans-serif;
       line-height: 70px;
       font-weight: 700;
       margin: 24px 0 0;
@@ -130,7 +130,7 @@ img {
 
   .slider-info:before,
   .slider-info:after {
-    content: '';
+    content: "";
     width: 130px;
     height: 130px;
     background: transparent;
@@ -199,7 +199,7 @@ img {
   font-size: 40px;
   font-weight: 750;
   color: #1a1a1a;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 .loginDetail {
   display: flex;
@@ -249,7 +249,7 @@ img {
   color: white;
 }
 .volunteerForm {
-  display: flex;
+  grid-column: span 1 / span 1;
 }
 .asidePicVolunterForm {
   height: 650px;
@@ -262,7 +262,7 @@ img {
 
 .formContain {
   margin: 50px;
-  width: 40%;
+  width: 70%;
   float: right;
   display: flex;
   flex-direction: column;
@@ -292,5 +292,32 @@ img {
     display: table;
     margin-top: auto;
     margin-bottom: auto;
+  }
+  .asidePicRequestBloodForm img {
+    height: 706px;
+    bottom: 0;
+    left: 0px;
+    margin-left: 150px;
+    margin-top: 50px;
+    margin-bottom: 0;
+  }
+  .formContain {
+    width: 40%;
+  }
+}
+.organizationPage {
+  .listOrganization {
+    div {
+      cursor: pointer;
+    }
+  }
+}
+
+.landingPage {
+  .formContain {
+    width: 90%;
+  }
+  .volunteerForm {
+    width: 600px;
   }
 }
