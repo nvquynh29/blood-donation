@@ -9,6 +9,7 @@ const addVolunteer = async (req, res) => {
       address: req.body.address,
       email: req.body.email,
       organization_id: req.body.organization_id,
+      gender: req.body.gender,
     })
     newVolunteer = await newVolunteer.save()
     return res.status(200).json(newVolunteer)
