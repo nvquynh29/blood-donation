@@ -90,17 +90,30 @@ const RequestBloodForm = () => {
                             </Form.Item>
                         </div>
                         
-                        <Form.Item
-                            name="phone_number"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Nhận số điện thoại!',
-                                }
-                            ]}
-                        >
-                            <Input placeholder='Số điện thoại' style={{ height: '40px' }} />
-                        </Form.Item>
+                        <div className="flex flex-row gap-x-5 flex-wrap">
+                            <Form.Item
+                                name="phone_number"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Nhận số điện thoại!',
+                                    }
+                                ]}
+                            >
+                                <Input placeholder='Số điện thoại' style={{ height: '40px' }} />
+                            </Form.Item>
+                            <Form.Item
+                                name="amount"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Nhập lượng máu tiếp nhận!',
+                                    }
+                                ]}
+                            >
+                                <Input placeholder='Lượng máu tiếp nhận (đơn vị CC)' style={{ height: '40px', width: '263px' }} />
+                            </Form.Item>
+                        </div>
                         <Form.Item
                             name="identity_card"
                             rules={[

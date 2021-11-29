@@ -27,6 +27,10 @@ const schema = mongoose.Schema({
   note: {
     type: String,
   },
+  amount: {
+    type: Number,
+    required: true,
+  },
 })
 
 const RequestBlood = mongoose.model('RequestBlood', schema, 'requestBlood')
