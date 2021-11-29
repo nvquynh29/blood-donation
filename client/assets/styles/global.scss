@@ -1,5 +1,6 @@
 @import "../fonts/fonts.scss";
 @import "../../src/components/advise-section/advise.scss";
+@import "../../src/pages/organization/[id]/style.scss";
 * {
   margin: 0;
   padding: 0;
@@ -323,74 +324,74 @@ img {
 }
 // search donate history
 .historySearch {
-    .ant-form-item-label > label {
-        float: left;
-    }
+  .ant-form-item-label > label {
+    float: left;
+  }
 
-    .ant-select-selector {
-        height: calc(2.25rem + 2px) !important;
-        border-radius: 5px !important;
-    }
+  .ant-select-selector {
+    height: calc(2.25rem + 2px) !important;
+    border-radius: 5px !important;
+  }
 
-    .ant-form-item-explain.ant-form-item-explain-error {
-        margin-left: 10px;
-        position: relative;
-    }
+  .ant-form-item-explain.ant-form-item-explain-error {
+    margin-left: 10px;
+    position: relative;
+  }
 }
 
 .historySearchForm {
-    width: 95%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    -webkit-box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
-    -moz-box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
-    box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
+  width: 95%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
+  -moz-box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
+  box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
 }
 
 .hisFormInputs {
-    display: flex;
-    flex-direction: row !important;
-    margin: 0 !important;
+  display: flex;
+  flex-direction: row !important;
+  margin: 0 !important;
 }
 
 .hisFormLabel {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .hisFormInput {
-    margin-left: 10px;
-    width: 200px !important ;
-    height: calc(2.25rem + 2px) !important;
-    border-radius: 5px !important;
-    margin-bottom: 20px;
+  margin-left: 10px;
+  width: 200px !important ;
+  height: calc(2.25rem + 2px) !important;
+  border-radius: 5px !important;
+  margin-bottom: 20px;
 }
 
 .hisSearchFormBtns {
-    width: 20%;
-    display: flex;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
+  width: 20%;
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hisSearchFormBtns button {
-    border: none;
-    height: 40px;
-    width: 100px;
-    border-radius: 10px 10px 10px 0px;
-    padding-left: 7px;
+  border: none;
+  height: 40px;
+  width: 100px;
+  border-radius: 10px 10px 10px 0px;
+  padding-left: 7px;
 }
 
 .hisSearchB:hover {
-    background-color: #c71f27 !important;
+  background-color: #c71f27 !important;
 }
 
 @media (max-width: 1024px) {
-    .hisFormInputs {
-        flex-direction: column !important;
-    }
+  .hisFormInputs {
+    flex-direction: column !important;
+  }
 }

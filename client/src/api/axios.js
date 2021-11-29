@@ -3,14 +3,29 @@ import Cookies from 'universal-cookie'
 import { env } from '../../next.config'
 
 const cookies = new Cookies()
+const getHeader = () => {
+  const headers = { 'Content-Type': 'application/json' }
+  if (cookies.get('accessToken')) {
+    headers = { ...headers, 'X-ACCESS-TOKEN': cookies.get('accessToken') }
+  }
+  if (cookies.get('refreshToken')) {
+    headers = { ...headers, 'X-REFRESH-TOKEN': cookies.get('refreshToken') }
+  }
+  return headers
+}
+
 const instance = axios.create({
   baseURL: env.API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    'X-ACCESS-TOKEN': cookies.get('accessToken'),
-    'X-REFRESH-TOKEN': cookies.get('refreshToken'),
-  },
+  headers: getHeader(),
 })
+// const instance = axios.create({
+//   baseURL: env.API_URL,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'X-ACCESS-TOKEN': cookies.get('accessToken'),
+//     'X-REFRESH-TOKEN': cookies.get('refreshToken'),
+//   },
+// })
 
 const refreshToken = async () => {
   return instance.get('/refresh-token').data
