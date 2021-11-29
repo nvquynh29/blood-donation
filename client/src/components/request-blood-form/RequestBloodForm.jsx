@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Select, DatePicker } from 'antd';
-
-
-
+import { Form, Input, Button, Select, DatePicker, notification } from 'antd';
+import { addRequestBlood } from '../../api/requestBlood'
+import router from 'next/router'
+// TODO: Add input gender to volunteerForm + input blood amount to requestBloodForm
 const RequestBloodForm = () => {
     const { Option } = Select
     const { TextArea } = Input
-    const onFinish = () => {
-        console.log('finish')
+    const onFinish =async (values) => {
+        values.birthday = values.birthday._d.toLocaleDateString('en-CA')
+        values.date_of_birth = values.birthday
+        delete values.birthday
+        await addRequestBlood(values)
+        notification.open({
+            type: 'success',
+            message: "Ghi nhận thành công",
+            description: "Chúng tôi đã tiếp nhận đơn yêu cầu đơn vị máu của bạn!"
+        })
+        router.push('/')
     }
     const onFinishFailed = () => {
         console.log('finish failed')
@@ -53,12 +62,6 @@ const RequestBloodForm = () => {
                             </Form.Item>
                             <Form.Item 
                                 name="gender"    
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Nhập giới tính!',
-                                    },
-                                ]}
                                 
                             >
                                 <Select placeholder="Giới tính" style={{ height: '40px', width: '90px' }}
