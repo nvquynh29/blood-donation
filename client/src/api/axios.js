@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie'
 import { env } from '../../next.config'
 
 const cookies = new Cookies()
+
 const getHeader = () => {
   const headers = { 'Content-Type': 'application/json' }
   if (cookies.get('accessToken')) {
