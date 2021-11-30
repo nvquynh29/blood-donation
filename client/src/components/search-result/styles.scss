@@ -13,11 +13,14 @@
 
     .info0 {
         display: flex;
-        img {
+        .imgCotainer {
             flex: 1;
+            position: relative;
+            bottom: 90px;
         }
-        .info {
-            flex: 5;
+
+        .info2 {
+            flex: 3;
         }
     }
 
@@ -62,6 +65,13 @@
             font-weight: 400;
             line-height: 1.5;
             text-align: left;
+        }
+    }
+}
+@media (max-width: 1082px) {
+    .info0 {
+        .imgCotainer {
+            display: none;
         }
     }
 }

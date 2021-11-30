@@ -45,34 +45,35 @@ function SearchResult({ hidden, data }) {
         <span>BCĐ vận động hiến máu tình nguyện Tỉnh/Thành phố: Hà Nội</span>
         <h3 className="font-bold text-xl">Chứng nhận</h3>
       </div>
-      <div className="info0">
-        <div className="info">
-          <div className="info1">
-            <div className="info1D">
-              <span>Ông/Bà: </span>
-              <p>{data.name}</p>
-            </div>
-            <div className="info1D">
-              <span>Sinh ngày: </span>
-              <p>{moment(data.date_of_birth).format('DD/MM/YYYY')}</p>
-            </div>
-            <div className="info1D">
-              <span>Số CCCD/CMND: </span>
-              <p>{data.citizenID}</p>
-            </div>
-            <div className="info1D">
-              <span>Số điện thoại:</span>
-              <p> {data.phone}</p>
-            </div>
-            <div className="info1D">
-              <span>Nhóm máu:</span>
-              <p> {data.blood_type}</p>
-            </div>
+
+      <div className="info">
+        <div className="info1">
+          <div className="info1D">
+            <span>Ông/Bà: </span>
+            <p>{data.name}</p>
           </div>
-          <div className='info1D'>
-            <span >Địa chỉ:</span>
-            <p> {normalizeString(data.address)}</p>
+          <div className="info1D">
+            <span>Sinh ngày: </span>
+            <p>{moment(data.date_of_birth).format('DD/MM/YYYY')}</p>
           </div>
+          <div className="info1D">
+            <span>Số CCCD/CMND: </span>
+            <p>{data.citizenID}</p>
+          </div>
+          <div className="info1D">
+            <span>Số điện thoại:</span>
+            <p> {data.phone}</p>
+          </div>
+          <div className="info1D">
+            <span>Nhóm máu:</span>
+            <p> {data.blood_type}</p>
+          </div>
+        </div>
+        <div className='info1D'>
+          <span >Địa chỉ:</span>
+          <p> {normalizeString(data.address)}</p>
+        </div>
+        <div className="info0">
           <div className="info2">
             <h3 className="font-bold text-xl" style={{ color: '#FE3C47' }}>Đã hiến máu tình nguyện</h3>
             <div className="info2D">
@@ -86,12 +87,14 @@ function SearchResult({ hidden, data }) {
               </div>
             </div>
           </div>
-          <h3 className="font-bold text-lg">Người bệnh luôn ghi ơn tấm lòng nhân ái của Ông/Bà.</h3>
+          <div className="imgCotainer">
+            <img src="https://previews.123rf.com/images/arcady31/arcady311510/arcady31151000025/46534837-certified-gold-seal.jpg" height="900px" width="auto" alt="certificate" />
+          </div>
         </div>
-        <div>
-          <img src="https://previews.123rf.com/images/arcady31/arcady311510/arcady31151000025/46534837-certified-gold-seal.jpg" height="900px" width="auto" alt="certificate" />
-        </div>
+        <h3 className="font-bold text-lg">Người bệnh luôn ghi ơn tấm lòng nhân ái của Ông/Bà.</h3>
       </div>
+
+
       <div className="dataTable">
         <h3>Lịch sử hiến máu:</h3>
         <Table dataSource={dataSource} columns={columns} pagination={false} />
