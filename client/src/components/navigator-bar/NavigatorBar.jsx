@@ -15,7 +15,7 @@ function NavigatorBar() {
         <div className="flex  z-50 shadow-lg w-full items-center flex-wrap bg-white p-3 transform transition duration-500 ease-in-out px-16">
           <Link href="/">
             <a className="inline-flex items-center p-2 mr-4 ">
-              <img srcSet="/images/logo.png" alt="" />
+              <img srcSet="/images/logo.svg" alt="" className="h-16" />
             </a>
           </Link>
           <button
@@ -58,7 +58,7 @@ function NavigatorBar() {
               </Link>
               <Link href="/requestForBlood">
                 <a className="md:inline md:w-auto w-full px-3 py-2 rounded text-red-400 font-bold items-center justify-center hover:bg-red-500 hover:text-white">
-                 Đăng ký tiếp nhận máu
+                  Đăng ký tiếp nhận máu
                 </a>
               </Link>
               <Link href="/donate-history">
