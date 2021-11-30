@@ -33,6 +33,10 @@ const schema = new mongoose.Schema({
     type: Date,
   },
   blood_type: String,
+  organization_id: {
+    type: String,
+    required: true,
+  },
   role: {
     type: String,
     required: true,

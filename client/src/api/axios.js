@@ -19,14 +19,6 @@ const instance = axios.create({
   baseURL: env.API_URL,
   headers: getHeader(),
 })
-// const instance = axios.create({
-//   baseURL: env.API_URL,
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'X-ACCESS-TOKEN': cookies.get('accessToken'),
-//     'X-REFRESH-TOKEN': cookies.get('refreshToken'),
-//   },
-// })
 
 const refreshToken = async () => {
   return instance.get('/refresh-token').data

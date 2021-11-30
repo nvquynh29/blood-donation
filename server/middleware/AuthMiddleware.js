@@ -17,9 +17,8 @@ const isAuth = async (req, res, next) => {
       return res.status(500).json({ error })
     }
   } else {
-    return res.sendStatus(403)
+    return res.status(403).json({ msg: 'forbidden' })
   }
-  return res.sendStatus(403)
 }
 
 export default isAuth

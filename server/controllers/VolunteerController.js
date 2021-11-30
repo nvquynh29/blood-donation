@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+import User from '../models/User.js'
 import Volunteer from '../models/Volunteer.js'
 
 const addVolunteer = async (req, res) => {
@@ -18,7 +20,7 @@ const addVolunteer = async (req, res) => {
   }
 }
 
-const getVolunteers = async (_, res) => {
+const getAllVolunteers = async (_, res) => {
   try {
     const volunteers = await Volunteer.find()
     return res.status(200).json(volunteers)
@@ -47,9 +49,36 @@ const updateVolunteer = async (req, res) => {
   }
 }
 
+const getOrgVolunteers = async (req, res) => {
+  try {
+    const { _id } = req.user
+    const { organization_id } = await User.findOne({ _id })
+    const volunteers = await Volunteer.find({ organization_id: organization_id, accepted: true })
+    return res.status(200).json(volunteers)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+const getOrgRequests = async (req, res) => {
+  try {
+    const { _id } = req.user
+    const { organization_id } = await User.findOne({ _id })
+    const volunteerRequest = await Volunteer.find({
+      organization_id: organization_id,
+      accepted: false,
+    })
+    return res.status(200).json(volunteerRequest)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 export const VolunteerController = {
   addVolunteer,
-  getVolunteers,
+  getAllVolunteers,
   updateVolunteer,
   deleteVolunteer,
+  getOrgVolunteers,
+  getOrgRequests,
 }

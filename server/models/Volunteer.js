@@ -28,6 +28,10 @@ const schema = mongoose.Schema({
     ref: 'Organization',
     required: true,
   },
+  accepted: {
+    type: Boolean,
+    required: true,
+  },
 })
 
 const Volunteer = mongoose.model('Volunteer', schema)
