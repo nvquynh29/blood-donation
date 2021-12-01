@@ -3,19 +3,19 @@ import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { ReactReduxContext } from 'react-redux'
 import { fillVolunteer }  from '../../store/actions/volunteerAction'
 import router from 'next/router'
+import moment from 'moment';
 
-export default function VolunteerForm() {
-    const { store } = useContext(ReactReduxContext)
+export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) {
+    // const { store } = useContext(ReactReduxContext)
     const { Option } = Select
-    const onFinish = (values) => {
-        store.dispatch(fillVolunteer(values))
-        router.push('/organization')
-    };
+    // const onFinish = (values) => {
+    //     store.dispatch(fillVolunteer(values))
+    //     router.push('/organization')
+    // };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
+    // const onFinishFailed = (errorInfo) => {
+    //     console.log('Failed:', errorInfo);
+    // };
     return (
         <div className="volunteerForm">
             <div className="formContain">
@@ -26,7 +26,10 @@ export default function VolunteerForm() {
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
-                    >
+                        initialValues={ !(defaultValue 
+                            && Object.keys(defaultValue).length === 0
+                            && Object.getPrototypeOf(defaultValue) === Object.prototype)? {...defaultValue, phone_number: defaultValue.phone, birthday: moment(defaultValue?.date_of_birth)}: {} }
+                        >
                         <Form.Item
                             name="name"
                             rules={[

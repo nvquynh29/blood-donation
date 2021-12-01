@@ -1,16 +1,20 @@
 import { Form, Input, Button, Checkbox, Card } from 'antd'
+import { fillVolunteer }  from '../store/actions/volunteerAction'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import MyCarousel from '../components/carousel/Carousel'
 import CustomCard from '../components/card/Card'
 import Link from 'next/link'
 import MainLayout from '../layouts/main-layout/Default'
 import ResgiterForm from '../components/reg-form/ResgiterForm'
+import router from 'next/router'
 import VolunteerForm from '../components/vonlunteer-form/VolunteerForm'
+import { ReactReduxContext } from 'react-redux'
 import Advise from '../components/advise-section/Advise'
 import {getEvent} from '../api/event'
 import {env} from '../../next.config'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 const Home = () => {
+  const { store } = useContext(ReactReduxContext)
   const [events, setEvents] = useState([])
     useEffect(() => {
         try {
@@ -97,9 +101,15 @@ const Home = () => {
       </div>
       <div className="flex justify-center">
         <div className="asidePicRequestBloodForm">
-                  <img src="https://templates.bwlthemes.com/blood_donation/images/appointment.jpg" alt="appointment image" />
-              </div>
-        <VolunteerForm />
+          <img src="https://templates.bwlthemes.com/blood_donation/images/appointment.jpg" alt="appointment image" />
+        </div>
+        <VolunteerForm defaultValue={{ } }
+          onFinish={(values) => {
+              store.dispatch(fillVolunteer(values))
+              router.push('/organization')
+          }} 
+          onFinishFailed={(error) => {console.error(error)}}
+        />
       </div>
       <div className="mx-auto container">
             <div className="title mt-10 ml-10 text-red-400 text-4xl font-bold">Các sự kiện sắp diễn ra </div>

@@ -9,6 +9,8 @@ import {
 import CustomTable from '../../components/custom-table'
 import * as volunteerApi from '../../api/volunteer'
 import moment from 'moment'
+import router from  'next/router'
+
 function Volunteers() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState([])
@@ -25,17 +27,19 @@ function Volunteers() {
 
   const addVolunteer = () => {
     // TODO: implement function
-    alert('add button clicked')
+    router.push('/volunteers/add')
   }
   const editVolunteer = (id) => {
     // TODO: implement function
     // await volunteerApi.updateVolunteer(id, newVolunteer)
-    alert('Edit button clicked')
+    router.push(`/volunteers/${id}`)
   }
 
   const removeVolunteer = (id) => {
-    const updatedData = filterData.filter((volunteer) => volunteer._id !== id)
+    let updatedData = filterData.filter((volunteer) => volunteer._id !== id)
     setFilterData(updatedData)
+    updatedData = data.filter((volunteer) => volunteer._id !== id)
+    setData(updatedData)
   }
 
   const searchVolunteer = (e) => {

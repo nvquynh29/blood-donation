@@ -30,7 +30,7 @@ const schema = mongoose.Schema({
   },
   accepted: {
     type: Boolean,
-    required: true,
+    default: false,
   },
 })
 

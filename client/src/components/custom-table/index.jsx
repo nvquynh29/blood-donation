@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Button, Input } from 'antd'
 
-function CustomTable({ data, columns, addBtnText, onAddBtnClick, searchPlaceHolder, onChange }) {
+function CustomTable({ data, columns, addBtnText, onAddBtnClick, searchPlaceHolder, onChange, rowSelection }) {
   const { Search } = Input
   return (
     <div>
@@ -16,7 +16,9 @@ function CustomTable({ data, columns, addBtnText, onAddBtnClick, searchPlaceHold
           className="max-w-xs"
         />
       </div>
-      <Table className="w-full" bordered dataSource={data} columns={columns} />
+      <Table className="w-full" bordered dataSource={data} columns={columns} 
+        rowSelection={rowSelection}
+      />
     </div>
   )
 }
