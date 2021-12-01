@@ -34,7 +34,8 @@ const schema = new mongoose.Schema({
   },
   blood_type: String,
   organization_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization',
     required: true,
   },
   role: {

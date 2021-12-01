@@ -1,5 +1,7 @@
 import path from 'path'
+import mongodb from 'mongodb'
 import Organization from '../models/Organization.js'
+import User from '../models/User.js'
 
 const createOrganization = async (req, res) => {
   const {
@@ -45,10 +47,31 @@ const getOrganization = async (req, res) => {
     return res.status(500).json(error)
   }
 }
+
+const getAllAdmins = async (req, res) => {
+  try {
+    const { _id } = req.user
+    const { organization_id } = await User.findOne({ _id })
+    console.log(organization_id)
+    const admins = await User.find({
+      organization_id: organization_id.toString(),
+      role: {
+        $in: ['admin', 'ADMIN', 'Admin'],
+      },
+      _id: {
+        $ne: _id,
+      },
+    })
+    return res.status(200).json(admins)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
 const getImage = async (req, res) => res.sendFile(path.join(path.resolve(), req.query.img_path))
 export const OrganizationController = {
   createOrganization,
   getAllOrganizations,
   getImage,
   getOrganization,
+  getAllAdmins,
 }
