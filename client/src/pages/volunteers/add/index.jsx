@@ -13,7 +13,9 @@ const VolunteerAdd = () => {
         <VolunteerForm defaultValue={{ } }
             onFinish={async (values) => {
             values.birthday = values.birthday._d.toLocaleDateString('en-CA')
-            // await AddVolunteer(values)
+            values.accepted = true
+            values.organization_id = 'mine'
+            await AddVolunteer(values)
             notification.open({
                 type: "success",
                 message: "Ghi nhận thành công",

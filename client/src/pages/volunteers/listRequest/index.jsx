@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Space, Modal, notification } from 'antd'
 import {
   EditOutlined,
@@ -11,10 +11,23 @@ import * as volunteerApi from '../../../api/volunteer'
 import moment from 'moment'
 import router from 'next/router'
 import { data } from 'autoprefixer'
-function VolunteerRequests({ volunteers }) {
-  const [data, setData] = useState(volunteers)
+function VolunteerRequests() {
+  const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(data)
 
+  useEffect(async () => {
+    try {
+      const res = await volunteerApi.getOrgRequests()
+      setData(res.data.map(data => { 
+        return {...data, key: data._id}
+      }))
+      setFilterData(res.data.map(data => { 
+        return {...data, key: data._id}
+      }))
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
   const searchVolunteer = (e) => {
     const value = e.target.value?.toLowerCase()
     const filtered = data.filter(
@@ -29,9 +42,8 @@ function VolunteerRequests({ volunteers }) {
 
   const openNotificationSuccess = () => {
     notification.success({
-      icon: <CheckCircleTwoTone twoToneColor="#16ed31" />,
-      duration: 3,
-      message: 'Đã xoá thành công tình nguyện viên',
+      type: "success",
+      message: 'Chấp nhận tình nguyện viên thành công!',
     })
   }
 
@@ -72,12 +84,23 @@ function VolunteerRequests({ volunteers }) {
 
   const [selectedKeys, setSelectedKeys] = useState([])
   const onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     setSelectedKeys(selectedRowKeys);
   }
   const rowSelection = {
     selectedKeys,
     onChange: onSelectChange,
+  }
+
+  const onAccept = async () => {
+    try {
+      await volunteerApi.markAsAccepted(selectedKeys)
+      setData(data.filter((element) => !(selectedKeys.includes(element.key))))
+      setFilterData(filterData.filter((element) => !(selectedKeys.includes(element.key))))
+      setSelectedKeys([])
+      openNotificationSuccess()
+    } catch(error) {
+      console.log(error)
+    }
   }
   return (
     <div>
@@ -85,26 +108,13 @@ function VolunteerRequests({ volunteers }) {
         data={filterData}
         columns={columns}
         addBtnText="Chấp nhận Đơn đăng ký"
-        // onAddBtnClick={}
+        onAddBtnClick={onAccept}
         searchPlaceHolder="Tìm kiếm..."
         onChange={searchVolunteer}
         rowSelection={rowSelection}
       />
     </div>
   )
-}
-
-VolunteerRequests.getInitialProps = async (ctx) => {
-  try {
-    let res = await volunteerApi.getVolunteers()
-    
-    return { volunteers: res.data.map(data => { 
-        return {...data, key: data._id}
-    }) }
-  } catch (error) {
-    console.log(error)
-    return {}
-  }
 }
 
 export default VolunteerRequests

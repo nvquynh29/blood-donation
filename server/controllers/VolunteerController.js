@@ -4,6 +4,11 @@ import Volunteer from '../models/Volunteer.js'
 
 const addVolunteer = async (req, res) => {
   try {
+    if (req.user && req.body.organization_id === 'mine') {
+      const { _id } = req.user
+      const organizationId = await User.findOne({ _id })
+      req.body.organization_id = organizationId
+    }
     let newVolunteer = new Volunteer({
       name: req.body.name,
       phone: req.body.phone_number,
@@ -12,6 +17,7 @@ const addVolunteer = async (req, res) => {
       email: req.body.email,
       organization_id: req.body.organization_id,
       gender: req.body.gender,
+      accepted: (req.body.accepted) ? req.body.accepted : false,
     })
     newVolunteer = await newVolunteer.save()
     return res.status(200).json(newVolunteer)
@@ -73,6 +79,36 @@ const getOrgRequests = async (req, res) => {
     return res.status(500).json(error)
   }
 }
+const getVolunteer = async (req, res) => {
+  try {
+    const { id } = req.params
+    const volunteer = await Volunteer.findById(id)
+    return res.status(200).json(volunteer)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+const markAsAccepted = async (req, res) => {
+  try {
+    const { listID } = req.body
+    const response = await Volunteer.updateMany(
+      {
+        _id: {
+          $in: listID,
+        },
+      },
+      {
+        $set: {
+          accepted: true,
+        },
+      },
+    )
+    return res.status(200).json(response)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
 
 export const VolunteerController = {
   addVolunteer,
@@ -81,4 +117,6 @@ export const VolunteerController = {
   deleteVolunteer,
   getOrgVolunteers,
   getOrgRequests,
+  getVolunteer,
+  markAsAccepted,
 }

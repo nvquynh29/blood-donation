@@ -6,6 +6,7 @@ const enhancers =  compose(
     (typeof window !== 'undefined' && window.devToolsExtension) ? 
     window.devToolsExtension() : f => f
 )
+const ISSERVER = typeof window === "undefined";
 const loadState = () => {
     try {
         const serializedState = localStorage.getItem('state')
@@ -43,8 +44,7 @@ const saveState = (state) => {
     }
 }
 
-const peristedState = loadState();
-
+const peristedState = (ISSERVER) ? { volunteer: null}:   loadState()
 const store = createStore(rootReducer, peristedState, 
 enhancers)
 store.subscribe(() => {
