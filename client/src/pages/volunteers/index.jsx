@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Space, Modal, notification } from 'antd'
 import {
   EditOutlined,
@@ -9,9 +9,19 @@ import {
 import CustomTable from '../../components/custom-table'
 import * as volunteerApi from '../../api/volunteer'
 import moment from 'moment'
-function Volunteers({ volunteers }) {
-  const [data, setData] = useState(volunteers)
-  const [filterData, setFilterData] = useState(data)
+function Volunteers() {
+  const [data, setData] = useState([])
+  const [filterData, setFilterData] = useState([])
+
+  useEffect(async () => {
+    try {
+      const res = await volunteerApi.getVolunteers()
+      setData(res.data)
+      setFilterData(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
 
   const addVolunteer = () => {
     // TODO: implement function
@@ -127,16 +137,6 @@ function Volunteers({ volunteers }) {
       />
     </div>
   )
-}
-
-Volunteers.getInitialProps = async (ctx) => {
-  try {
-    const res = await volunteerApi.getVolunteers()
-    return { volunteers: res.data }
-  } catch (error) {
-    console.log(error)
-    return {}
-  }
 }
 
 export default Volunteers
