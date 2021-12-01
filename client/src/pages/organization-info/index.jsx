@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from "react"
 import VolunteerForm from "../../components/organization-volunteer-form"
 import MainLayout from "../../layouts/main-layout/Default"
-import { getOrganization } from "../../api/organization"
+import { getOrganization, getAdmins } from "../../api/organization"
 import router from "next/router"
 import { env } from "../../../next.config"
 import CustomTable from "../../components/custom-table"
-import * as volunteerApi from "../../api/volunteer"
 import moment from "moment"
 
-function OrganizationDetail(props) {
-  const [adminData, setAdminData] = useState(props.admins)
+function OrganizationDetail() {
+
+
+  const [admins, setAdmins] = useState([])
+  const [adminData, setAdminData] = useState([])
+  const [organization, setOrganization] = useState({})
+  useEffect(async () => {
+    try {
+      const res1 = await getOrganization("619a76c62465b779011b3d01")
+      const res2 = await getAdmins()
+   
+      setOrganization(res1.data),
+      setAdminData(res2.data)
+      setAdmins(res2.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
   const searchAdmin = (e) => {
     const value = e.target.value?.toLowerCase()
-    const filtered = props.admins.filter(
+    const filtered = admins.filter(
       (admin) =>
         admin.name.toLowerCase().includes(value) ||
         admin.phone.toLowerCase().includes(value) ||
@@ -47,7 +62,6 @@ function OrganizationDetail(props) {
       width: "25%",
     },
   ]
-  const organization = props.organization
   return (
     <div className="grid xl:grid-cols-2 grid-cols-1 organizationDetail gap-5">
       <div className="col-span-1 picContain">
@@ -78,14 +92,6 @@ function OrganizationDetail(props) {
       </div>
     </div>
   )
-}
-OrganizationDetail.getInitialProps = async (ctx) => {
-  const res1 = await getOrganization("619a76c62465b779011b3d01")
-  const res2 = await volunteerApi.getVolunteers()
-  return {
-    organization: res1.data,
-    admins: res2.data,
-  }
 }
 
 export default OrganizationDetail
