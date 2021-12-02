@@ -9,7 +9,9 @@ import {
 import CustomTable from '../../components/custom-table'
 import * as volunteerApi from '../../api/volunteer'
 import moment from 'moment'
-import router from  'next/router'
+import router from 'next/router'
+import MainLayOut from "../../layouts/main-layout/Default"
+import MiniDrawer from '../../layouts/trial/MiniDrawer'
 
 function Volunteers() {
   const [data, setData] = useState([])
@@ -76,7 +78,7 @@ function Volunteers() {
           console.log(error)
         }
       },
-      onCancel: () => {},
+      onCancel: () => { },
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -130,16 +132,21 @@ function Volunteers() {
   ]
 
   return (
-    <div>
-      <CustomTable
-        data={filterData}
-        columns={columns}
-        addBtnText="Thêm tình nguyện viên"
-        onAddBtnClick={addVolunteer}
-        searchPlaceHolder="Tìm kiếm tình nguyện viên"
-        onChange={searchVolunteer}
-      />
-    </div>
+    <MiniDrawer>
+      <div className='volunteers'>
+        <div className="adminTitle">
+          Danh sách tình nguyện viên
+        </div>
+        <CustomTable
+          data={filterData}
+          columns={columns}
+          addBtnText="Thêm tình nguyện viên"
+          onAddBtnClick={addVolunteer}
+          searchPlaceHolder="Tìm kiếm tình nguyện viên"
+          onChange={searchVolunteer}
+        />
+      </div>
+    </MiniDrawer>
   )
 }
 
