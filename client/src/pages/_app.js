@@ -13,6 +13,8 @@ import Head from 'next/head'
 import store from '../store'
 
 import MainLayout from '../layouts/main-layout/Default'
+import '../../assets/styles/global.scss'
+import "../layouts/trial/styles.scss"
 
 // Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start())
