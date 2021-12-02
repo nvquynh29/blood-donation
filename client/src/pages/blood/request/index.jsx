@@ -34,34 +34,52 @@ function BloodRequest() {
       title: 'Họ và tên',
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
     },
     {
       title: 'Ngày sinh',
       dataIndex: 'date_of_birth',
       key: 'date_of_birth',
+      align: 'center',
       render: (dob) => moment(dob).format('DD/MM/YYYY'),
     },
     {
       title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
+      align: 'center',
       render: (gender) => (gender === 'male' ? 'Nam' : 'Nữ'),
     },
     {
       title: 'CCCD',
       dataIndex: 'identity_card',
       key: 'identity_card',
+      align: 'center',
     },
     {
       title: 'SĐT',
       dataIndex: 'phone_number',
       key: 'phone_number',
+      align: 'center',
+    },
+    {
+      title: 'Lượng máu (ml)',
+      dataIndex: 'amount',
+      key: 'amount',
+      align: 'center',
+    },
+    {
+      title: 'Nhóm máu',
+      dataIndex: 'blood_type',
+      key: 'blood_type',
+      align: 'center',
     },
     {
       title: 'Ghi chú',
       dataIndex: 'note',
       key: 'note',
       width: '30%',
+      align: 'center',
     },
   ]
 

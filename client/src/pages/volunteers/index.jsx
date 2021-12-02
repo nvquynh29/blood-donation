@@ -9,7 +9,7 @@ import {
 import CustomTable from '../../components/custom-table'
 import * as volunteerApi from '../../api/volunteer'
 import moment from 'moment'
-import router from  'next/router'
+import router from 'next/router'
 
 function Volunteers() {
   const [data, setData] = useState([])
@@ -18,8 +18,11 @@ function Volunteers() {
   useEffect(async () => {
     try {
       const res = await volunteerApi.getVolunteers()
-      setData(res.data)
-      setFilterData(res.data)
+      const volunteers = res.data.map((volunteer) => {
+        return { ...volunteer, key: volunteer._id }
+      })
+      setData(volunteers)
+      setFilterData(volunteers)
     } catch (error) {
       console.log(error)
     }
@@ -49,7 +52,7 @@ function Volunteers() {
         volunteer.name.toLowerCase().includes(value) ||
         volunteer.phone.toLowerCase().includes(value) ||
         volunteer.email.toLowerCase().includes(value) ||
-        volunteer.address.toLowerCase().includes(value)
+        volunteer.address.toLowerCase().includes(value),
     )
     setFilterData(filtered)
   }
@@ -122,8 +125,14 @@ function Volunteers() {
       dataIndex: '_id',
       render: (id) => (
         <Space size="middle">
-          <EditOutlined className="cursor-pointer" onClick={() => editVolunteer(id)} />
-          <DeleteOutlined className="cursor-pointer" onClick={() => deleteVolunteer(id)} />
+          <EditOutlined
+            className="cursor-pointer"
+            onClick={() => editVolunteer(id)}
+          />
+          <DeleteOutlined
+            className="cursor-pointer"
+            onClick={() => deleteVolunteer(id)}
+          />
         </Space>
       ),
     },

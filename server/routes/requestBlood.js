@@ -6,7 +6,7 @@ import isAdmin from '../middleware/AdminMiddleware.js'
 const requestBloodRouter = express.Router()
 
 requestBloodRouter.post('/', RequestBloodController.addRequestBlood)
-requestBloodRouter.get('/', RequestBloodController.getRequests)
+requestBloodRouter.get('/', [isAuth, isAdmin], RequestBloodController.getRequests)
 requestBloodRouter.put('/markAsAccepted/list', [isAuth, isAdmin], RequestBloodController.markAsAccepted)
 
 export default requestBloodRouter

@@ -17,7 +17,7 @@ const addVolunteer = async (req, res) => {
       email: req.body.email,
       organization_id: req.body.organization_id,
       gender: req.body.gender,
-      accepted: (req.body.accepted) ? req.body.accepted : false,
+      accepted: req.body.accepted ? req.body.accepted : false,
     })
     newVolunteer = await newVolunteer.save()
     return res.status(200).json(newVolunteer)
