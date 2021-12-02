@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Modal, notification } from 'antd'
-import {
-  EditOutlined,
-  DeleteOutlined,
-  CloseCircleOutlined,
-  CheckCircleTwoTone,
-} from '@ant-design/icons'
+import { notification } from 'antd'
 import CustomTable from '../../../components/custom-table'
 import * as volunteerApi from '../../../api/volunteer'
 import moment from 'moment'
-import router from 'next/router'
-import { data } from 'autoprefixer'
 function VolunteerRequests() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(data)
@@ -107,7 +99,7 @@ function VolunteerRequests() {
       <CustomTable
         data={filterData}
         columns={columns}
-        addBtnText="Chấp nhận Đơn đăng ký"
+        addBtnText="Chấp nhận đơn đăng ký"
         onAddBtnClick={onAccept}
         searchPlaceHolder="Tìm kiếm..."
         onChange={searchVolunteer}

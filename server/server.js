@@ -26,7 +26,7 @@ app.use('/volunteer', volunteerRouter)
 app.use('/organization', organizationRouter)
 app.use('/event', eventRouter)
 app.use('/donation', donationRouter)
-app.use('/requestBlood', requestBloodRouter)
+app.use('/request-blood', requestBloodRouter)
 initAPIs(app) // use isAuth middleware from this line
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
