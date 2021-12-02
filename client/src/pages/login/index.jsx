@@ -11,15 +11,15 @@ const Login = () => {
   const router = useRouter()
   const cookies = new Cookies()
 
-  const onFinish = (values) => {
-    login(values)
+  const onFinish = async (values) => {
+    await login(values)
   }
   const form = useForm()
 
   const writeCookies = ({ accessToken, refreshToken }) => {
-    cookies.set('accessToken', accessToken)
+    cookies.set('accessToken', accessToken, { path: '/' })
     if (refreshToken) {
-      cookies.set('refreshToken', refreshToken)
+      cookies.set('refreshToken', refreshToken, { path: '/' })
     }
   }
 

@@ -1,5 +1,7 @@
 @import '../fonts/fonts.scss';
 @import '../../src/components/advise-section/advise.scss';
+@import '../../src/pages/organization/[id]/style.scss';
+@import '../../src/components/search-result/styles.scss';
 * {
   margin: 0;
   padding: 0;
@@ -250,6 +252,15 @@ img {
 }
 .volunteerForm {
   grid-column: span 1 / span 1;
+  .ant-select-selector {
+    height: 40px !important;
+  }
+  .ant-select-selection-item,
+  .ant-select-selection-placeholder {
+    display: table;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 }
 .asidePicVolunterForm {
   height: 650px;
@@ -323,7 +334,9 @@ input[type='number'] {
     }
   }
 
-  .landingPage {
+  .landingPage,
+  .volunteerAdd,
+  .volunteerEdit {
     .formContain {
       width: 90%;
     }

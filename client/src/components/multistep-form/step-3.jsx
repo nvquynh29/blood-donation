@@ -29,7 +29,8 @@ const questions = [
         title: 'Sử dụng ma túy, tiêm chích?',
       },
       {
-        title: 'Quan hệ tình dục với người nhiễm hoặc có nguy cơ nhiễm HIV/AIDS, viêm gan',
+        title:
+          'Quan hệ tình dục với người nhiễm hoặc có nguy cơ nhiễm HIV/AIDS, viêm gan',
       },
       {
         title:
@@ -39,7 +40,8 @@ const questions = [
         title: 'Tiêm vác xin phòng bệnh?',
       },
       {
-        title: 'Có liên quan đến/ở vùng có dịch lưu hành(sốt xuất huyết, sốt rét, bò điên,...?',
+        title:
+          'Có liên quan đến/ở vùng có dịch lưu hành(sốt xuất huyết, sốt rét, bò điên,...?',
       },
     ],
   },
@@ -77,27 +79,39 @@ function index() {
             Câu hỏi hiến máu
           </Typography>
           <div className="flex items-center">
-            XIN QUÝ VỊ VUI LÒNG TÍCH DẤU {<CheckOutlined className="text-xl px-2" />} VÀO Ô
+            XIN QUÝ VỊ VUI LÒNG TÍCH DẤU{' '}
+            {<CheckOutlined className="text-xl px-2" />} VÀO Ô
             {<CheckCircleOutlined className="text-xl px-2" />}THÍCH HỢP
           </div>
           <Typography variant="p" className="italic my-2 ">
             <span className="text-red-500 font-bold">Chú ý: </span>
-            Để đảm bảo an toàn sức khỏe cho quý vị và người bệnh nhận máu, xin quý vị trả lời trung
-            thực và chính xác. Nếu có bất cứ nghi ngờ nào về nguy cơ mắc bệnh lây truyền, XIN QUÝ VỊ
-            HÃY KHÔNG HIẾN MÁU!
+            Để đảm bảo an toàn sức khỏe cho quý vị và người bệnh nhận máu, xin
+            quý vị trả lời trung thực và chính xác. Nếu có bất cứ nghi ngờ nào
+            về nguy cơ mắc bệnh lây truyền, XIN QUÝ VỊ HÃY KHÔNG HIẾN MÁU!
           </Typography>
           <hr className="h-[1px] bg-gray-900" />
           <div className="flex flex-col">
             {questions.map((item, index) => (
               <div key={index + item} className="">
-                <Typography variant="h5" className="mb-2 flex text-xl font-Dosis break-words">
+                <Typography
+                  variant="h5"
+                  className="mb-2 flex text-xl font-Dosis break-words"
+                >
                   <span className="font-bold">
                     <span>{index + 1}.</span> {item.title}
                   </span>
                   {!item.subquestion ? (
-                    <RadioGroup class="float-right flex !flex-row flex-nowrap">
-                      <Radio defaultChecked={false} value="yes" onChange={onChecked} />
-                      <Radio defaultChecked={false} value="no" onChange={onChecked} />
+                    <RadioGroup class="float-right flex !flex-row !flex-nowrap">
+                      <Radio
+                        defaultChecked={false}
+                        value="yes"
+                        onChange={onChecked}
+                      />
+                      <Radio
+                        defaultChecked={false}
+                        value="no"
+                        onChange={onChecked}
+                      />
                     </RadioGroup>
                   ) : null}
                 </Typography>
@@ -113,9 +127,17 @@ function index() {
                           <span>{subindex + 1}.</span> {subitem.title}
                         </span>
                         {item.subquestion ? (
-                          <RadioGroup class="float-right flex !flex-row flex-nowrap">
-                            <Radio defaultChecked={false} value="yes" onChange={onChecked} />
-                            <Radio defaultChecked={false} value="no" onChange={onChecked} />
+                          <RadioGroup class="float-right flex !flex-row !flex-nowrap">
+                            <Radio
+                              defaultChecked={false}
+                              value="yes"
+                              onChange={onChecked}
+                            />
+                            <Radio
+                              defaultChecked={false}
+                              value="no"
+                              onChange={onChecked}
+                            />
                           </RadioGroup>
                         ) : null}
                       </Typography>

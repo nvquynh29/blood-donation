@@ -1,0 +1,53 @@
+.organizationDetail {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+
+    .head {
+        margin-left: 10px;
+    }
+
+    .picContain {
+        width: 100%;
+        flex: 5;
+        .pic {
+            margin-left: 0 !important;
+            max-width: 100%;
+
+            .ad {
+                color: #d3010d;
+                font-size: 28px;
+                line-height: 30px;
+                font-weight: 500;
+            }
+
+            .des {
+                line-height: 30px;
+                font: 18px/28px "Source Sans Pro", sans-serif;
+                color: #4d4d4d;
+                font-style: normal;
+                font-weight: 400;
+                letter-spacing: 0.01em;
+                margin: 0 0 12px;
+                padding: 0;
+            }
+        }
+    }
+    .volunteerForm1 {
+        flex: 4;
+        .formContain {
+            margin: 0;
+            margin-top: 100px;
+            margin-right: 50px;
+            width: 90%;
+            padding: 0;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .organizationDetail {
+        flex-direction: column;
+    }
+}

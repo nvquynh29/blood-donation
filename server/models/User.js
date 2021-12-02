@@ -33,6 +33,11 @@ const schema = new mongoose.Schema({
     type: Date,
   },
   blood_type: String,
+  organization_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization',
+    required: true,
+  },
   role: {
     type: String,
     required: true,

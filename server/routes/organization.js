@@ -2,6 +2,8 @@ import express from 'express'
 import multer from 'multer'
 import * as mime from 'mime-types'
 import { OrganizationController } from '../controllers/OrganizationController.js'
+import isAuth from '../middleware/AuthMiddleware.js'
+import isAdmin from '../middleware/AdminMiddleware.js'
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -33,5 +35,6 @@ const upload = multer({
 
 const organizationRouter = express.Router()
 organizationRouter.post('/', upload.single('organization_image'), OrganizationController.createOrganization)
+organizationRouter.get('/admins', [isAuth, isAdmin], OrganizationController.getAllAdmins)
 
 export default organizationRouter
