@@ -6,8 +6,8 @@ const addVolunteer = async (req, res) => {
   try {
     if (req.user && req.body.organization_id === 'mine') {
       const { _id } = req.user
-      const organizationId = await User.findOne({ _id })
-      req.body.organization_id = organizationId
+      const user = await User.findOne({ _id })
+      req.body.organization_id = user.organization_id
     }
     let newVolunteer = new Volunteer({
       name: req.body.name,

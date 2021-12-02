@@ -3,6 +3,9 @@ import { notification } from 'antd'
 import CustomTable from '../../../components/custom-table'
 import * as volunteerApi from '../../../api/volunteer'
 import moment from 'moment'
+import router from 'next/router'
+import { data } from 'autoprefixer'
+import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 function VolunteerRequests() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(data)
@@ -10,11 +13,11 @@ function VolunteerRequests() {
   useEffect(async () => {
     try {
       const res = await volunteerApi.getOrgRequests()
-      setData(res.data.map(data => { 
-        return {...data, key: data._id}
+      setData(res.data.map(data => {
+        return { ...data, key: data._id }
       }))
-      setFilterData(res.data.map(data => { 
-        return {...data, key: data._id}
+      setFilterData(res.data.map(data => {
+        return { ...data, key: data._id }
       }))
     } catch (error) {
       console.log(error)
@@ -90,11 +93,12 @@ function VolunteerRequests() {
       setFilterData(filterData.filter((element) => !(selectedKeys.includes(element.key))))
       setSelectedKeys([])
       openNotificationSuccess()
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
   return (
+<<<<<<< HEAD:client/src/pages/volunteers/listRequest/index.jsx
     <div>
       <CustomTable
         data={filterData}
@@ -106,6 +110,24 @@ function VolunteerRequests() {
         rowSelection={rowSelection}
       />
     </div>
+=======
+    <MiniDrawer>
+      <div className='volunteers'>
+        <div className="adminTitle">
+          Danh sách đăng ký tình nguyện viên
+        </div>
+        <CustomTable
+          data={filterData}
+          columns={columns}
+          addBtnText="Chấp nhận Đơn đăng ký"
+          onAddBtnClick={onAccept}
+          searchPlaceHolder="Tìm kiếm..."
+          onChange={searchVolunteer}
+          rowSelection={rowSelection}
+        />
+      </div>
+    </MiniDrawer>
+>>>>>>> cc53c4ccfb612dad09bb9e89aee150e4d89d025b:client/src/pages/volunteers/list-request/index.jsx
   )
 }
 
