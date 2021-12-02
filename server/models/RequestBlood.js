@@ -31,6 +31,19 @@ const schema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  organization_id: {
+    type: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Organization',
+      required: true,
+      default: null,
+    },
+  },
+  accepted: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 })
 
 const RequestBlood = mongoose.model('RequestBlood', schema, 'requestBlood')

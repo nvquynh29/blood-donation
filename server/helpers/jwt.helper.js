@@ -10,8 +10,8 @@ const generateToken = (user, secretSignature, tokenLife) => new Promise((resolve
   })
 })
 
-const verifyToken = (token, secretSignature) => new Promise((resolve, reject) => {
-  jwt.verify(token, secretSignature, (error, decoded) => {
+const verifyToken = (token, secretSignature, options) => new Promise((resolve, reject) => {
+  jwt.verify(token, secretSignature, options, (error, decoded) => {
     if (error) {
       return reject(error)
     }

@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Modal, notification } from 'antd'
-import {
-  EditOutlined,
-  DeleteOutlined,
-  CloseCircleOutlined,
-  CheckCircleTwoTone,
-} from '@ant-design/icons'
+import { notification } from 'antd'
 import CustomTable from '../../../components/custom-table'
 import * as volunteerApi from '../../../api/volunteer'
 import moment from 'moment'
@@ -104,6 +98,19 @@ function VolunteerRequests() {
     }
   }
   return (
+<<<<<<< HEAD:client/src/pages/volunteers/listRequest/index.jsx
+    <div>
+      <CustomTable
+        data={filterData}
+        columns={columns}
+        addBtnText="Chấp nhận đơn đăng ký"
+        onAddBtnClick={onAccept}
+        searchPlaceHolder="Tìm kiếm..."
+        onChange={searchVolunteer}
+        rowSelection={rowSelection}
+      />
+    </div>
+=======
     <MiniDrawer>
       <div className='volunteers'>
         <div className="adminTitle">
@@ -120,6 +127,7 @@ function VolunteerRequests() {
         />
       </div>
     </MiniDrawer>
+>>>>>>> cc53c4ccfb612dad09bb9e89aee150e4d89d025b:client/src/pages/volunteers/list-request/index.jsx
   )
 }
 
