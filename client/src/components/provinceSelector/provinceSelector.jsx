@@ -123,7 +123,7 @@ function ProvinceSelector(props) {
               }}
             >
               <MenuItem
-                value=""
+                // value=""
                 onClickCapture={stopImmediatePropagation}
                 className="sticky top-0 z-50 bg-opacity-100 !bg-white !shadow-md pb-3 !pt-0"
                 onKeyDown={(e) => e.stopPropagation()}

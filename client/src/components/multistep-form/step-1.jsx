@@ -99,7 +99,7 @@ function index(props) {
     }
   }
   return (
-    <div>
+    <div className="mb-10">
       <form autoComplete="off" onSubmit={handleFormSubmit}>
         <Paper className="py-10">
           <Box sx={{ flexGrow: 1 }} className="px-5">
