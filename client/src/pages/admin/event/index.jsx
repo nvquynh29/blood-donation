@@ -9,7 +9,8 @@ import {
 import CustomTable from '../../../components/custom-table'
 import { getAllEvent, deleteEvent } from '../../../api/event'
 import moment from 'moment'
-import router from  'next/router'
+import router from 'next/router'
+import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 
 function Event() {
   const [data, setData] = useState([])
@@ -18,7 +19,7 @@ function Event() {
   useEffect(async () => {
     try {
       const res = await getAllEvent()
-      res.data.map((el) => {return {...el, key: el._id}})
+      res.data.map((el) => { return { ...el, key: el._id } })
       setData(res.data)
       setFilterData(res.data)
     } catch (error) {
@@ -60,7 +61,7 @@ function Event() {
   }
 
   const onDeleteEvent = (id) => {
-      console.log(id)
+    console.log(id)
     Modal.confirm({
       title: 'Xoá sự kiện',
       icon: <CloseCircleOutlined />,
@@ -74,7 +75,7 @@ function Event() {
           console.log(error)
         }
       },
-      onCancel: () => {},
+      onCancel: () => { },
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -121,16 +122,21 @@ function Event() {
   ]
 
   return (
-    <div>
-      <CustomTable
-        data={filterData}
-        columns={columns}
-        addBtnText="Thêm sự kiện"
-        onAddBtnClick={addEvent}
-        searchPlaceHolder="Tìm kiếm sự kiện "
-        onChange={searchEvent}
-      />
-    </div>
+    <MiniDrawer>
+      <div className='volunteers'>
+        <div className="adminTitle">
+          Danh sách sự kiện
+        </div>
+        <CustomTable
+          data={filterData}
+          columns={columns}
+          addBtnText="Thêm sự kiện"
+          onAddBtnClick={addEvent}
+          searchPlaceHolder="Tìm kiếm sự kiện "
+          onChange={searchEvent}
+        />
+      </div>
+    </MiniDrawer>
   )
 }
 
