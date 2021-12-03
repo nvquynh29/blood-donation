@@ -25,7 +25,7 @@ const schema = new mongoose.Schema({
   volunteers: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Volunteer',
       required: true,
     },
   ],
