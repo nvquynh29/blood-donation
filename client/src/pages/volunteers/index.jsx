@@ -9,7 +9,9 @@ import {
 import CustomTable from '../../components/custom-table'
 import * as volunteerApi from '../../api/volunteer'
 import moment from 'moment'
-import router from  'next/router'
+import router from 'next/router'
+import MainLayOut from "../../layouts/main-layout/Default"
+import MiniDrawer from '../../layouts/trial/MiniDrawer'
 
 function Volunteers() {
   const [data, setData] = useState([])
@@ -18,8 +20,11 @@ function Volunteers() {
   useEffect(async () => {
     try {
       const res = await volunteerApi.getVolunteers()
-      setData(res.data)
-      setFilterData(res.data)
+      const volunteers = res.data.map((volunteer) => {
+        return { ...volunteer, key: volunteer._id }
+      })
+      setData(volunteers)
+      setFilterData(volunteers)
     } catch (error) {
       console.log(error)
     }
@@ -49,7 +54,7 @@ function Volunteers() {
         volunteer.name.toLowerCase().includes(value) ||
         volunteer.phone.toLowerCase().includes(value) ||
         volunteer.email.toLowerCase().includes(value) ||
-        volunteer.address.toLowerCase().includes(value)
+        volunteer.address.toLowerCase().includes(value),
     )
     setFilterData(filtered)
   }
@@ -76,7 +81,7 @@ function Volunteers() {
           console.log(error)
         }
       },
-      onCancel: () => {},
+      onCancel: () => { },
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -122,24 +127,35 @@ function Volunteers() {
       dataIndex: '_id',
       render: (id) => (
         <Space size="middle">
-          <EditOutlined className="cursor-pointer" onClick={() => editVolunteer(id)} />
-          <DeleteOutlined className="cursor-pointer" onClick={() => deleteVolunteer(id)} />
+          <EditOutlined
+            className="cursor-pointer"
+            onClick={() => editVolunteer(id)}
+          />
+          <DeleteOutlined
+            className="cursor-pointer"
+            onClick={() => deleteVolunteer(id)}
+          />
         </Space>
       ),
     },
   ]
 
   return (
-    <div>
-      <CustomTable
-        data={filterData}
-        columns={columns}
-        addBtnText="Thêm tình nguyện viên"
-        onAddBtnClick={addVolunteer}
-        searchPlaceHolder="Tìm kiếm tình nguyện viên"
-        onChange={searchVolunteer}
-      />
-    </div>
+    <MiniDrawer>
+      <div className='volunteers'>
+        <div className="adminTitle">
+          Danh sách tình nguyện viên
+        </div>
+        <CustomTable
+          data={filterData}
+          columns={columns}
+          addBtnText="Thêm tình nguyện viên"
+          onAddBtnClick={addVolunteer}
+          searchPlaceHolder="Tìm kiếm tình nguyện viên"
+          onChange={searchVolunteer}
+        />
+      </div>
+    </MiniDrawer>
   )
 }
 
