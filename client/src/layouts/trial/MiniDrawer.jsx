@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie'
@@ -25,7 +26,7 @@ import {
   Apartment,
   Logout,
 } from '@mui/icons-material'
-import React, { useEffect, useRef } from 'react'
+import { getUser } from '../../api/user'
 
 const drawerWidth = 240
 
@@ -98,6 +99,7 @@ export default function MiniDrawer({ children }) {
   const theme = useTheme()
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
+  const [user, setUser] = useState({})
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -109,8 +111,8 @@ export default function MiniDrawer({ children }) {
 
   const logout = () => {
     const cookies = new Cookies()
-    cookies.remove('accessToken', { path: '/'})
-    cookies.remove('refreshToken', { path: '/'})
+    cookies.remove('accessToken', { path: '/' })
+    cookies.remove('refreshToken', { path: '/' })
     router.push('/')
   }
 
@@ -123,9 +125,25 @@ export default function MiniDrawer({ children }) {
     }
   }
 
+  const getCurrentUser = async () => {
+    try {
+      const res = await getUser()
+      setUser(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getFirstCharName = (userName) => {
+    const arr = userName.split(' ')
+    const firstChar = arr[arr.length - 1][0]
+    return firstChar
+  }
+
   const userDropDown = useRef(null)
 
   useEffect(() => {
+    getCurrentUser()
     let handleClickOutside = (event) => {
       if (
         userDropDown.current &&
@@ -194,7 +212,7 @@ export default function MiniDrawer({ children }) {
             style={{ backgroundColor: '#151515', border: ' 1px solid #539' }}
           >
             {/* TODO: Current user name */}
-            H
+            {getFirstCharName(user.name)}
           </Avatar>
         </div>
       </AppBar>
