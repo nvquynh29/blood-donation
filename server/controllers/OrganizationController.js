@@ -52,7 +52,6 @@ const getAllAdmins = async (req, res) => {
   try {
     const { _id } = req.user
     const { organization_id } = await User.findOne({ _id })
-    console.log(organization_id)
     const admins = await User.find({
       organization_id: organization_id.toString(),
       role: {

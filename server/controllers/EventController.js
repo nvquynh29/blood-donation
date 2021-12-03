@@ -1,21 +1,43 @@
 import Event from '../models/Event.js'
+import User from '../models/User.js'
 
 const createEvent = async (req, res) => {
+  const { _id } = req.user
+  const { organization_id } = await User.findOne({ _id })
   const {
-    name, startDate, duration, address, organizationID,
+    name, startDate, duration, address,
   } = req.body
   let newEvent = new Event({
     name,
     start_date: startDate,
     duration,
     address,
-    organization_id: organizationID,
+    organization_id: organization_id,
   })
   try {
     newEvent = await newEvent.save()
     return res.status(200).json(newEvent)
   } catch (e) {
     return res.status(500).json(e)
+  }
+}
+
+const deleteEvent = async (req, res) => {
+  try {
+    const { id } = req.params
+    const response = await Event.findOneAndDelete({ _id: id })
+    return res.status(200).json(response)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+const updateEvent = async (req, res) => {
+  try {
+    const { id } = req.params
+    const event = await Event.findOneAndUpdate({ _id: id }, req.body, { new: true })
+    return res.status(200).json(event)
+  } catch (error) {
+    return res.status(500).json(error)
   }
 }
 
@@ -31,10 +53,13 @@ const getAllEvent = async (req, res) => {
       donation_books: 0,
     }).sort({
       start_date: 1,
-    }).populate('organization_id', {
-      admin: 0,
-      list_blood_requests: 0,
     })
+    if (!req.query.no_org) {
+      events = events.populate('organization_id', {
+        admin: 0,
+        list_blood_requests: 0,
+      })
+    }
     if (req.query.limit) {
       events = events.limit(parseInt(req.query.limit, 10))
     }
@@ -45,7 +70,19 @@ const getAllEvent = async (req, res) => {
   }
 }
 
+const getEventDetail = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id)
+    return res.status(200).json(event)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 export const EventController = {
   createEvent,
   getAllEvent,
+  updateEvent,
+  deleteEvent,
+  getEventDetail,
 }
