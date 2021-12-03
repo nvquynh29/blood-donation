@@ -1,9 +1,9 @@
 import React from 'react'
 import { Tabs } from 'antd'
-
+import  VolunteerList from '../../../../../components/volunteer-list'
 
 const { TabPane } = Tabs
-export default function EventSetting() {
+function EventSetting() {
     return (
         <Tabs defaultActiveKey="1"  size="large">
             <TabPane tab="Đơn hiến máu" key="1">
@@ -12,7 +12,7 @@ export default function EventSetting() {
             </TabPane>
         
             <TabPane tab="Tình nguyện viên" key="2">
-            <div>a</div>
+            <VolunteerList/>
 
             </TabPane>
             <TabPane tab="Phần quà" key="3">
@@ -21,3 +21,4 @@ export default function EventSetting() {
           </Tabs>
     )
 }
+export default EventSetting
