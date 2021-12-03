@@ -20,25 +20,27 @@ const instance = axios.create({
   headers: getHeader(),
 })
 
-const refreshToken = async () => {
-  return instance.get('/refresh-token').data
+const refreshToken = () => {
+  return instance.get('/refresh-token')
 }
 
 instance.interceptors.response.use(
   async (response) => {
     const config = response.config
-    if (config.url.indexOf('/login') >= 0 || config.url.indexOf('/refresh-token') >= 0) {
+    if (
+      config.url.indexOf('/login') >= 0 ||
+      config.url.indexOf('/refresh-token') >= 0
+    ) {
       return response
     }
     const status = response.status
-    if (status && status === 401) {
-      if (msg && msg == 'jwt expired') {
-        const { accessToken } = await refreshToken()
+    if (status && status === 200) {
+      if (response.msg == 'jwt expired') {
+        cookies.remove('accessToken')
+        const { accessToken } = (await refreshToken()).data
         if (accessToken) {
-          console.log('Da lay lai access Token thanh cong')
-          cookies.set('accessToken', accessToken)
-          // writeCookies({ accessToken })
-          return instance(config)
+          cookies.set('accessToken', accessToken, { path: '/' })
+          return response
         }
       }
     }
@@ -46,7 +48,7 @@ instance.interceptors.response.use(
   },
   (err) => {
     return Promise.reject(err)
-  }
+  },
 )
 
 export default instance
