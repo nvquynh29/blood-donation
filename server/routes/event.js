@@ -9,5 +9,6 @@ eventRouter.delete('/:id', [isAuth, isAdmin], EventController.deleteEvent)
 eventRouter.put('/:id', [isAuth, isAdmin], EventController.updateEvent)
 eventRouter.post('/', [isAuth, isAdmin], EventController.createEvent)
 eventRouter.get('/detail/:id', EventController.getEventDetail)
+eventRouter.get('/listVolunteer/:id', EventController.getEventVolunteerId)
 
 export default eventRouter
