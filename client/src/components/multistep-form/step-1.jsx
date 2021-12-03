@@ -40,7 +40,6 @@ const major = [
   'N/A',
 ]
 function index(props) {
-  const [isSubmit, setIsSubmit] = useState(false)
   const [childState, setChildState] = useState({})
   const [step1State, setStep1State] = useState({})
   const [localStorageData, setLocalStorageData] = useState({})
@@ -136,14 +135,24 @@ function index(props) {
                       control={<Radio />}
                       label="Nam"
                     />
-                    <FormControlLabel value="male" name="gender" control={<Radio />} label="Nữ" />
+                    <FormControlLabel
+                      value="male"
+                      name="gender"
+                      control={<Radio />}
+                      label="Nữ"
+                    />
                   </RadioGroup>
                 </FormControl>
                 <FormControl>
                   <FormControlLabel
-                    control={<Checkbox checked={step1State.foreigner ?? false} />}
+                    control={
+                      <Checkbox checked={step1State.foreigner ?? false} />
+                    }
                     onChange={() => {
-                      setStep1State({ ...step1State, ['foreigner']: !step1State.foreigner })
+                      setStep1State({
+                        ...step1State,
+                        ['foreigner']: !step1State.foreigner,
+                      })
                     }}
                     name="foreigner"
                     label="Người nước ngoài"
@@ -156,7 +165,9 @@ function index(props) {
                   name="user_uid"
                   required
                   // type="number"
-                  {...(step1State.user_uid ? { value: step1State.user_uid } : {})}
+                  {...(step1State.user_uid
+                    ? { value: step1State.user_uid }
+                    : {})}
                   variant="standard"
                   className="mx-4 w-1/3"
                   onChange={handleChange}
@@ -164,7 +175,9 @@ function index(props) {
                 <TextField
                   label="Nơi cấp"
                   name="uid_place"
-                  {...(step1State.uid_place ? { value: step1State.uid_place } : {})}
+                  {...(step1State.uid_place
+                    ? { value: step1State.uid_place }
+                    : {})}
                   required
                   variant="standard"
                   onChange={handleChange}
@@ -173,7 +186,9 @@ function index(props) {
                   label="Mã thẻ SV/Quân nhân"
                   name="user_role_uid"
                   required
-                  {...(step1State.user_role_uid ? { value: step1State.user_role_uid } : {})}
+                  {...(step1State.user_role_uid
+                    ? { value: step1State.user_role_uid }
+                    : {})}
                   variant="standard"
                   className="mx-2 w-1/3"
                   onChange={handleChange}
@@ -183,7 +198,9 @@ function index(props) {
                 <TextField
                   label="Số Điện thoại*"
                   name="phone_number"
-                  {...(step1State.phone_number ? { value: step1State.phone_number } : {})}
+                  {...(step1State.phone_number
+                    ? { value: step1State.phone_number }
+                    : {})}
                   variant="standard"
                   className="mx-4 w-1/3"
                   onChange={handleChange}
@@ -206,7 +223,9 @@ function index(props) {
                     label="Nghề nghiệp"
                     name="major"
                     displayEmpty
-                    {...(step1State.major ? { value: step1State.major } : { value: '' })}
+                    {...(step1State.major
+                      ? { value: step1State.major }
+                      : { value: '' })}
                     variant="standard"
                     className="w-full"
                     required
@@ -232,7 +251,9 @@ function index(props) {
                   <TextField
                     label="Nơi công tác"
                     name="work_place"
-                    {...(step1State.work_place ? { value: step1State.work_place } : {})}
+                    {...(step1State.work_place
+                      ? { value: step1State.work_place }
+                      : {})}
                     variant="standard"
                     onChange={handleChange}
                   />

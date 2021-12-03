@@ -5,7 +5,6 @@ import Router from 'next/router'
 import 'tailwindcss/tailwind.css'
 import 'nprogress/nprogress.css'
 import 'antd/dist/antd.css'
-import '../../assets/styles/global.scss'
 import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel/dist/assets/owl.theme.default.css'
 import { Provider } from 'react-redux'
@@ -13,6 +12,7 @@ import Head from 'next/head'
 import store from '../store'
 
 import MainLayout from '../layouts/main-layout/Default'
+import '../../assets/styles/global.scss'
 
 // Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start())

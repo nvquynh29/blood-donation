@@ -8,6 +8,9 @@ import Typography from '@mui/material/Typography'
 import Step1Container from './step-1'
 import Step2Container from './step-2'
 import Step3Container from './step-3'
+import { notification } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+
 const steps = [
   'Thông tin cá nhân',
   'Hình thức hiến máu',
@@ -46,6 +49,8 @@ function getStepCompnent(step, callback) {
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = useState(0)
   const [completed, setCompleted] = useState({})
+  const [trickger, setTrickger] = useState(false)
+  const [subClick, setSubClick] = useState(false)
   const [allStepState, setAllStepState] = useState({})
   const totalSteps = () => {
     return steps.length
@@ -64,6 +69,8 @@ export default function HorizontalNonLinearStepper() {
   }
 
   const handleNext = () => {
+    console.log(activeStep)
+    console.log(totalSteps())
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
@@ -89,13 +96,44 @@ export default function HorizontalNonLinearStepper() {
     handleNext()
   }
   const getStepContent = (data) => {
-    // console.log(data)
+    return { data: data }
   }
   const handleReset = () => {
     setActiveStep(0)
     setCompleted({})
   }
-
+  const openNotification = (message) => {
+    return notification.open({
+      message: 'Cảnh báo',
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: message,
+      onClick: () => {
+        console.log('Notification Clicked!')
+      },
+    })
+  }
+  const handleSumbit = (e) => {
+    setTrickger(true)
+    e.preventDefault()
+    const steps = ['step1', 'step2']
+    const allStepState = []
+    steps.forEach((step) => {
+      allStepState.push({ [step]: JSON.parse(localStorage.getItem(step)) })
+    })
+    console.log(...allStepState)
+    const form = Array.from(e.target)
+    const questionData = form.filter(
+      (element) => element.type === 'radio' && element.checked,
+    )
+    console.log(questionData)
+    if (questionData.length < 16) {
+      return openNotification('Vui lòng trả lời hết câu hỏi')
+    } else {
+      questionData.forEach((element) => {
+        console.log(element.value)
+      })
+    }
+  }
   return (
     <Box sx={{ width: '100%' }} className="p-6 bg-[#f5f5f5]">
       <Stepper className="mb-3" nonLinear activeStep={activeStep}>
@@ -115,56 +153,55 @@ export default function HorizontalNonLinearStepper() {
         ))}
       </Stepper>
       <div>
-        {allStepsCompleted() ? (
-          <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleReset}>Reset</Button>
-            </Box>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <div className={activeStep === 0 ? '' : activeStep === 3 ? '' : 'hidden'}>
-              <Step1Container callback={getStepContent} />
-            </div>
-            <div className={activeStep === 1 ? '' : activeStep === 3 ? '' : 'hidden'}>
-              <Step2Container callback={getStepContent} />
-            </div>
-            <div className={activeStep === 2 ? '' : activeStep === 3 ? '' : 'hidden'}>
-              <Step3Container callback={getStepContent} />
-            </div>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
+        {
+          <form autoComplete="off" onSubmit={handleSumbit}>
+            <React.Fragment>
+              <div
+                className={
+                  activeStep === 0 ? '' : activeStep === 3 ? '' : 'hidden'
+                }
               >
-                Back
-              </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              {/* <Button onClick={handleNext} sx={{ mr: 1 }}>
-                Next
-              </Button> */}
-              {/* {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                  </Button>
-                ))}                 */}
-              <Button onClick={handleComplete}>
-                {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Tiếp theo'}
-              </Button>
-            </Box>
-          </React.Fragment>
-        )}
+                <Step1Container callback={getStepContent} />
+              </div>
+              <div
+                className={
+                  activeStep === 1 ? '' : activeStep === 3 ? '' : 'hidden'
+                }
+              >
+                <Step2Container callback={getStepContent} />
+              </div>
+              <div
+                className={
+                  activeStep === 2 ? '' : activeStep === 3 ? '' : 'hidden'
+                }
+              >
+                <Step3Container callback={getStepContent} />
+              </div>
+              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Quay lại
+                </Button>
+                <Box sx={{ flex: '1 1 auto' }} />
+
+                {/* <p>{activeStep}</p> */}
+                <Button
+                  type={activeStep === 3 ? 'submit' : 'button'}
+                  onClick={activeStep === 3 ? null : handleNext}
+                >
+                  {activeStep === 3 ? 'Đăng ký' : 'Tiếp theo'}
+                  {/* {completedSteps() === tottotalStepsalSteps() - 1
+                    ? 'Finish'
+                    : 'Tiếp theo'} */}
+                </Button>
+              </Box>
+            </React.Fragment>
+          </form>
+        }
       </div>
     </Box>
   )

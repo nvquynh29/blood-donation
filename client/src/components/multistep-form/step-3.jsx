@@ -1,5 +1,12 @@
 import { CheckCircleOutlined, CheckOutlined } from '@ant-design/icons'
-import { Box, Paper, Radio, RadioGroup, Typography } from '@mui/material'
+import {
+  Box,
+  FormControl,
+  Paper,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material'
 import React from 'react'
 const questions = [
   {
@@ -95,24 +102,33 @@ function index() {
               <div key={index + item} className="">
                 <Typography
                   variant="h5"
-                  className="mb-2 flex text-xl font-Dosis break-words"
+                  className="mb-2 flex text-xl justify-between font-Dosis break-words"
                 >
                   <span className="font-bold">
                     <span>{index + 1}.</span> {item.title}
+                    {/* {item.subquestion?.length} */}
                   </span>
-                  {!item.subquestion ? (
-                    <RadioGroup class="float-right flex !flex-row !flex-nowrap">
-                      <Radio
-                        defaultChecked={false}
-                        value="yes"
-                        onChange={onChecked}
-                      />
-                      <Radio
-                        defaultChecked={false}
-                        value="no"
-                        onChange={onChecked}
-                      />
-                    </RadioGroup>
+                  {!item.subquestion || item.subquestion.length < 1 ? (
+                    <FormControl required>
+                      <RadioGroup
+                        name={'question_' + index}
+                        required
+                        class="flex !flex-row !flex-nowrap"
+                      >
+                        <Radio
+                          // name={'y' + index}
+                          defaultChecked={false}
+                          value={true}
+                          onChange={onChecked}
+                        />
+                        <Radio
+                          // name={'n' + index}
+                          defaultChecked={false}
+                          value={false}
+                          onChange={onChecked}
+                        />
+                      </RadioGroup>
+                    </FormControl>
                   ) : null}
                 </Typography>
 
@@ -127,18 +143,26 @@ function index() {
                           <span>{subindex + 1}.</span> {subitem.title}
                         </span>
                         {item.subquestion ? (
-                          <RadioGroup class="float-right flex !flex-row !flex-nowrap">
-                            <Radio
-                              defaultChecked={false}
-                              value="yes"
-                              onChange={onChecked}
-                            />
-                            <Radio
-                              defaultChecked={false}
-                              value="no"
-                              onChange={onChecked}
-                            />
-                          </RadioGroup>
+                          <FormControl>
+                            <RadioGroup
+                              required
+                              name={'subquestion_of_' + index + '-' + subindex}
+                              class="flex !flex-row !flex-nowrap"
+                            >
+                              <Radio
+                                // name={index + '-' + subindex}
+                                defaultChecked={false}
+                                value={true}
+                                onChange={onChecked}
+                              />
+                              <Radio
+                                // name={index + '-' + subindex}
+                                defaultChecked={false}
+                                value={false}
+                                onChange={onChecked}
+                              />
+                            </RadioGroup>
+                          </FormControl>
                         ) : null}
                       </Typography>
                     </div>

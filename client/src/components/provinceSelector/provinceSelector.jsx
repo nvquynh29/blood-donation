@@ -1,4 +1,12 @@
-import { FormControl, Input, InputLabel, MenuItem, Paper, Select, TextField } from '@mui/material'
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+} from '@mui/material'
 import React, { useEffect, useState, memo, useRef } from 'react'
 import { getAllProvinces } from '../../../api/province'
 
@@ -28,7 +36,7 @@ function ProvinceSelector(props) {
 
   const searchProvinces = (event) => {
     const suggestedProvince = provinces.filter((item) =>
-      formatSearch(item.name).includes(formatSearch(event.target.value))
+      formatSearch(item.name).includes(formatSearch(event.target.value)),
     )
 
     console.log(suggestedProvince)
@@ -49,7 +57,10 @@ function ProvinceSelector(props) {
     const { name, value } = e.target
     setLocalData({ ...localData, [name]: value })
     console.log({ [name]: value.name || value })
-    setFormState((pre) => ({ ...Object.assign({}, pre), [name]: value.name || value }))
+    setFormState((pre) => ({
+      ...Object.assign({}, pre),
+      [name]: value.name || value,
+    }))
     switch (name) {
       case `city_${props.ProvinceSelectorID}`:
         const prvData = provinces.find((item) => item.name === value).districts
@@ -68,7 +79,7 @@ function ProvinceSelector(props) {
   useEffect(() => {
     if (localData['city_' + props.ProvinceSelectorID]) {
       const currentProvince = provinces.find(
-        (item) => item.name === localData['city_' + props.ProvinceSelectorID]
+        (item) => item.name === localData['city_' + props.ProvinceSelectorID],
       )
       if (currentProvince) {
         setDistricts(currentProvince.districts)
@@ -77,7 +88,7 @@ function ProvinceSelector(props) {
   })
   useEffect(() => {
     const currentDistrict = districts.find(
-      (item) => item.name === localData['district_' + props.ProvinceSelectorID]
+      (item) => item.name === localData['district_' + props.ProvinceSelectorID],
     )
     if (currentDistrict) {
       setWards(currentDistrict.wards)
@@ -95,7 +106,9 @@ function ProvinceSelector(props) {
   return (
     <div>
       <Paper className="px-5 pb-10 pt-5 ">
-        <span className=" text-[#888888] text-lg font-extrabold">{props.title}</span>
+        <span className=" text-[#888888] text-lg font-extrabold">
+          {props.title}
+        </span>
         {/* left form */}
         <div className="grid gap-3">
           {/* tinh thanh */}
@@ -194,12 +207,13 @@ function ProvinceSelector(props) {
               required
               name={'address_' + props.ProvinceSelectorID}
               label="Địa chỉ"
-              {...(props.localStorageData['address_' + props.ProvinceSelectorID]
-                ? { value: props.localStorageData['address_' + props.ProvinceSelectorID] }
+              {...(localData['address_' + props.ProvinceSelectorID]
+                ? {
+                    value: localData['address_' + props.ProvinceSelectorID],
+                  }
                 : {})}
               variant="standard"
               onChange={handleOnChange}
-              defaultValue=""
               required
             />
           </FormControl>
@@ -207,14 +221,15 @@ function ProvinceSelector(props) {
             <TextField
               className="pt-5"
               fullWidth
-              {...(props.localStorageData
-                ? { value: props.localStorageData['fulladdress_' + props.ProvinceSelectorID] }
+              {...(localData['fulladdress_' + props.ProvinceSelectorID]
+                ? {
+                    value: localData['fulladdress_' + props.ProvinceSelectorID],
+                  }
                 : {})}
               name={'fulladdress_' + props.ProvinceSelectorID}
               placeholder="Địa chỉ đầy đủ"
               variant="standard"
               onChange={handleOnChange}
-              defaultValue=""
               // error
             />
           </FormControl>
