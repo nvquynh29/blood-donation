@@ -8,6 +8,7 @@ import isAuth from '../middleware/AuthMiddleware.js'
 
 const volunteerRouter = express.Router()
 volunteerRouter.post('/', VolunteerController.addVolunteer)
+volunteerRouter.post('/org', [isAuth, isAdmin], VolunteerController.addVolunteerAdmin)
 volunteerRouter.get('/', VolunteerController.getAllVolunteers)
 volunteerRouter.get('/info/:id', VolunteerController.getVolunteer)
 volunteerRouter.put('/markAsAccepted/list', VolunteerController.markAsAccepted)
