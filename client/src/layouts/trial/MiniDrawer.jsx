@@ -147,6 +147,9 @@ export default function MiniDrawer({ children }) {
 
   useEffect(() => {
     getCurrentUser()
+  }, [])
+
+  useEffect(() => {
     let handleClickOutside = (event) => {
       if (
         userDropDown.current &&
