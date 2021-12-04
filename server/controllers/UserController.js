@@ -23,17 +23,18 @@ const updateUser = async (req, res) => {
       name, email, currentPassword, newPassword,
     } = req.body
     const user = await User.findOne({ _id })
-    const isValidUser = bcrypt.compareSync(currentPassword, user.password)
-    if (isValidUser) {
-      const password = await bcrypt.hash(newPassword, salt)
-      const response = await User.findOneAndUpdate(
-        { _id },
-        { name, email, password },
-        { new: true },
-      )
-      return res.status(200).json({ name: response.name, email: response.email })
+    const data = { name, email }
+    if (currentPassword && newPassword) {
+      const isValidUser = bcrypt.compareSync(currentPassword, user.password)
+      if (isValidUser) {
+        const password = await bcrypt.hash(newPassword, salt)
+        data.password = password
+      } else {
+        return res.status(403).json({ msg: 'password incorrect' })
+      }
     }
-    return res.status(403).json({ msg: 'password incorrect' })
+    const response = await User.findOneAndUpdate({ _id }, data, { new: true })
+    return res.status(200).json({ name: response.name, email: response.email })
   } catch (error) {
     console.log(error)
     return res.status(500).json(error)
