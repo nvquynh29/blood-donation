@@ -128,6 +128,7 @@ export default function MiniDrawer({ children }) {
   const getCurrentUser = async () => {
     try {
       const res = await getUser()
+      console.log(res.data)
       setUser(res.data)
     } catch (error) {
       console.log(error)

@@ -9,6 +9,7 @@ const RequestBloodForm = () => {
     const onFinish =async (values) => {
         values.birthday = values.birthday._d.toLocaleDateString('en-CA')
         values.date_of_birth = values.birthday
+        console.log(values)
         delete values.birthday
         await addRequestBlood(values)
         notification.open({
