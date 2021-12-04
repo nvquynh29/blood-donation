@@ -32,16 +32,12 @@ const schema = mongoose.Schema({
     required: true,
   },
   organization_id: {
-    type: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Organization',
-      required: true,
-      default: null,
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization',
+    default: null,
   },
   accepted: {
     type: Boolean,
-    required: true,
     default: false,
   },
 })

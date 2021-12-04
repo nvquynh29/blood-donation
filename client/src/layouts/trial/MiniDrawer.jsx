@@ -163,7 +163,7 @@ export default function MiniDrawer({ children }) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  })
+  }, [])
 
   return (
     <Box sx={{ display: 'flex' }}>
