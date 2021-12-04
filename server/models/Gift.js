@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
   name: {
@@ -6,15 +6,10 @@ const schema = new mongoose.Schema({
     required: true,
   },
   type: {
-    type: Number,
-    required: true,
-  },
-  description: String,
-  image_path: String,
-  level: {
     type: String,
     required: true,
   },
+  image_path: String,
 })
 
 const Gift = mongoose.model('Gift', schema)

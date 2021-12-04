@@ -12,6 +12,7 @@ import donationRouter from './routes/donation.js'
 import isAdmin from './middleware/AdminMiddleware.js'
 import requestBloodRouter from './routes/requestBlood.js'
 import userRouter from './routes/user.js'
+import giftRouter from './routes/gift.js'
 
 dotenv.config()
 const app = express()
@@ -29,6 +30,7 @@ app.use('/event', eventRouter)
 app.use('/donation', donationRouter)
 app.use('/request-blood', requestBloodRouter)
 app.use('/user', userRouter)
+app.use('/gift', giftRouter)
 initAPIs(app) // use isAuth middleware from this line
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
