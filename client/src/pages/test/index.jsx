@@ -5,7 +5,8 @@ import OrganizationDetail from '../organization/[id]/index'
 function index() {
   return (
     <div>
-      <OrganizationDetail />
+      {/* <OrganizationDetail /> */}
+      <MultiStepForm />
     </div>
   )
 }

@@ -1,43 +1,29 @@
-import { Input, FormControl, InputLabel, MenuItem, Paper, Select, TextField } from '@mui/material'
-import React, { useState, useEffect, useRef } from 'react'
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+} from '@mui/material'
+import React, { useEffect, useState, memo, useRef } from 'react'
 import { getAllProvinces } from '../../../api/province'
 
-function ProvinceSelector() {
+function ProvinceSelector(props) {
+  const [localData, setLocalData] = useState({})
   const [provinces, setProvinces] = useState([])
+  const [fliterProvince, setFliterProvince] = useState([])
   const [districts, setDistricts] = useState([])
   const [wards, setWards] = useState([])
-
   const [formState, setFormState] = useState({})
   const ref = useRef()
-  ref.current = formState
   const getAllProvincesData = async () => {
     const res = await getAllProvinces()
     setProvinces(res.data)
+    setFliterProvince(res.data)
   }
-  // function search() {
-  //   input = document.getElementById('myInput')
-  //   filter = input.value
 
-  //   for (i = 0; i < tr.length; i++) {
-  //     td = tr[i].getElementsByTagName('td')[1]
-  //     if (td) {
-  //       txtValue = td.textContent || td.innerText
-  //       if (
-  //         txtValue
-  //           .toUpperCase()
-  //           .normalize('NFD')
-  //           .replace(/[\u0300-\u036f]/g, '')
-  //           .replace(/đ/g, 'd')
-  //           .replace(/Đ/g, 'D')
-  //           .indexOf(filter) > -1
-  //       ) {
-  //         tr[i].style.display = ''
-  //       } else {
-  //         tr[i].style.display = 'none'
-  //       }
-  //     }
-  //   }
-  // }
   const formatSearch = (text) => {
     return text
       .toUpperCase()
@@ -50,92 +36,164 @@ function ProvinceSelector() {
 
   const searchProvinces = (event) => {
     const suggestedProvince = provinces.filter((item) =>
-      formatSearch(item.name).includes(formatSearch(event.target.value))
+      formatSearch(item.name).includes(formatSearch(event.target.value)),
     )
 
     console.log(suggestedProvince)
+    setFliterProvince(suggestedProvince)
   }
   useEffect(() => {
     getAllProvincesData()
   }, [])
 
+  useEffect(() => {
+    setLocalData(props.localStorageData)
+  }, [props.localStorageData])
+
   const handleOnChange = (e) => {
-    const value = e.target.value
-    const name = e.target.name
-    setFormState((pre) => ({ ...Object.assign({}, pre), [name]: value }))
+    // changeOnlyLocal(e)
+    e.preventDefault()
+    e.stopPropagation()
+    const { name, value } = e.target
+    setLocalData({ ...localData, [name]: value })
+    console.log({ [name]: value.name || value })
+    setFormState((pre) => ({
+      ...Object.assign({}, pre),
+      [name]: value.name || value,
+    }))
     switch (name) {
-      case 'city':
-        setDistricts(value.districts ?? [])
+      case `city_${props.ProvinceSelectorID}`:
+        const prvData = provinces.find((item) => item.name === value).districts
+        setDistricts(prvData)
         return
-      case 'district':
-        setWards(value.wards ?? [])
+      case `district_${props.ProvinceSelectorID}`:
+        const disData = districts.find((item) => item.name === value).wards
+        setWards(disData)
         return
-      case 'ward':
+      case `ward_${props.ProvinceSelectorID}`:
         return
       default:
         break
     }
   }
   useEffect(() => {
-    // console.log(formState)
+    if (localData['city_' + props.ProvinceSelectorID]) {
+      const currentProvince = provinces.find(
+        (item) => item.name === localData['city_' + props.ProvinceSelectorID],
+      )
+      if (currentProvince) {
+        setDistricts(currentProvince.districts)
+      }
+    }
+  })
+  useEffect(() => {
+    const currentDistrict = districts.find(
+      (item) => item.name === localData['district_' + props.ProvinceSelectorID],
+    )
+    if (currentDistrict) {
+      setWards(currentDistrict.wards)
+    }
+  }, [districts])
+
+  const stopImmediatePropagation = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+  }
+
+  useEffect(() => {
+    props.onChange(formState)
   }, [formState])
   return (
     <div>
-      <Paper className="px-5 py-10 ">
+      <Paper className="px-5 pb-10 pt-5 ">
+        <span className=" text-[#888888] text-lg font-extrabold">
+          {props.title}
+        </span>
         {/* left form */}
         <div className="grid gap-3">
           {/* tinh thanh */}
           <FormControl fullWidth variant="standard" required>
-            <InputLabel id="province-1">Tỉnh/Thành phố*</InputLabel>
-
+            <InputLabel id="province-1">Tỉnh/Thành phố</InputLabel>
             <Select
               labelId="province-1"
-              defaultValue=""
-              // value={formState?.city?.name || 'helllo'}
+              required
+              variant="standard"
+              className="w-full"
+              displayEmpty
               onChange={handleOnChange}
-              label="Tỉnh/Thành phố*"
-              name="city"
+              label="Tỉnh/Thành phố"
+              {...(localData['city_' + props.ProvinceSelectorID]
+                ? { value: localData['city_' + props.ProvinceSelectorID] }
+                : { value: '' })}
+              name={'city_' + props.ProvinceSelectorID}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: fliterProvince.length * 4.5,
+                    minHeight: 100,
+                  },
+                },
+              }}
             >
-              <Input fullWidth type="text" variant="standard" disabled placeholder="Tìm kiếm" />
-              {provinces.map((item) => (
-                <MenuItem key={item.code} name={item.name} value={item}>
+              <MenuItem
+                // value=""
+                onClickCapture={stopImmediatePropagation}
+                className="sticky top-0 z-50 bg-opacity-100 !bg-white !shadow-md pb-3 !pt-0"
+                onKeyDown={(e) => e.stopPropagation()}
+                onChange={searchProvinces}
+              >
+                <Input
+                  fullWidth
+                  type="text"
+                  variant="standard"
+                  placeholder="Tìm kiếm"
+                  className="w-full h-full bg-white"
+                />
+              </MenuItem>
+              {fliterProvince.map((item) => (
+                <MenuItem key={item.code} name={item.name} value={item.name}>
                   {item.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
+
           {/* huyen  */}
           <FormControl fullWidth variant="standard" required>
-            <InputLabel id="district-1">Huyện/Quận*</InputLabel>
+            <InputLabel id="district-1">Huyện/Quận</InputLabel>
             <Select
               labelId="district-1"
               defaultValue=""
-              // value={currentDistrict.name}
+              required
+              {...(localData['district_' + props.ProvinceSelectorID]
+                ? { value: localData['district_' + props.ProvinceSelectorID] }
+                : { value: '' })}
               onChange={handleOnChange}
-              label="Huyện/Quận*"
-              name="district"
+              label="Huyện/Quận"
+              name={'district_' + props.ProvinceSelectorID}
             >
               {districts.map((item) => (
-                <MenuItem key={item.code} name={item.name} value={item}>
+                <MenuItem key={item.code} name={item.name} value={item.name}>
                   {item.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
           {/* xa phuong */}
-
           <FormControl fullWidth variant="standard" required>
-            <InputLabel id="ward-1">Xã/Phường*</InputLabel>
+            <InputLabel id="ward-1">Xã/Phường</InputLabel>
             <Select
               labelId="ward-1"
-              defaultValue=""
-              // value={currentWard.name}
+              required
+              {...(localData['ward_' + props.ProvinceSelectorID]
+                ? { value: localData['ward_' + props.ProvinceSelectorID] }
+                : { value: '' })}
               onChange={handleOnChange}
-              label="Xã/Phường*"
-              name="ward"
+              label="Xã/Phường"
+              name={'ward_' + props.ProvinceSelectorID}
             >
               {wards.map((item) => (
-                <MenuItem key={item.code} name={item.name} value={item}>
+                <MenuItem key={item.code} name={item.name} value={item.name}>
                   {item.name}
                 </MenuItem>
               ))}
@@ -146,22 +204,33 @@ function ProvinceSelector() {
             <TextField
               className="pt-2"
               fullWidth
-              name="address"
-              label="Địa chỉ*"
+              required
+              name={'address_' + props.ProvinceSelectorID}
+              label="Địa chỉ"
+              {...(localData['address_' + props.ProvinceSelectorID]
+                ? {
+                    value: localData['address_' + props.ProvinceSelectorID],
+                  }
+                : {})}
               variant="standard"
               onChange={handleOnChange}
-              defaultValue=""
+              required
             />
           </FormControl>
           <FormControl fullWidth variant="standard">
             <TextField
               className="pt-5"
               fullWidth
-              name="fulladdress"
+              {...(localData['fulladdress_' + props.ProvinceSelectorID]
+                ? {
+                    value: localData['fulladdress_' + props.ProvinceSelectorID],
+                  }
+                : {})}
+              name={'fulladdress_' + props.ProvinceSelectorID}
               placeholder="Địa chỉ đầy đủ"
               variant="standard"
               onChange={handleOnChange}
-              defaultValue=""
+              // error
             />
           </FormControl>
         </div>
@@ -170,4 +239,4 @@ function ProvinceSelector() {
   )
 }
 
-export default ProvinceSelector
+export default memo(ProvinceSelector)
