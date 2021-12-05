@@ -88,7 +88,7 @@ function VolunteerRequests() {
 
   const onAccept = async () => {
     try {
-      await volunteerApi.markAsAccepted(selectedKeys)
+      await volunteerApi.markAsAccepted({ listID: selectedKeys })
       setData(data.filter((element) => !(selectedKeys.includes(element.key))))
       setFilterData(filterData.filter((element) => !(selectedKeys.includes(element.key))))
       setSelectedKeys([])

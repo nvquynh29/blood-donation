@@ -9,11 +9,11 @@ function Profile() {
   const openNotification = () => {
     notification.success({
       type: 'success',
-      message: 'Chấp nhận đăng ký tiếp nhận máu thành công!',
+      message: 'Cập nhật thông tin thành công',
     })
   }
 
-  const getUser = async () => {
+  const getCurrentUser = async () => {
     try {
       const res = await userApi.getUser()
       setUser(res.data)
@@ -28,6 +28,7 @@ function Profile() {
     const payload = { name, email, currentPassword, newPassword }
     try {
       const res = await userApi.updateUser(payload)
+      openNotification()
       setUser(res.data)
     } catch (error) {
       console.log(error)
@@ -35,62 +36,65 @@ function Profile() {
   }
 
   useEffect(() => {
-    getUser()
+    getCurrentUser()
   }, [])
 
   return (
     <MiniDrawer>
-      <div className="mx-auto">
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 8 }}
-          initialValues={{ name: user.name, email: user.email }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            label="Họ và tên"
-            name="name"
-            rules={[
-              { required: true, message: 'Họ và tên không được để trống' },
-            ]}
+      <div className="profile">
+        <div className="title">Thông tin cá nhân</div>
+        <div className="mx-auto form">
+          <Form
+            name="basic"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 8 }}
+            // initialValues={{ name: user.name, email: user.email }}
+            onFinish={onFinish}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: 'Email không được để trống' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Mật khẩu hiện tại"
-            name="currentPassword"
-            // rules={[{ required: true, message: 'Họ và tên không được để trống' }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            label="Mật khẩu mới"
-            name="newPassword"
-            // rules={[{ required: true, message: 'Họ và tên không được để trống' }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            label="Nhập lại mật khẩu"
-            name="confirmPassword"
-            // rules={[{ required: true, message: 'Họ và tên không được để trống' }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Cập nhật
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              label="Họ và tên"
+              name="name"
+              rules={[
+                { required: true, message: 'Họ và tên không được để trống' },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true, message: 'Email không được để trống' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Mật khẩu hiện tại"
+              name="currentPassword"
+              // rules={[{ required: true, message: 'Họ và tên không được để trống' }]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label="Mật khẩu mới"
+              name="newPassword"
+              // rules={[{ required: true, message: 'Họ và tên không được để trống' }]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label="Nhập lại mật khẩu"
+              name="confirmPassword"
+              // rules={[{ required: true, message: 'Họ và tên không được để trống' }]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
+              <Button type="primary" htmlType="submit" className="btn">
+                Cập nhật
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </MiniDrawer>
   )

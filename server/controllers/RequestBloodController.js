@@ -38,7 +38,7 @@ const markAsAccepted = async (req, res) => {
           accepted: true,
           organization_id: mongoose.Types.ObjectId(organization_id),
         },
-      }
+      },
     )
     return res.status(200).json(response)
   } catch (error) {

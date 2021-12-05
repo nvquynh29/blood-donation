@@ -135,15 +135,21 @@ export default function MiniDrawer({ children }) {
   }
 
   const getFirstCharName = (userName) => {
-    const arr = userName.split(' ')
-    const firstChar = arr[arr.length - 1][0]
-    return firstChar
+    if (userName) {
+      const arr = userName.split(' ')
+      const firstChar = arr[arr.length - 1][0]
+      return firstChar
+    }
+    return 'A';
   }
 
   const userDropDown = useRef(null)
 
   useEffect(() => {
     getCurrentUser()
+  }, [])
+
+  useEffect(() => {
     let handleClickOutside = (event) => {
       if (
         userDropDown.current &&
@@ -160,7 +166,7 @@ export default function MiniDrawer({ children }) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  })
+  }, [])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -193,11 +199,11 @@ export default function MiniDrawer({ children }) {
           <div className="adminInfo" id="avaI" style={{ visibility: 'hidden' }}>
             <ul>
               <div className="menuItem">
-                <li>
-                  <a href="/profile" className="text-white">
+                <a href="/profile" className="text-white">
+                  <li>
                     Trang cá nhân
-                  </a>
-                </li>
+                  </li>
+                </a>
               </div>
               <div className="menuItem">
                 <li onClick={logout}>
