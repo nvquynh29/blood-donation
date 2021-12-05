@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie'
@@ -17,6 +17,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import { ReactReduxContext } from 'react-redux'
 import { Avatar } from '@mui/material'
 import {
   Home,
@@ -27,6 +28,7 @@ import {
   Logout,
 } from '@mui/icons-material'
 import { getUser } from '../../api/user'
+import { removeUser } from "../../store/actions/userAction";
 
 const drawerWidth = 240
 
@@ -100,6 +102,7 @@ export default function MiniDrawer({ children }) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const [user, setUser] = useState({})
+  const { store } = useContext(ReactReduxContext)
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -113,6 +116,7 @@ export default function MiniDrawer({ children }) {
     const cookies = new Cookies()
     cookies.remove('accessToken', { path: '/' })
     cookies.remove('refreshToken', { path: '/' })
+    store.dispatch(removeUser())
     router.push('/')
   }
 

@@ -1,0 +1,3 @@
+export const REQUEST_USER_API = 'REQUEST_USER_API'
+export const RECEIVE_USER_API = 'RECEIVE_USER_API'
+export const REMOVE_USER = 'REMOVE_USER'

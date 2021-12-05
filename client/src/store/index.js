@@ -1,18 +1,30 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './reducers'
 import moment from 'moment'
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from './sagas'
+import { env } from '../../next.config'
+import { composeWithDevTools } from "redux-devtools-extension"
 
-const enhancers =  compose(
-    (typeof window !== 'undefined' && window.devToolsExtension) ? 
-    window.devToolsExtension() : f => f
-)
+// redux devtool
+const sagaMiddleware = createSagaMiddleware()
+const bindMiddleware = (middleware) => {
+    if (env.MODE !== "PRODUCTION") {
+     // I require this only in dev environment
+        return composeWithDevTools(applyMiddleware(...middleware))
+    }
+    return applyMiddleware(...middleware)
+}
+
+// persist the state with local storage
 const ISSERVER = typeof window === "undefined";
 const loadState = () => {
     try {
         const serializedState = localStorage.getItem('state')
         if(serializedState === null) {
             return {
-                volunteer: null
+                volunteer: null,
+                user: null,
             };
         }
         const state = JSON.parse(serializedState)
@@ -23,11 +35,11 @@ const loadState = () => {
     } catch (e) {
         console.log(e)
         return {
-            volunteer: null
+            volunteer: null,
+            user: null,
         }
     }
-};
-
+}
 const saveState = (state) => {
     try {
         const newState = {...state}
@@ -43,10 +55,11 @@ const saveState = (state) => {
         console.log(e)
     }
 }
+const peristedState = (ISSERVER) ? { volunteer: null, user: null}:   loadState()
 
-const peristedState = (ISSERVER) ? { volunteer: null}:   loadState()
-const store = createStore(rootReducer, peristedState, 
-enhancers)
+const store = createStore(rootReducer, peristedState,
+    bindMiddleware([sagaMiddleware]))
+sagaMiddleware.run(rootSaga)
 store.subscribe(() => {
     saveState(store.getState())
 });
