@@ -57,10 +57,17 @@ function ProvinceSelector(props) {
     const { name, value } = e.target
     setLocalData({ ...localData, [name]: value })
     console.log({ [name]: value.name || value })
-    setFormState((pre) => ({
-      ...Object.assign({}, pre),
-      [name]: value.name || value,
-    }))
+    setFormState((pre) => {
+      props.onChange({
+        ...Object.assign({}, pre),
+        [name]: value.name || value,
+      })
+      return {
+        ...Object.assign({}, pre),
+        [name]: value.name || value,
+      }
+    })
+
     switch (name) {
       case `city_${props.ProvinceSelectorID}`:
         const prvData = provinces.find((item) => item.name === value).districts
