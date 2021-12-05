@@ -111,18 +111,16 @@ function index() {
                   {!item.subquestion || item.subquestion.length < 1 ? (
                     <FormControl required>
                       <RadioGroup
-                        name={'question_' + index}
+                        name={item.title}
                         required
                         class="flex !flex-row !flex-nowrap"
                       >
                         <Radio
-                          // name={'y' + index}
                           defaultChecked={false}
                           value={true}
                           onChange={onChecked}
                         />
                         <Radio
-                          // name={'n' + index}
                           defaultChecked={false}
                           value={false}
                           onChange={onChecked}
@@ -146,7 +144,7 @@ function index() {
                           <FormControl>
                             <RadioGroup
                               required
-                              name={'subquestion_of_' + index + '-' + subindex}
+                              name={subitem.title}
                               class="flex !flex-row !flex-nowrap"
                             >
                               <Radio

@@ -120,19 +120,23 @@ export default function HorizontalNonLinearStepper() {
     steps.forEach((step) => {
       allStepState.push({ [step]: JSON.parse(localStorage.getItem(step)) })
     })
-    console.log(...allStepState)
     const form = Array.from(e.target)
     const questionData = form.filter(
       (element) => element.type === 'radio' && element.checked,
     )
-    console.log(questionData)
+    let step3 = {}
+
     if (questionData.length < 16) {
       return openNotification('Vui lòng trả lời hết câu hỏi')
     } else {
       questionData.forEach((element) => {
-        console.log(element.value)
+        if (element.name === 'selectGift') return
+        const { name, value } = element
+        step3 = { ...step3, [name]: value }
       })
     }
+    allStepState.push({ step3: step3 })
+    console.log(...allStepState)
   }
   return (
     <Box sx={{ width: '100%' }} className="p-6 bg-[#f5f5f5]">
