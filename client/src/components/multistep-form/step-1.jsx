@@ -70,9 +70,9 @@ function index(props) {
     localStorage.setItem('step1', JSON.stringify({ ...obj, ...childState }))
     setStep1State({ ...obj, ...childState })
   }
-  const handleChildCallBack = useCallback((data, cb) => {
+  const handleChildCallBack = (data, cb) => {
     setChildState({ ...childState, ...data })
-  }, [])
+  }
   useEffect(() => {
     props.callback(step1State)
   }, [step1State])
@@ -97,6 +97,12 @@ function index(props) {
       setStep1State({ ...step1State, ['dob']: value })
     }
   }
+  useEffect(() => {
+    localStorage.setItem(
+      'step1',
+      JSON.stringify({ ...step1State, ...childState }),
+    )
+  }, [step1State, childState])
   return (
     <div className="mb-10">
       <form autoComplete="off" onSubmit={handleFormSubmit}>
