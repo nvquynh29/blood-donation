@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { useRouter } from 'next/router'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
@@ -6,8 +6,11 @@ import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
 import { useForm } from 'antd/lib/form/Form'
 import Cookies from 'universal-cookie'
+import { ReactReduxContext } from "react-redux"
+import { requestUserApi } from '../../store/actions/userAction'
 
 const Login = () => {
+  const {store} = useContext(ReactReduxContext)
   const router = useRouter()
   const cookies = new Cookies()
 
@@ -29,6 +32,7 @@ const Login = () => {
       if (res.status === 200) {
         writeCookies(res.data)
         router.push('/home')
+        store.dispatch(requestUserApi(res.data.accessToken))
       }
     } catch (error) {
       console.log(error)
@@ -101,6 +105,17 @@ const Login = () => {
       </div>
     </div>
   )
+}
+
+Login.getInitialProps = async (ctx) => {
+  const cookies = new Cookies(ctx.req ? ctx.req.headers.cookie : '')
+  if (cookies.get('accessToken')) {
+    ctx.res.writeHead(302, {
+      Location: '/home',
+    })
+    ctx.res.end()
+  }
+  return {}
 }
 
 export default Login

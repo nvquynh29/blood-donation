@@ -1,9 +1,11 @@
-@import "../fonts/fonts.scss";
-@import "../../src/components/advise-section/advise.scss";
-@import "../../src/pages/organization/[id]/style.scss";
-@import "../../src/components/search-result/styles.scss";
-@import "../../src/pages/volunteers/styles.scss";
-@import "../../src/layouts/trial/styles.scss";
+@import '../fonts/fonts.scss';
+@import '../../src/components/advise-section/advise.scss';
+@import '../../src/pages/organization/[id]/style.scss';
+@import '../../src/components/search-result/styles.scss';
+@import '../../src/pages/volunteers/styles.scss';
+@import '../../src/layouts/trial/styles.scss';
+@import '../../src/pages/admin/event/add/styles.scss';
+@import '../../src/pages/organization-info/styles.scss';
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +27,7 @@ body {
 body,
 input,
 button {
-  font: 14px "Roboto", sans-serif;
+  font: 14px 'Roboto', sans-serif;
 }
 a {
   color: black;
@@ -111,7 +113,7 @@ img {
       padding: 10px;
     }
     .content h3 {
-      font-family: "Source Sans Pro", sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       color: #1a1a1a;
       font-weight: 700;
       text-transform: uppercase;
@@ -123,7 +125,7 @@ img {
       letter-spacing: 0.03em;
       position: relative;
       overflow: hidden;
-      font-family: "Source Sans Pro", sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       line-height: 70px;
       font-weight: 700;
       margin: 24px 0 0;
@@ -134,7 +136,7 @@ img {
 
   .slider-info:before,
   .slider-info:after {
-    content: "";
+    content: '';
     width: 130px;
     height: 130px;
     background: transparent;
@@ -203,7 +205,7 @@ img {
   font-size: 40px;
   font-weight: 750;
   color: #1a1a1a;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 .loginDetail {
   display: flex;
@@ -295,7 +297,17 @@ img {
   background-color: #eaedf1;
   padding: 50px;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
 .requestBloodForm {
   .ant-select-selector {
     height: 40px !important;
@@ -407,5 +419,40 @@ img {
 @media (max-width: 1024px) {
   .hisFormInputs {
     flex-direction: column !important;
+  }
+}
+.ant-notification {
+  z-index: 99999999;
+}
+
+.profile {
+  .title {
+    margin-top: 1.5rem !important;
+    font-size: 2.5rem !important;
+    margin-bottom: 0.5rem;
+    font-weight: 550 !important;
+    line-height: 1.2;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    color: #212529 !important;
+    font-family: sans-serif;
+  }
+  .form {
+    margin-top: 100px;
+    .ant-btn-primary {
+      background: #fc3e47;
+      border: none;
+      height: 40px;
+      margin-top: 10px;
+      border-radius: 3px;
+      margin-left: 137px;
+      width: 40%;
+    }
+    .ant-btn-primary:hover,
+    .ant-btn-primary:focus {
+      background: #d64047;
+    }
   }
 }

@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Modal, notification } from 'antd'
-import {
-  EditOutlined,
-  DeleteOutlined,
-  CloseCircleOutlined,
-  CheckCircleTwoTone,
-} from '@ant-design/icons'
+import { notification } from 'antd'
 import CustomTable from '../../../components/custom-table'
 import * as volunteerApi from '../../../api/volunteer'
 import moment from 'moment'
@@ -94,7 +88,7 @@ function VolunteerRequests() {
 
   const onAccept = async () => {
     try {
-      await volunteerApi.markAsAccepted(selectedKeys)
+      await volunteerApi.markAsAccepted({ listID: selectedKeys })
       setData(data.filter((element) => !(selectedKeys.includes(element.key))))
       setFilterData(filterData.filter((element) => !(selectedKeys.includes(element.key))))
       setSelectedKeys([])

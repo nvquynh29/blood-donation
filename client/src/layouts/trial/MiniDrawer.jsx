@@ -18,111 +18,141 @@ import { Avatar } from '@mui/material';
 import { Home, SupervisedUserCircle, Event, Bloodtype, Apartment, Logout } from '@mui/icons-material';
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { getUser } from '../../api/user'
+import { removeUser } from "../../store/actions/userAction";
 
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: 'hidden',
-});
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+})
 
 const closedMixin = (theme) => ({
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(9)} + 1px)`,
-    },
-});
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(9)} + 1px)`,
+  },
+})
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-}));
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}))
 
 const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
+  }),
+}))
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        boxSizing: 'border-box',
-        ...(open && {
-            ...openedMixin(theme),
-            '& .MuiDrawer-paper': openedMixin(theme),
-        }),
-        ...(!open && {
-            ...closedMixin(theme),
-            '& .MuiDrawer-paper': closedMixin(theme),
-        }),
-    }),
-);
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}))
 
 export default function MiniDrawer({ children }) {
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+  const theme = useTheme()
+  const router = useRouter()
+  const [open, setOpen] = React.useState(false)
+  const [user, setUser] = useState({})
+  const { store } = useContext(ReactReduxContext)
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+  const handleDrawerOpen = () => {
+    setOpen(true)
+  }
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+  const handleDrawerClose = () => {
+    setOpen(false)
+  }
 
-    function handleOnclick() {
-        let a = document.getElementById('avaI');
-        if (a.style.visibility === "visible") {
-            a.style.visibility = "hidden";
-        }
-        else {
-            a.style.visibility = "visible";
-        }
+  const logout = () => {
+    const cookies = new Cookies()
+    cookies.remove('accessToken', { path: '/' })
+    cookies.remove('refreshToken', { path: '/' })
+    store.dispatch(removeUser())
+    router.push('/')
+  }
+
+  function handleOnclick() {
+    let a = document.getElementById('avaI')
+    if (a.style.visibility === 'visible') {
+      a.style.visibility = 'hidden'
+    } else {
+      a.style.visibility = 'visible'
     }
+  }
 
-    const userDropDown = useRef(null);
+  const getCurrentUser = async () => {
+    try {
+      const res = await getUser()
+      setUser(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-    useEffect(() => {
-        let handleClickOutside = (event) => {
-            if (userDropDown.current && !userDropDown.current.contains(event.target)) {
-                let a = document.getElementById('avaI');
-                if (a.style.visibility === "visible") {
-                    a.style.visibility = "hidden";
-                }
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
+  const getFirstCharName = (userName) => {
+    if (userName) {
+      const arr = userName.split(' ')
+      const firstChar = arr[arr.length - 1][0]
+      return firstChar
+    }
+    return 'A';
+  }
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+  const userDropDown = useRef(null)
+
+  useEffect(() => {
+    getCurrentUser()
+  }, [])
+
+  useEffect(() => {
+    let handleClickOutside = (event) => {
+      if (
+        userDropDown.current &&
+        !userDropDown.current.contains(event.target)
+      ) {
+        let a = document.getElementById('avaI')
+        if (a.style.visibility === 'visible') {
+          a.style.visibility = 'hidden'
         }
     });
 
@@ -221,22 +251,11 @@ export default function MiniDrawer({ children }) {
                         </Link>
                     </ListItem>
                 </List>
-                {/* <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List> */}
-            </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <DrawerHeader />
-                {children}
-            </Box>
-        </Box>
-    );
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        {children}
+      </Box>
+    </Box>
+  )
 }

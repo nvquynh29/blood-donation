@@ -3,7 +3,7 @@ import moment from 'moment'
 import { normalizeString } from '../../utils'
 import { Row, Table } from 'antd'
 
-function SearchResult({ hidden, data }) {
+function SearchResult({ data }) {
   let dataSource = []
   const columns = [
     {

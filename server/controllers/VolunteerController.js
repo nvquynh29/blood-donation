@@ -4,6 +4,25 @@ import Volunteer from '../models/Volunteer.js'
 
 const addVolunteer = async (req, res) => {
   try {
+    let newVolunteer = new Volunteer({
+      name: req.body.name,
+      phone: req.body.phone_number,
+      date_of_birth: req.body.birthday,
+      address: req.body.address,
+      email: req.body.email,
+      organization_id: req.body.organization_id,
+      gender: req.body.gender,
+      accepted: req.body.accepted ? req.body.accepted : false,
+    })
+    newVolunteer = await newVolunteer.save()
+    return res.status(200).json(newVolunteer)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+const addVolunteerAdmin = async (req, res) => {
+  try {
     if (req.user && req.body.organization_id === 'mine') {
       const { _id } = req.user
       const user = await User.findOne({ _id })
@@ -17,7 +36,7 @@ const addVolunteer = async (req, res) => {
       email: req.body.email,
       organization_id: req.body.organization_id,
       gender: req.body.gender,
-      accepted: (req.body.accepted) ? req.body.accepted : false,
+      accepted: req.body.accepted ? req.body.accepted : false,
     })
     newVolunteer = await newVolunteer.save()
     return res.status(200).json(newVolunteer)
@@ -74,6 +93,7 @@ const getOrgRequests = async (req, res) => {
       organization_id: organization_id,
       accepted: false,
     })
+    console.log(req.user)
     return res.status(200).json(volunteerRequest)
   } catch (error) {
     return res.status(500).json(error)
@@ -119,4 +139,5 @@ export const VolunteerController = {
   getOrgRequests,
   getVolunteer,
   markAsAccepted,
+  addVolunteerAdmin,
 }

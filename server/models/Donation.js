@@ -51,7 +51,7 @@ const schema = new mongoose.Schema({
   },
   is_done: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 })
 

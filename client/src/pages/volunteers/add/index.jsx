@@ -2,7 +2,7 @@ import react from 'react'
 import VolunteerForm from '../../../components/vonlunteer-form/VolunteerForm'
 import router from 'next/router'
 import { notification } from 'antd'
-import { AddVolunteer } from '../../../api/volunteer'
+import { AddVolunteerOrg } from '../../../api/volunteer'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 const VolunteerAdd = () => {
 
@@ -17,7 +17,7 @@ const VolunteerAdd = () => {
             values.birthday = values.birthday._d.toLocaleDateString('en-CA')
             values.accepted = true
             values.organization_id = 'mine'
-            await AddVolunteer(values)
+            await AddVolunteerOrg(values)
             notification.open({
               type: "success",
               message: "Ghi nhận thành công",
