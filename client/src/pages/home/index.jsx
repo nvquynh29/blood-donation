@@ -10,9 +10,7 @@ const MultiStepForm = dynamic(() => import('../../components/multistep-form/form
 function index() {
   return (
     <MiniDrawer>
-      <div>
-        Home
-      </div>
+      <div>Home</div>
     </MiniDrawer>
   )
 }

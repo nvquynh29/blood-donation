@@ -17,6 +17,7 @@
     "@mui/lab": "^5.0.0-alpha.57",
     "@mui/material": "^5.2.1",
     "@mui/styled-engine-sc": "^5.1.0",
+    "@mui/x-data-grid": "^5.1.0",
     "@reduxjs/toolkit": "^1.6.2",
     "@trendmicro/react-sidenav": "^0.5.0",
     "antd": "^4.16.13",
