@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { notification } from 'antd'
-import CustomTable from '../../../components/custom-table'
-import * as volunteerApi from '../../../api/volunteer'
+import CustomTable from '../../../../components/custom-table'
+import * as volunteerApi from '../../../../api/volunteer'
 import moment from 'moment'
 import router from 'next/router'
 import { data } from 'autoprefixer'
-import MiniDrawer from '../../../layouts/trial/MiniDrawer'
+import MiniDrawer from '../../../../layouts/trial/MiniDrawer'
 function VolunteerRequests() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(data)

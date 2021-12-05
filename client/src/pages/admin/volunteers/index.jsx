@@ -6,12 +6,14 @@ import {
   CloseCircleOutlined,
   CheckCircleTwoTone,
 } from '@ant-design/icons'
-import CustomTable from '../../components/custom-table'
-import * as volunteerApi from '../../api/volunteer'
+import { Button } from 'antd'
+import CustomTable from '../../../components/custom-table'
+import * as volunteerApi from '../../../api/volunteer'
 import moment from 'moment'
 import router from 'next/router'
-import MainLayOut from "../../layouts/main-layout/Default"
-import MiniDrawer from '../../layouts/trial/MiniDrawer'
+import MiniDrawer from '../../../layouts/trial/MiniDrawer'
+import Link from 'next/link'
+
 
 function Volunteers() {
   const [data, setData] = useState([])
@@ -32,12 +34,12 @@ function Volunteers() {
 
   const addVolunteer = () => {
     // TODO: implement function
-    router.push('/volunteers/add')
+    router.push('volunteers/add')
   }
   const editVolunteer = (id) => {
     // TODO: implement function
     // await volunteerApi.updateVolunteer(id, newVolunteer)
-    router.push(`/volunteers/${id}`)
+    router.push(`volunteers/${id}`)
   }
 
   const removeVolunteer = (id) => {
@@ -146,6 +148,11 @@ function Volunteers() {
         <div className="adminTitle">
           Danh sách tình nguyện viên
         </div>
+        <Link href='volunteers/list-request'>
+          <Button>
+            Danh sách đơn đăng ký
+          </Button>
+        </Link>
         <CustomTable
           data={filterData}
           columns={columns}
