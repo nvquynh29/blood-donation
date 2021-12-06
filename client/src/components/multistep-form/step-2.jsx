@@ -38,7 +38,6 @@ function index() {
     const { name, value } = e.target
     switch (name) {
       case 'time-zone':
-        console.log(formLocal)
         localStorage.setItem(
           'step2',
           JSON.stringify({ ...formLocal, time_zone: value }),
@@ -48,7 +47,6 @@ function index() {
 
         return
       case 'capacity':
-        console.log(formLocal)
         localStorage.setItem(
           'step2',
           JSON.stringify({ ...formLocal, capacity: value }),

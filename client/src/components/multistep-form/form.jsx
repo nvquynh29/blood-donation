@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
@@ -113,6 +113,7 @@ export default function HorizontalNonLinearStepper() {
     })
   }
   const handleSumbit = (e) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     setTrickger(true)
     e.preventDefault()
     const steps = ['step1', 'step2']
@@ -138,6 +139,9 @@ export default function HorizontalNonLinearStepper() {
     allStepState.push({ step3: step3 })
     console.log(...allStepState)
   }
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <Box sx={{ width: '100%' }} className="p-6 bg-[#f5f5f5]">
       <Stepper className="mb-3" nonLinear activeStep={activeStep}>
