@@ -268,7 +268,6 @@ function index(props) {
             </Grid>
           </Box>
         </Paper>
-        <Button type="submit">Submit</Button>
         {/* </form>
       <form> */}
         <div className="flex w-full justify-around mt-10">
