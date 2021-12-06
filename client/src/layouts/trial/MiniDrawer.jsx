@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
-import { useRouter } from 'next/router'
+import router from 'next/router'
+import Link from 'next/link'
 import Cookies from 'universal-cookie'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
@@ -99,7 +100,6 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer({ children }) {
   const theme = useTheme()
-  const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const [user, setUser] = useState({})
   const { store } = useContext(ReactReduxContext)
@@ -203,7 +203,7 @@ export default function MiniDrawer({ children }) {
           <div className="adminInfo" id="avaI" style={{ visibility: 'hidden' }}>
             <ul>
               <div className="menuItem">
-                <a href="/profile" className="text-white">
+                <a href="/admin/profile" className="text-white">
                   <li>
                     Trang cá nhân
                   </li>
@@ -238,36 +238,46 @@ export default function MiniDrawer({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem button key="Dashboard">
-            <ListItemIcon>
-              <Home style={{ color: '#fe3c47' }} />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          <ListItem button key="Sự kiện">
-            <ListItemIcon>
-              <Event style={{ color: '#fe3c47' }} />
-            </ListItemIcon>
-            <ListItemText primary="Sự kiện" />
-          </ListItem>
-          <ListItem button key="Tình nguyện viên">
-            <ListItemIcon>
-              <SupervisedUserCircle style={{ color: '#fe3c47' }} />
-            </ListItemIcon>
-            <ListItemText primary="Tình nguyện viên" />
-          </ListItem>
-          <ListItem button key="Đơn vị hiến máu">
-            <ListItemIcon>
-              <Bloodtype style={{ color: '#fe3c47' }} />
-            </ListItemIcon>
-            <ListItemText primary="Đơn vị hiến máu" />
-          </ListItem>
-          <ListItem button key="Tổ chức">
-            <ListItemIcon>
-              <Apartment style={{ color: '#fe3c47' }} />
-            </ListItemIcon>
-            <ListItemText primary="Tổ chức" />
-          </ListItem>
+          <Link href='dashboard'>
+            <ListItem button key="Dashboard">
+              <ListItemIcon>
+                <Home style={{ color: '#fe3c47' }} />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+          </Link>
+          <Link href='event'>
+            <ListItem button key="Sự kiện">
+              <ListItemIcon>
+                <Event style={{ color: '#fe3c47' }} />
+              </ListItemIcon>
+              <ListItemText primary="Sự kiện" />
+            </ListItem>
+          </Link>
+          <Link href='volunteers'>
+            <ListItem button key="Tình nguyện viên">
+              <ListItemIcon>
+                <SupervisedUserCircle style={{ color: '#fe3c47' }} />
+              </ListItemIcon>
+              <ListItemText primary="Tình nguyện viên" />
+            </ListItem>
+          </Link>
+          <Link href='blood/request'>
+            <ListItem button key="Đơn đăng ký tiếp nhận máu">
+              <ListItemIcon>
+                <Bloodtype style={{ color: '#fe3c47' }} />
+              </ListItemIcon>
+              <ListItemText primary="Đơn vị hiến máu" />
+            </ListItem>
+          </Link>
+          <Link href='organization-info'>
+            <ListItem button key="Tổ chức">
+              <ListItemIcon>
+                <Apartment style={{ color: '#fe3c47' }} />
+              </ListItemIcon>
+              <ListItemText primary="Tổ chức" />
+            </ListItem>
+          </Link>
         </List>
         {/* <Divider />
                 <List>

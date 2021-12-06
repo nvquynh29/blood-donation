@@ -1,9 +1,9 @@
 import react from 'react'
-import VolunteerForm from '../../../components/vonlunteer-form/VolunteerForm'
+import VolunteerForm from '../../../../components/vonlunteer-form/VolunteerForm'
 import router from 'next/router'
 import { notification } from 'antd'
-import { AddVolunteerOrg } from '../../../api/volunteer'
-import MiniDrawer from '../../../layouts/trial/MiniDrawer'
+import { AddVolunteerOrg } from '../../../../api/volunteer'
+import MiniDrawer from '../../../../layouts/trial/MiniDrawer'
 const VolunteerAdd = () => {
 
   return (
@@ -23,7 +23,8 @@ const VolunteerAdd = () => {
               message: "Ghi nhận thành công",
               description: "Thêm tình nguyện viên mới thành công!"
             })
-            router.push('/volunteers')
+            router.prefetch('/admin/volunteers')
+            router.push('/admin/volunteers')
           }}
           onFinishFailed={(error) => { console.error(error) }}
         />

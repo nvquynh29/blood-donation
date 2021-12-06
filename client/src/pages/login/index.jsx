@@ -31,7 +31,7 @@ const Login = () => {
       const res = await auth.login(credential)
       if (res.status === 200) {
         writeCookies(res.data)
-        router.push('/home')
+        router.push('/admin/dashboard')
         store.dispatch(requestUserApi(res.data.accessToken))
       }
     } catch (error) {
@@ -111,7 +111,7 @@ Login.getInitialProps = async (ctx) => {
   const cookies = new Cookies(ctx.req ? ctx.req.headers.cookie : '')
   if (cookies.get('accessToken')) {
     ctx.res.writeHead(302, {
-      Location: '/home',
+      Location: 'admin/dashboard',
     })
     ctx.res.end()
   }

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
-import VolunteerForm from "../../components/organization-volunteer-form"
-import MainLayout from "../../layouts/main-layout/Default"
-import { getOrganization, getAdmins } from "../../api/organization"
+import VolunteerForm from "../../../components/organization-volunteer-form"
+import MainLayout from "../../../layouts/main-layout/Default"
+import { getOrganization, getAdmins } from "../../../api/organization"
 import router from "next/router"
-import { env } from "../../../next.config"
-import CustomTable from "../../components/custom-table"
+import { env } from "../../../../next.config"
+import CustomTable from "../../../components/custom-table"
 import moment from "moment"
-import MiniDrawer from "../../layouts/trial/MiniDrawer"
+import MiniDrawer from "../../../layouts/trial/MiniDrawer"
 
 function OrganizationDetail() {
 
