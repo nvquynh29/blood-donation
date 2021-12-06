@@ -28,8 +28,8 @@ function Gifts(props) {
   }
 
   useEffect(() => {
-    setFilteredGifts(giftFilter(props.capacity))
-  }, [props.capacity, gifts])
+    setFilteredGifts(giftFilter(props.amount))
+  }, [props.amount, gifts])
   useEffect(() => {
     const getGifts = async () => {
       const res = await getAllGifts()
