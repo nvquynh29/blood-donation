@@ -16,6 +16,7 @@ import {
 import React, { useEffect, useState, useCallback } from 'react'
 import DatePicker from '../datepicker'
 import ProvinceSelector from '../provinceSelector/provinceSelector'
+import moment from 'moment'
 
 const major = [
   'Học sinh - Sinh viên',
@@ -50,14 +51,14 @@ function index(props) {
     formData.forEach((element) => {
       if (element.value) {
         if (element.name === 'gender' && !element.checked) {
-          return
+          return  
         }
         if (element.name === 'foreigner') {
           console.log(element.checked)
           return (obj[element.name] = element.checked)
         }
-        if (element.name === '') {
-          obj['dob'] = element.value
+        if (element.name === 'date_of_birth') {
+          obj['date_of_birth'] = element.value
         }
         if (element.name && element.value) {
           obj[element.name] = element.value
@@ -94,7 +95,7 @@ function index(props) {
       setStep1State({ ...step1State, [name]: value })
     } else {
       const value = e
-      setStep1State({ ...step1State, ['dob']: value })
+      setStep1State({ ...step1State, ['date_of_birth']: value })
     }
   }
   useEffect(() => {
@@ -122,8 +123,8 @@ function index(props) {
                 />
                 <FormControl required>
                   <DatePicker
-                    name="dob"
-                    {...(step1State.dob ? { value: step1State.dob } : {})}
+                    name="date_of_birth"
+                    {...(step1State.date_of_birth ? { value: step1State.date_of_birth } : {})}
                     onChange={handleChange}
                   />
                 </FormControl>
@@ -133,16 +134,16 @@ function index(props) {
                     aria-label="gender"
                     value={step1State.gender || 'female'}
                     onChange={handleChange}
-                    name="gender"
+                    name="gender" 
                   >
                     <FormControlLabel
-                      value="female"
+                      value="male"
                       name="gender"
                       control={<Radio />}
                       label="Nam"
                     />
                     <FormControlLabel
-                      value="male"
+                      value="female"
                       name="gender"
                       control={<Radio />}
                       label="Nữ"
@@ -168,11 +169,11 @@ function index(props) {
               <div>
                 <TextField
                   label="Số CMND/CCCD"
-                  name="user_uid"
+                  name="citizenID"
                   required
                   // type="number"
-                  {...(step1State.user_uid
-                    ? { value: step1State.user_uid }
+                  {...(step1State.citizenID
+                    ? { value: step1State.citizenID }
                     : {})}
                   variant="standard"
                   className="mx-4 w-1/3"
@@ -203,9 +204,9 @@ function index(props) {
               <div className="mt-5">
                 <TextField
                   label="Số Điện thoại*"
-                  name="phone_number"
-                  {...(step1State.phone_number
-                    ? { value: step1State.phone_number }
+                  name="phone"
+                  {...(step1State.phone
+                    ? { value: step1State.phone }
                     : {})}
                   variant="standard"
                   className="mx-4 w-1/3"
@@ -213,8 +214,8 @@ function index(props) {
                 />
                 <TextField
                   label="Email"
-                  name="mail"
-                  {...(step1State.mail ? { value: step1State.mail } : {})}
+                  name="email"
+                  {...(step1State.email ? { value: step1State.email } : {})}
                   variant="standard"
                   className=" w-1/3"
                   onChange={handleChange}

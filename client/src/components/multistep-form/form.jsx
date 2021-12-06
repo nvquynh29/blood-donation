@@ -10,6 +10,9 @@ import Step2Container from './step-2'
 import Step3Container from './step-3'
 import { notification } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { createDonation } from '../../api/donation'
+import router from 'next/router'
+import moment from 'moment'
 
 const steps = [
   'Thông tin cá nhân',
@@ -69,8 +72,7 @@ export default function HorizontalNonLinearStepper() {
   }
 
   const handleNext = () => {
-    console.log(activeStep)
-    console.log(totalSteps())
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
@@ -78,6 +80,7 @@ export default function HorizontalNonLinearStepper() {
           steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1
     setActiveStep(newActiveStep)
+
   }
 
   const handleBack = () => {
@@ -112,7 +115,7 @@ export default function HorizontalNonLinearStepper() {
       },
     })
   }
-  const handleSumbit = (e) => {
+  const handleSumbit = async (e) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTrickger(true)
     e.preventDefault()
@@ -137,7 +140,21 @@ export default function HorizontalNonLinearStepper() {
       })
     }
     allStepState.push({ step3: step3 })
-    console.log(...allStepState)
+
+    console.log(moment(allStepState[0].step1.date_of_birth).startOf('day').utcOffset('+00:00', true))
+    try {
+      await createDonation({...allStepState, event_id: router.query.id,
+        date_of_birth: moment(allStepState[0].step1.date_of_birth).startOf('day').utcOffset('+00:00', true),
+      })
+      notification.open({
+        message: 'Ghi nhận thành công!',
+        type: 'success',
+        description: 'Hệ thống đã lưu đơn đăng lý hiến máu của bạn thành công.',
+      })
+      router.push('/')
+    } catch (e) {
+      console.log(e)
+    }
   }
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -162,7 +179,7 @@ export default function HorizontalNonLinearStepper() {
       </Stepper>
       <div>
         {
-          <form autoComplete="off" onSubmit={handleSumbit}>
+          <form autoComplete="off" onSubmit={handleSumbit} method="POST">
             <React.Fragment>
               <div
                 className={
@@ -197,15 +214,16 @@ export default function HorizontalNonLinearStepper() {
                 <Box sx={{ flex: '1 1 auto' }} />
 
                 {/* <p>{activeStep}</p> */}
-                <Button
-                  type={activeStep === 3 ? 'submit' : 'button'}
-                  onClick={activeStep === 3 ? null : handleNext}
+                {activeStep === 3 ? <Button
+                  type='submit'
                 >
-                  {activeStep === 3 ? 'Đăng ký' : 'Tiếp theo'}
-                  {/* {completedSteps() === tottotalStepsalSteps() - 1
-                    ? 'Finish'
-                    : 'Tiếp theo'} */}
-                </Button>
+                  Đăng ký
+                </Button> : <Button
+                  onClick={handleNext}
+                >
+                  Tiếp theo
+                </Button>}
+                
               </Box>
             </React.Fragment>
           </form>
