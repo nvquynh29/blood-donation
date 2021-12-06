@@ -37,7 +37,7 @@ function MyCarousel() {
                   {event.sologan}
                 </h2>
 
-                <Link href="/">
+                <Link href="/event">
                   <a className="custom-btn inline-flex items-center p-2 mr-4 mt-5">
                     <span className="px-2">Đăng ký hiến máu</span>{' '}
                     <SwapRightOutlined className="text-3xl" />

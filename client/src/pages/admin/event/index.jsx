@@ -134,6 +134,13 @@ function Event() {
           onAddBtnClick={addEvent}
           searchPlaceHolder="Tìm kiếm sự kiện "
           onChange={searchEvent}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: event => {
+                router.push(`/admin/event/${record._id}/setting`)
+              }, // click row
+            };
+          }}
         />
       </div>
     </MiniDrawer>

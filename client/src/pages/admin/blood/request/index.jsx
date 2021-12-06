@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import CustomTable from '../../../components/custom-table'
+import CustomTable from '../../../../components/custom-table'
 import moment from 'moment'
-import * as requestBloodApi from '../../../api/requestBlood'
+import * as requestBloodApi from '../../../../api/requestBlood'
 import { notification } from 'antd'
 
 function BloodRequest() {

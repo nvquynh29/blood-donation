@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Form, Button, notification } from 'antd'
-import MiniDrawer from '../../layouts/trial/MiniDrawer'
-import * as userApi from '../../api/user'
+import MiniDrawer from '../../../layouts/trial/MiniDrawer'
+import * as userApi from '../../../api/user'
 
 function Profile() {
   const [user, setUser] = useState({})

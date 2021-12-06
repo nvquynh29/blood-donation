@@ -7,8 +7,8 @@ const getUser = async (req, res) => {
     const user = await User.findOne({ _id }, {
       name: 1,
       email: 1,
+      role: 1,
     }).exec()
-    console.log(user)
     return res.status(200).json(user)
   } catch (error) {
     return res.status(500).json(error)
@@ -34,7 +34,11 @@ const updateUser = async (req, res) => {
       }
     }
     const response = await User.findOneAndUpdate({ _id }, data, { new: true })
-    return res.status(200).json({ name: response.name, email: response.email })
+    return res.status(200).json({
+      name: response.name,
+      email: response.email,
+      role: response.role,
+    })
   } catch (error) {
     console.log(error)
     return res.status(500).json(error)
