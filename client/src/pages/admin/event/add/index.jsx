@@ -75,6 +75,16 @@ export default function AddEventPage() {
                                     required: true,
                                     message: 'Nhập số ngày diễn ra!',
                                 },
+                                ({ getFieldValue }) => ({
+                                    validator(_, value) {
+                                        if (value > 0 && value <= 31) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(
+                                            "Số ngày diễn ra phải lớn hơn 0 và nhỏ hơn 31!"
+                                        )
+                                    }
+                                })
                             ]}
                             label="Số ngày diễn ra"
                         >

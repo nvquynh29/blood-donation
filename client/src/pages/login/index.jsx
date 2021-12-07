@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
@@ -10,7 +10,7 @@ import { ReactReduxContext } from "react-redux"
 import { requestUserApi } from '../../store/actions/userAction'
 
 const Login = () => {
-  const {store} = useContext(ReactReduxContext)
+  const { store } = useContext(ReactReduxContext)
   const router = useRouter()
   const cookies = new Cookies()
 
@@ -107,15 +107,15 @@ const Login = () => {
   )
 }
 
-Login.getInitialProps = async (ctx) => {
-  const cookies = new Cookies(ctx.req ? ctx.req.headers.cookie : '')
-  if (cookies.get('accessToken')) {
-    ctx.res.writeHead(302, {
-      Location: 'admin/dashboard',
-    })
-    ctx.res.end()
-  }
-  return {}
-}
+// Login.getInitialProps = async (ctx) => {
+//   const cookies = new Cookies(ctx.req ? ctx.req.headers.cookie : '')
+//   if (cookies.get('accessToken')) {
+//     ctx.res.writeHead(302, {
+//       Location: 'admin/dashboard',
+//     })
+//     ctx.res.end()
+//   }
+//   return {}
+// }
 
 export default Login
