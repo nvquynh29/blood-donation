@@ -6,7 +6,7 @@ import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
 import { useForm } from 'antd/lib/form/Form'
 import Cookies from 'universal-cookie'
-import { ReactReduxContext } from "react-redux"
+import { ReactReduxContext } from 'react-redux'
 import { requestUserApi } from '../../store/actions/userAction'
 
 const Login = () => {
@@ -96,7 +96,12 @@ const Login = () => {
               </div>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" size="middle" htmlType="submit" className="loginBtn">
+              <Button
+                type="primary"
+                size="middle"
+                htmlType="submit"
+                className="loginBtn"
+              >
                 Log in
               </Button>
             </Form.Item>
@@ -106,16 +111,4 @@ const Login = () => {
     </div>
   )
 }
-
-// Login.getInitialProps = async (ctx) => {
-//   const cookies = new Cookies(ctx.req ? ctx.req.headers.cookie : '')
-//   if (cookies.get('accessToken')) {
-//     ctx.res.writeHead(302, {
-//       Location: 'admin/dashboard',
-//     })
-//     ctx.res.end()
-//   }
-//   return {}
-// }
-
 export default Login
