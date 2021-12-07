@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 // quận cẦu GiẤy => Quận Cầu Giấy
 export const normalizeString = (str) => {
   if (str) {
@@ -10,3 +11,13 @@ export const normalizeString = (str) => {
   }
   return str
 }
+
+export const verifyToken = (token, secretSignature, options) =>
+  new Promise((resolve, reject) => {
+    jwt.verify(token, secretSignature, options, (error, decoded) => {
+      if (error) {
+        return reject(error)
+      }
+      return resolve(decoded)
+    })
+  })
