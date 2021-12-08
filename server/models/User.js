@@ -41,6 +41,7 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
+    lowercase: true,
   },
 })
 
