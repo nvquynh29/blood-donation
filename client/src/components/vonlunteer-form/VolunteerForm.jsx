@@ -1,11 +1,11 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { ReactReduxContext } from 'react-redux'
-import { fillVolunteer }  from '../../store/actions/volunteerAction'
+import { fillVolunteer } from '../../store/actions/volunteerAction'
 import router from 'next/router'
 import moment from 'moment';
 
-export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) {
+export default function VolunteerForm({ defaultValue, onFinish, onFinishFailed }) {
     // const { store } = useContext(ReactReduxContext)
     const { Option } = Select
     // const onFinish = (values) => {
@@ -16,6 +16,9 @@ export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) 
     // const onFinishFailed = (errorInfo) => {
     //     console.log('Failed:', errorInfo);
     // };
+
+
+
     return (
         <div className="volunteerForm">
             <div className="formContain">
@@ -26,10 +29,10 @@ export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) 
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
-                        initialValues={ !(defaultValue 
+                        initialValues={!(defaultValue
                             && Object.keys(defaultValue).length === 0
-                            && Object.getPrototypeOf(defaultValue) === Object.prototype)? {...defaultValue, phone_number: defaultValue.phone, birthday: moment(defaultValue?.date_of_birth)}: {} }
-                        >
+                            && Object.getPrototypeOf(defaultValue) === Object.prototype) ? { ...defaultValue, phone_number: defaultValue.phone, birthday: moment(defaultValue?.date_of_birth) } : {}}
+                    >
                         <Form.Item
                             name="name"
                             rules={[
@@ -48,10 +51,15 @@ export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) 
                                 {
                                     required: true,
                                     message: 'Nhận số điện thoại!',
+                                },
+                                {
+                                    pattern: '(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})',
+                                    message: "Số điện thoại không hợp lệ!"
                                 }
                             ]}
                         >
-                            <Input placeholder='Số điện thoại' style={{ height: '40px' }} />
+                            <Input placeholder='Số điện thoại' style={{ height: '40px' }}
+                            />
                         </Form.Item>
                         <Form.Item
                             name="email"
@@ -62,7 +70,7 @@ export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) 
                                 },
                                 {
                                     type: 'email',
-                                    message: 'Không đúng định dạng email'
+                                    message: 'Email không hợp lệ!'
                                 }
                             ]}
                         >
@@ -81,8 +89,8 @@ export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) 
                             >
                                 <DatePicker placeholder='Ngày sinh' style={{ height: '40px' }} />
                             </Form.Item>
-                            <Form.Item 
-                                name="gender"    
+                            <Form.Item
+                                name="gender"
                                 rules={[
                                     {
                                         required: true,
@@ -91,7 +99,7 @@ export default function VolunteerForm({defaultValue, onFinish, onFinishFailed}) 
                                 ]}
                             >
                                 <Select placeholder="Giới tính" style={{ height: '40px', width: '90px' }}
-                                    >
+                                >
                                     <Option value="male">Nam</Option>
                                     <Option value="female">Nữ</Option>
                                 </Select>

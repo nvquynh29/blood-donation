@@ -3,6 +3,7 @@ import CustomTable from '../../../../components/custom-table'
 import moment from 'moment'
 import * as requestBloodApi from '../../../../api/requestBlood'
 import { notification } from 'antd'
+import MiniDrawer from '../../../../layouts/trial/MiniDrawer'
 
 function BloodRequest() {
   const [data, setData] = useState([])
@@ -116,17 +117,19 @@ function BloodRequest() {
   }
 
   return (
-    <div>
-      <CustomTable
-        data={filterData}
-        columns={columns}
-        addBtnText="Chấp nhận đơn đăng ký"
-        onAddBtnClick={onAccept}
-        searchPlaceHolder="Tìm kiếm..."
-        onChange={searchRequest}
-        rowSelection={rowSelection}
-      />
-    </div>
+    <MiniDrawer>
+      <div className='volunteers'>
+        <CustomTable
+          data={filterData}
+          columns={columns}
+          addBtnText="Chấp nhận đơn đăng ký"
+          onAddBtnClick={onAccept}
+          searchPlaceHolder="Tìm kiếm..."
+          onChange={searchRequest}
+          rowSelection={rowSelection}
+        />
+      </div>
+    </MiniDrawer>
   )
 }
 
