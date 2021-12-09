@@ -64,3 +64,21 @@ export const createDonation = async (req, res) => {
     return res.status(500).json(error)
   }
 }
+
+export const getEventDonation = async (req, res) => {
+  try {
+    const donations = await Donation.find({ event_id: req.params.event_id })
+    return res.status(200).json(donations)
+  } catch (e) {
+    return res.status(500).json(e)
+  }
+}
+
+export const deleteDonation = async (req, res) => {
+  try {
+    const response = await Donation.findOneAndDelete({ _id: req.params.id })
+    return res.status(200).json(response)
+  } catch (e) {
+    return res.status(500).json(e)
+  }
+}

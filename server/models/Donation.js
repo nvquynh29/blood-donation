@@ -101,7 +101,7 @@ const schema = new mongoose.Schema({
   event_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Event',
-    required: true,
+    default: null,
   },
   is_done: {
     type: Boolean,

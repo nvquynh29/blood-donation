@@ -49,7 +49,7 @@ function getStepCompnent(step, callback) {
   //   </div>
   // )
 }
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper({ currentUrl }) {
   const [activeStep, setActiveStep] = useState(0)
   const [completed, setCompleted] = useState({})
   const [trickger, setTrickger] = useState(false)
@@ -151,7 +151,8 @@ export default function HorizontalNonLinearStepper() {
         type: 'success',
         description: 'Hệ thống đã lưu đơn đăng lý hiến máu của bạn thành công.',
       })
-      router.push('/')
+      if (currentUrl !== 'admin') router.push('/')
+      else router.push(`/admin/event/${router.query.id}/setting`)
     } catch (e) {
       console.log(e)
     }
