@@ -21,6 +21,7 @@ const schema = new mongoose.Schema({
   organization_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Organization',
+    default: null,
   },
   volunteers: [
     {
