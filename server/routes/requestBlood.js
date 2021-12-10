@@ -10,5 +10,6 @@ requestBloodRouter.get('/', [isAuth, isAdmin], RequestBloodController.getPending
 requestBloodRouter.get('/accepted', [isAuth, isAdmin], RequestBloodController.getAcceptedRequests)
 requestBloodRouter.delete('/:id', [isAuth, isAdmin], RequestBloodController.deleteRequest)
 requestBloodRouter.put('/markAsAccepted/list', [isAuth, isAdmin], RequestBloodController.markAsAccepted)
+requestBloodRouter.patch('/:id', [isAuth, isAdmin], RequestBloodController.updateRequestStatus)
 
 export default requestBloodRouter

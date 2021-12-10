@@ -67,10 +67,27 @@ const deleteRequest = async (req, res) => {
   }
 }
 
+const updateRequestStatus = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { status } = req.body
+    const response = await RequestBlood.findOneAndUpdate(
+      { _id: id },
+      { is_done: status },
+      { new: true },
+    )
+    return res.status(200).json(response)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json(error)
+  }
+}
+
 export const RequestBloodController = {
   addRequestBlood,
   getAcceptedRequests,
   getPendingRequests,
   markAsAccepted,
   deleteRequest,
+  updateRequestStatus,
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { notification } from 'antd'
+import router from 'next/router'
 import moment from 'moment'
 import CustomTable from '../../../../components/custom-table'
 import * as requestBloodApi from '../../../../api/requestBlood'
@@ -100,6 +101,7 @@ function BloodRequest() {
       )
       setSelectedKeys([])
       openNotificationSuccess()
+      router.push('/admin/blood')
     } catch (error) {
       console.log(error)
     }
@@ -110,7 +112,7 @@ function BloodRequest() {
       (request) =>
         request.name.toLowerCase().includes(value) ||
         request.phone_number.toLowerCase().includes(value) ||
-        request.identity_card.toLowerCase().includes(value)
+        request.identity_card.toLowerCase().includes(value),
     )
     setFilterData(filtered)
   }

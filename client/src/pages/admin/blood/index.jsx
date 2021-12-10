@@ -13,6 +13,9 @@ import moment from 'moment'
 import router from 'next/router'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 import Link from 'next/link'
+import { Select } from 'antd'
+
+const { Option } = Select
 
 function BloodRequestAccepted() {
   const [data, setData] = useState([])
@@ -85,6 +88,14 @@ function BloodRequestAccepted() {
     })
   }
 
+  const updateStatus = async (id, status) => {
+    try {
+      await requestBloodApi.updateStatus(id, status)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const columns = [
     {
       title: 'Họ và tên',
@@ -134,8 +145,24 @@ function BloodRequestAccepted() {
       title: 'Ghi chú',
       dataIndex: 'note',
       key: 'note',
-      width: '30%',
+      width: '25%',
       align: 'center',
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'is_done',
+      key: 'is_done',
+      align: 'center',
+      render: (isDone, record) => (
+        <Select
+          defaultValue={isDone ?? false}
+          onChange={(status) => updateStatus(record._id, status)}
+          style={{ width: 120 }}
+        >
+          <Option value={true}>Đã hỗ trợ</Option>
+          <Option value={false}>Đang duyệt</Option>
+        </Select>
+      ),
     },
     {
       title: 'Hành động',
