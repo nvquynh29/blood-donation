@@ -40,6 +40,10 @@ const schema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  is_done: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const RequestBlood = mongoose.model('RequestBlood', schema, 'requestBlood')

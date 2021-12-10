@@ -204,9 +204,7 @@ export default function MiniDrawer({ children }) {
             <ul>
               <div className="menuItem">
                 <a href="/admin/profile" className="text-white">
-                  <li>
-                    Trang cá nhân
-                  </li>
+                  <li>Trang cá nhân</li>
                 </a>
               </div>
               <div className="menuItem">
@@ -238,7 +236,7 @@ export default function MiniDrawer({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          <Link href='dashboard'>
+          <Link href="/admin/dashboard">
             <ListItem button key="Dashboard">
               <ListItemIcon>
                 <Home style={{ color: '#fe3c47' }} />
@@ -246,7 +244,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Dashboard" />
             </ListItem>
           </Link>
-          <Link href='event'>
+          <Link href="/admin/event">
             <ListItem button key="Sự kiện">
               <ListItemIcon>
                 <Event style={{ color: '#fe3c47' }} />
@@ -254,7 +252,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Sự kiện" />
             </ListItem>
           </Link>
-          <Link href='volunteers'>
+          <Link href="/admin/volunteers">
             <ListItem button key="Tình nguyện viên">
               <ListItemIcon>
                 <SupervisedUserCircle style={{ color: '#fe3c47' }} />
@@ -262,7 +260,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Tình nguyện viên" />
             </ListItem>
           </Link>
-          <Link href='blood/request'>
+          <Link href="/admin/blood/request">
             <ListItem button key="Đơn đăng ký tiếp nhận máu">
               <ListItemIcon>
                 <Bloodtype style={{ color: '#fe3c47' }} />
@@ -270,7 +268,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Đơn vị hiến máu" />
             </ListItem>
           </Link>
-          <Link href='organization-info'>
+          <Link href="/admin/organization-info">
             <ListItem button key="Tổ chức">
               <ListItemIcon>
                 <Apartment style={{ color: '#fe3c47' }} />
@@ -279,17 +277,6 @@ export default function MiniDrawer({ children }) {
             </ListItem>
           </Link>
         </List>
-        {/* <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

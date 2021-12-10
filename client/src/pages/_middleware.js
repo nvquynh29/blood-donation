@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { verifyToken } from '../utils'
 
 const getPayload = async (token) => {
-  const secret = process.env.ACCESS_TOKEN_SECRET || 'access'
+  const secret = process.env.ACCESS_TOKEN_SECRET
   try {
     const payload = await verifyToken(token, secret, { ignoreExpiration: true })
     return payload
@@ -28,6 +28,7 @@ export async function middleware(req) {
       return NextResponse.redirect('/login')
     }
   }
+
   if (req.url.includes('admin')) {
     if (isValidPayload(payload)) {
       if (req.url.includes(`/${payload.role}`)) {
