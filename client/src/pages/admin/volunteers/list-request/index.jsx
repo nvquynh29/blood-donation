@@ -93,6 +93,7 @@ function VolunteerRequests() {
       setFilterData(filterData.filter((element) => !(selectedKeys.includes(element.key))))
       setSelectedKeys([])
       openNotificationSuccess()
+      router.push('/admin/volunteers')
     } catch (error) {
       console.log(error)
     }

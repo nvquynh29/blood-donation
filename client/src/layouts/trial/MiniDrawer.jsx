@@ -260,7 +260,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Tình nguyện viên" />
             </ListItem>
           </Link>
-          <Link href="/admin/blood/request">
+          <Link href="/admin/blood">
             <ListItem button key="Đơn đăng ký tiếp nhận máu">
               <ListItemIcon>
                 <Bloodtype style={{ color: '#fe3c47' }} />

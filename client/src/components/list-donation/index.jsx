@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Modal, notification } from 'antd'
+import { Space, Modal, notification, Select } from 'antd'
 import {
   EditOutlined,
   DeleteOutlined,
@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons'
 import { Button } from 'antd'
 import CustomTable from '../../components/custom-table'
-import { getEventDonation, deleteDonation } from '../../api/donation'
+import { getEventDonation, deleteDonation, updateDonationStatus } from '../../api/donation'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import MiniDrawer from '../../layouts/trial/MiniDrawer'
@@ -70,6 +70,14 @@ function DonationList() {
     })
   }
 
+  const updateStatus = async (id, status) => {
+    try {
+      await updateDonationStatus(id, {status: status})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const onDeleteDonation = (id) => {
     Modal.confirm({
       title: 'Xoá đơn hiến máu',
@@ -109,27 +117,36 @@ function DonationList() {
       key: 'phone',
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
       title: 'Lượng máu (CC)',
       dataIndex: 'amount',
       key: 'amount',
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'is_done',
-      key: 'is_done',
-      render: (is_done) => (
-        (is_done) ? <span>Đã xong</span> : <span>Chưa hiến</span>
-      )
+      title: 'Số chứng minh nhân dân',
+      dataIndex: 'citizenID',
+      key: 'citizenID',
     },
     {
       title: 'Thời gian',
       dataIndex: 'time',
       key: 'time',
+    }
+    ,
+    {
+      title: 'Trạng thái',
+      dataIndex: 'is_done',
+      key: 'is_done',
+      align: 'center',
+      render: (isDone, record) => (
+        <Select
+          defaultValue={isDone ?? false}
+          onChange={(status) => updateStatus(record._id, status)}
+          style={{ width: 120 }}
+        >
+          <Option value={true}>Đã thành công</Option>
+          <Option value={false}>Đang duyệt</Option>
+        </Select>
+      ),
     }
     ,
     {

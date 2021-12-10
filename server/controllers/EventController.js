@@ -83,7 +83,7 @@ const getEventDetail = async (req, res) => {
 
 const getEventVolunteerId = async (req, res) => {
   try {
-    const { volunteers } = await Event.findById(req.params.id)
+    const { volunteers } = await Event.findById(req.params.id).populate('volunteers').exec()
     return res.status(200).json(volunteers)
   } catch (error) {
     return res.status(500).json(error)
