@@ -7,6 +7,7 @@ const router = express.Router()
 
 router.post('/find', DonationController.findDonation)
 router.post('/', DonationController.createDonation)
+router.patch('/:id', DonationController.updateDonationStatus)
 router.get('/event/:event_id', [isAuth, isAdmin], DonationController.getEventDonation)
 router.delete('/:id', [isAuth, isAdmin], DonationController.deleteDonation)
 export default router
