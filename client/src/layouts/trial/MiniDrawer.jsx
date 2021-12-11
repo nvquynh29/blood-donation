@@ -1,35 +1,35 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
-import { styled, useTheme } from '@mui/material/styles'
-import router from 'next/router'
-import Link from 'next/link'
-import Cookies from 'universal-cookie'
-import Box from '@mui/material/Box'
-import MuiDrawer from '@mui/material/Drawer'
-import MuiAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import CssBaseline from '@mui/material/CssBaseline'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
+import {
+  Apartment,
+  Bloodtype,
+  Event,
+  Home,
+  Logout,
+  SupervisedUserCircle,
+} from '@mui/icons-material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import MenuIcon from '@mui/icons-material/Menu'
+import { Avatar } from '@mui/material'
+import MuiAppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import Divider from '@mui/material/Divider'
+import MuiDrawer from '@mui/material/Drawer'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import { styled, useTheme } from '@mui/material/styles'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Link from 'next/link'
+import router from 'next/router'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { ReactReduxContext } from 'react-redux'
-import { Avatar } from '@mui/material'
-import {
-  Home,
-  SupervisedUserCircle,
-  Event,
-  Bloodtype,
-  Apartment,
-  Logout,
-} from '@mui/icons-material'
+import Cookies from 'universal-cookie'
 import { getUser } from '../../api/user'
-import { removeUser } from "../../store/actions/userAction";
+import { removeUser } from '../../store/actions/userAction'
 
 const drawerWidth = 240
 
@@ -144,7 +144,7 @@ export default function MiniDrawer({ children }) {
       const firstChar = arr[arr.length - 1][0]
       return firstChar
     }
-    return 'A';
+    return 'A'
   }
 
   const userDropDown = useRef(null)
@@ -204,9 +204,7 @@ export default function MiniDrawer({ children }) {
             <ul>
               <div className="menuItem">
                 <a href="/admin/profile" className="text-white">
-                  <li>
-                    Trang cá nhân
-                  </li>
+                  <li>Trang cá nhân</li>
                 </a>
               </div>
               <div className="menuItem">
@@ -238,7 +236,7 @@ export default function MiniDrawer({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          <Link href='dashboard'>
+          <Link href="/admin/dashboard">
             <ListItem button key="Dashboard">
               <ListItemIcon>
                 <Home style={{ color: '#fe3c47' }} />
@@ -246,7 +244,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Dashboard" />
             </ListItem>
           </Link>
-          <Link href='event'>
+          <Link href="/admin/event">
             <ListItem button key="Sự kiện">
               <ListItemIcon>
                 <Event style={{ color: '#fe3c47' }} />
@@ -254,7 +252,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Sự kiện" />
             </ListItem>
           </Link>
-          <Link href='volunteers'>
+          <Link href="/admin/volunteers">
             <ListItem button key="Tình nguyện viên">
               <ListItemIcon>
                 <SupervisedUserCircle style={{ color: '#fe3c47' }} />
@@ -262,7 +260,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Tình nguyện viên" />
             </ListItem>
           </Link>
-          <Link href='blood/request'>
+          <Link href="/admin/blood/request">
             <ListItem button key="Đơn đăng ký tiếp nhận máu">
               <ListItemIcon>
                 <Bloodtype style={{ color: '#fe3c47' }} />
@@ -270,7 +268,7 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Đơn vị hiến máu" />
             </ListItem>
           </Link>
-          <Link href='organization-info'>
+          <Link href="/admin/organization-info">
             <ListItem button key="Tổ chức">
               <ListItemIcon>
                 <Apartment style={{ color: '#fe3c47' }} />

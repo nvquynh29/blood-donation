@@ -14,7 +14,6 @@ import router from 'next/router'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 import Link from 'next/link'
 
-
 function Volunteers() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState([])
@@ -83,7 +82,7 @@ function Volunteers() {
           console.log(error)
         }
       },
-      onCancel: () => { },
+      onCancel: () => {},
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -144,14 +143,10 @@ function Volunteers() {
 
   return (
     <MiniDrawer>
-      <div className='volunteers'>
-        <div className="adminTitle">
-          Danh sách tình nguyện viên
-        </div>
-        <Link href='volunteers/list-request'>
-          <Button>
-            Danh sách đơn đăng ký
-          </Button>
+      <div className="volunteers">
+        <div className="adminTitle">Danh sách tình nguyện viên</div>
+        <Link href="volunteers/list-request">
+          <Button className="float-right mb-3">Danh sách đơn đăng ký</Button>
         </Link>
         <CustomTable
           data={filterData}
