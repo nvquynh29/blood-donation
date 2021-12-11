@@ -218,7 +218,7 @@ function ProvinceSelector(props) {
                 ? {
                     value: localData['address_' + props.ProvinceSelectorID],
                   }
-                : {})}
+                : { value: '' })}
               variant="standard"
               onChange={handleOnChange}
               required
@@ -232,7 +232,7 @@ function ProvinceSelector(props) {
                 ? {
                     value: localData['fulladdress_' + props.ProvinceSelectorID],
                   }
-                : {})}
+                : { value: '' })}
               name={'fulladdress_' + props.ProvinceSelectorID}
               placeholder="Địa chỉ đầy đủ"
               variant="standard"

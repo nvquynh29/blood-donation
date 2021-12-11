@@ -1,21 +1,31 @@
-import React from 'react'
-import { Form, Input, Button, notification, DatePicker } from 'antd';
+import React, { useState } from 'react'
+import { Form, Input, Button, notification, Select } from 'antd';
 import router from 'next/router'
 import moment from 'moment'
 import { addEvent } from '../../../../api/event'
-import MiniDrawer from '../../../../layouts/trial/MiniDrawer';
+import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
+const { Option } = Select;
+import UploadAndDisplayImage from '../../../../components/img-upload'
 
-export default function AddEventPage() {
+
+const AddOrganizationSuperAdmin = () => {
     const onFinish = async (values) => {
         try {
-            values.startDate = values.start_date._d.toLocaleDateString('en-CA')
-            await addEvent(values)
+
+            let inpFile = document.getElementById('img_path');
+            values.img_path = inpFile.files[0];
+            console.log(values);
+
+            //TODO:
+            // call api add
+
+
             notification.open({
                 type: "success",
                 message: "Ghi nhận thành công",
-                description: "Đăng ký sự kiện mới thành công!"
+                description: "Đăng ký tổ chức mới thành công!"
             })
-            router.push('/admin/event')
+            router.push('/super-admin/organization')
         } catch (error) {
             console.log(error)
         }
@@ -24,12 +34,15 @@ export default function AddEventPage() {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     }
+    const props = {
+        url: null
+    };
+
     return (
-        <MiniDrawer>
+        <MiniDrawerSuperAdmin>
             <div className="addEvent">
                 <div className="title">
-                    Thêm sự kiện
-
+                    Thêm tổ chức
                 </div>
                 <hr />
                 <div className="formContainer">
@@ -40,56 +53,40 @@ export default function AddEventPage() {
                         autoComplete="off"
                         layout="vertical"
                     >
+                        <UploadAndDisplayImage props={props}>
+                        </UploadAndDisplayImage>
+
                         <Form.Item
                             name="name"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Nhập tên!',
+                                    message: 'Nhập tên tổ chức!',
                                 },
                             ]}
-                            label="Tên"
+                            label="Tên tổ chức"
                             className="lable"
                         >
 
-                            <Input placeholder='Tên' style={{ height: '40px' }} />
+                            <Input placeholder='Tên tổ chức' style={{ height: '40px' }} />
                         </Form.Item>
-                        <Form.Item
-                            name="start_date"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Nhập mgày bắt đầu!',
-                                },
-                            ]}
-                            className="date"
-                            label="Ngày bắt đầu"
-                        >
 
-                            <DatePicker placeholder='Ngày bắt đầu' style={{ height: '40px' }} />
-                        </Form.Item>
                         <Form.Item
-                            name="duration"
+                            name="is_blood_bank"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Nhập số ngày diễn ra!',
+                                    message: 'Chọn trường này!',
                                 },
-                                ({ getFieldValue }) => ({
-                                    validator(_, value) {
-                                        if (value > 0 && value <= 31) {
-                                            return Promise.resolve();
-                                        }
-                                        return Promise.reject(
-                                            "Số ngày diễn ra phải lớn hơn 0 và nhỏ hơn 31!"
-                                        )
-                                    }
-                                })
                             ]}
-                            label="Số ngày diễn ra"
-                        >
-                            <Input placeholder='Nhập số ngày diễn ra' style={{ height: "40px" }} />
+                            label="Có là ngân hàng máu"
+                            className="lable">
+                            <Select style={{ width: "20%" }} defaultValue="--Chọn có/không--">
+                                <Option value='1'>Có</Option>
+                                <Option value='0'>Không</Option>
+                            </Select>
                         </Form.Item>
+
                         <Form.Item
                             name="address"
                             rules={[
@@ -112,6 +109,8 @@ export default function AddEventPage() {
                     </Form>
                 </div>
             </div>
-        </MiniDrawer >
+        </MiniDrawerSuperAdmin>
     )
 }
+
+export default AddOrganizationSuperAdmin

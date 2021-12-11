@@ -10,6 +10,9 @@ import Step2Container from './step-2'
 import Step3Container from './step-3'
 import { notification } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { createDonation } from '../../api/donation'
+import router from 'next/router'
+import moment from 'moment'
 
 const steps = [
   'Thông tin cá nhân',
@@ -46,7 +49,7 @@ function getStepCompnent(step, callback) {
   //   </div>
   // )
 }
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper({ currentUrl }) {
   const [activeStep, setActiveStep] = useState(0)
   const [completed, setCompleted] = useState({})
   const [trickger, setTrickger] = useState(false)
@@ -69,8 +72,7 @@ export default function HorizontalNonLinearStepper() {
   }
 
   const handleNext = () => {
-    console.log(activeStep)
-    console.log(totalSteps())
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
@@ -112,8 +114,7 @@ export default function HorizontalNonLinearStepper() {
       },
     })
   }
-  const handleSumbit = (e) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  const handleSumbit = async (e) => {
     setTrickger(true)
     e.preventDefault()
     const steps = ['step1', 'step2']
@@ -130,6 +131,7 @@ export default function HorizontalNonLinearStepper() {
     if (questionData.length < 16) {
       return openNotification('Vui lòng trả lời hết câu hỏi')
     } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       questionData.forEach((element) => {
         if (element.name === 'selectGift') return
         const { name, value } = element
@@ -137,10 +139,39 @@ export default function HorizontalNonLinearStepper() {
       })
     }
     allStepState.push({ step3: step3 })
-    console.log(...allStepState)
+    console.log(allStepState)
+    allStepState[0].step1.gender ?? (allStepState[0].step1.gender = 'female')
+    console.log(
+      moment(allStepState[0].step1.date_of_birth)
+        .startOf('day')
+        .utcOffset('+00:00', true),
+    )
+    try {
+      await createDonation({
+        ...allStepState,
+        event_id: router.query.id,
+        date_of_birth: moment(allStepState[0].step1.date_of_birth)
+          .startOf('day')
+          .utcOffset('+00:00', true),
+      })
+      notification.open({
+        message: 'Ghi nhận thành công!',
+        type: 'success',
+        description: 'Hệ thống đã lưu đơn đăng lý hiến máu của bạn thành công.',
+      })
+      if (currentUrl !== 'admin') router.push('/')
+      else router.push(`/admin/event/${router.query.id}/setting`)
+    } catch (e) {
+      console.log(e)
+    }
   }
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, [])
+  useEffect(() => {
+    return () => {
+      localStorage.clear()
+    }
   }, [])
   return (
     <Box sx={{ width: '100%' }} className="p-6 bg-[#f5f5f5]">
@@ -162,7 +193,7 @@ export default function HorizontalNonLinearStepper() {
       </Stepper>
       <div>
         {
-          <form autoComplete="off" onSubmit={handleSumbit}>
+          <form autoComplete="off" onSubmit={handleSumbit} method="POST">
             <React.Fragment>
               <div
                 className={
@@ -197,15 +228,11 @@ export default function HorizontalNonLinearStepper() {
                 <Box sx={{ flex: '1 1 auto' }} />
 
                 {/* <p>{activeStep}</p> */}
-                <Button
-                  type={activeStep === 3 ? 'submit' : 'button'}
-                  onClick={activeStep === 3 ? null : handleNext}
-                >
-                  {activeStep === 3 ? 'Đăng ký' : 'Tiếp theo'}
-                  {/* {completedSteps() === tottotalStepsalSteps() - 1
-                    ? 'Finish'
-                    : 'Tiếp theo'} */}
-                </Button>
+                {activeStep === 3 ? (
+                  <Button type="submit">Đăng ký</Button>
+                ) : (
+                  <Button onClick={handleNext}>Tiếp theo</Button>
+                )}
               </Box>
             </React.Fragment>
           </form>

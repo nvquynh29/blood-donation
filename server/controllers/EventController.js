@@ -1,5 +1,6 @@
 import Event from '../models/Event.js'
 import User from '../models/User.js'
+import Donation from '../models/Donation.js'
 
 const createEvent = async (req, res) => {
   const { _id } = req.user
@@ -26,6 +27,7 @@ const deleteEvent = async (req, res) => {
   try {
     const { id } = req.params
     const response = await Event.findOneAndDelete({ _id: id })
+    await Donation.updateMany({ event_id: id }, { $set: { event_id: null } })
     return res.status(200).json(response)
   } catch (error) {
     return res.status(500).json(error)
@@ -81,7 +83,7 @@ const getEventDetail = async (req, res) => {
 
 const getEventVolunteerId = async (req, res) => {
   try {
-    const { volunteers } = await Event.findById(req.params.id)
+    const { volunteers } = await Event.findById(req.params.id).populate('volunteers').exec()
     return res.status(200).json(volunteers)
   } catch (error) {
     return res.status(500).json(error)

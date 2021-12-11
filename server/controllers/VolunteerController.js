@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import User from '../models/User.js'
 import Volunteer from '../models/Volunteer.js'
+import Event from '../models/Event.js'
 
 const addVolunteer = async (req, res) => {
   try {
@@ -58,6 +59,10 @@ const deleteVolunteer = async (req, res) => {
   try {
     const { id } = req.params
     await Volunteer.findOneAndDelete({ _id: id })
+    await Event.updateMany(
+      {},
+      { $pull: { volunteers: id } },
+    )
     return res.status(200).json({})
   } catch (error) {
     return res.status(500).json(error)

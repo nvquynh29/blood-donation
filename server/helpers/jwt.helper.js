@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 
 const generateToken = (user, secretSignature, tokenLife) => new Promise((resolve, reject) => {
-  const { _id } = user
-  jwt.sign({ _id }, secretSignature, { expiresIn: tokenLife }, (error, token) => {
+  const { _id, role } = user
+  jwt.sign({ _id, role }, secretSignature, { expiresIn: tokenLife }, (error, token) => {
     if (error) {
       return reject(error)
     }

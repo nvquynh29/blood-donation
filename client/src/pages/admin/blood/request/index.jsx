@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import CustomTable from '../../../../components/custom-table'
-import moment from 'moment'
-import * as requestBloodApi from '../../../../api/requestBlood'
 import { notification } from 'antd'
+import router from 'next/router'
+import moment from 'moment'
+import CustomTable from '../../../../components/custom-table'
+import * as requestBloodApi from '../../../../api/requestBlood'
+import MiniDrawer from '../../../../layouts/trial/MiniDrawer'
 
 function BloodRequest() {
   const [data, setData] = useState([])
@@ -11,7 +13,7 @@ function BloodRequest() {
 
   useEffect(async () => {
     try {
-      const res = await requestBloodApi.getRequests()
+      const res = await requestBloodApi.getPendingRequests()
       const requests = res.data.map((request) => {
         return { ...request, key: request._id }
       })
@@ -99,6 +101,7 @@ function BloodRequest() {
       )
       setSelectedKeys([])
       openNotificationSuccess()
+      router.push('/admin/blood')
     } catch (error) {
       console.log(error)
     }
@@ -109,24 +112,26 @@ function BloodRequest() {
       (request) =>
         request.name.toLowerCase().includes(value) ||
         request.phone_number.toLowerCase().includes(value) ||
-        request.identity_card.toLowerCase().includes(value) ||
-        request.blood_type.toLowerCase().includes(value),
+        request.identity_card.toLowerCase().includes(value),
     )
     setFilterData(filtered)
   }
 
   return (
-    <div>
-      <CustomTable
-        data={filterData}
-        columns={columns}
-        addBtnText="Chấp nhận đơn đăng ký"
-        onAddBtnClick={onAccept}
-        searchPlaceHolder="Tìm kiếm..."
-        onChange={searchRequest}
-        rowSelection={rowSelection}
-      />
-    </div>
+    <MiniDrawer>
+      <div className="request-blood">
+        <div className="adminTitle">Danh sách đơn xin hỗ trợ máu</div>
+        <CustomTable
+          data={filterData}
+          columns={columns}
+          addBtnText="Chấp nhận đơn"
+          onAddBtnClick={onAccept}
+          searchPlaceHolder="Tìm kiếm đơn xin hỗ trợ"
+          onChange={searchRequest}
+          rowSelection={rowSelection}
+        />
+      </div>
+    </MiniDrawer>
   )
 }
 

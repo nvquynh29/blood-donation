@@ -55,9 +55,16 @@ function index() {
   }, [])
   const labels = ['', '', '', '', '', '', '', '', '', '', '', '']
   //4 con số tổng đã hiến trong quá khứ, tổng sk đã dixẽn ra, tổng số đơn đăng ký tiếp nhận máu, tổng số máu đã cho đi
-  //1 bảng 4 input là tên ngày ,2 tổng
-  //pie chart tổng lượng máu gồm chưa hiến và đã hiến
-  //pie chart đơn đăng ký gồm chưa hiến và đã hiến
+
+
+  //1 bảng 4 input là tên ngày , tổng số đơn đã nhận và tổng lượng máu dự kiến  của sự kiện sắp diễn ra
+
+
+  // sự kiện đang diễn ra gồm select box để chọn sk sau đó hiển thị 2 pie chart bên dưới thông tin gồm: 
+  //pie chart tổng lượng máu  chưa hiến và đã hiến
+  //pie chart đơn đăng ký  chưa hiến và đã hiến
+
+  
   //sự kiện đã diễn ra có biểu đồ cơ cấu theo nhóm máu
   //biểu đồ 2 số lượng đơn và số lượng máu
   const lineData = useMemo(() => {
