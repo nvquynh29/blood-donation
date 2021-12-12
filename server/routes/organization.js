@@ -4,6 +4,7 @@ import * as mime from 'mime-types'
 import { OrganizationController } from '../controllers/OrganizationController.js'
 import isAuth from '../middleware/AuthMiddleware.js'
 import isAdmin from '../middleware/AdminMiddleware.js'
+import isSuperAdmin from '../middleware/SuperAdminMiddleware.js'
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -11,7 +12,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const ext = mime.extension(file.mimetype)
-    cb(null, `${new Date().getTime()}-${req.body.name.replace(/\s/g, '-')}.${ext}`)
+    cb(null, `${new Date().getTime()}.${ext}`)
   },
 })
 
@@ -34,8 +35,10 @@ const upload = multer({
 })
 
 const organizationRouter = express.Router()
-organizationRouter.post('/', upload.single('organization_image'), OrganizationController.createOrganization)
+organizationRouter.post('/', [upload.single('organization_image'), isAuth, isSuperAdmin], OrganizationController.createOrganization)
+organizationRouter.put('/:id', [upload.single('organization_image'), isAuth, isSuperAdmin], OrganizationController.updateOrganization)
 organizationRouter.get('/admins', [isAuth, isAdmin], OrganizationController.getAllAdmins)
 organizationRouter.get('/dashboard', [isAuth, isAdmin], OrganizationController.getDashboardInfo)
+organizationRouter.delete('/:id', [isAuth, isSuperAdmin], OrganizationController.deleteOrganization)
 
 export default organizationRouter

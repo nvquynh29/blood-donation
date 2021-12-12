@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Input, Button, notification, Select } from 'antd';
 import router from 'next/router'
 import moment from 'moment'
-import { addEvent } from '../../../../api/event'
+import { addOrganization } from '../../../../api/organization'
 import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 import UploadAndDisplayImage from '../../../../components/img-upload'
@@ -17,15 +17,17 @@ const AddOrganizationSuperAdmin = () => {
             console.log(values);
 
             //TODO:
-            // call api add
-
-
-            notification.open({
-                type: "success",
-                message: "Ghi nhận thành công",
-                description: "Đăng ký tổ chức mới thành công!"
-            })
-            router.push('/super-admin/organization')
+            try {
+                await addOrganization(values)
+                notification.open({
+                    type: "success",
+                    message: "Ghi nhận thành công",
+                    description: "Đăng ký tổ chức mới thành công!"
+                })
+                router.push('/super-admin/organization')
+            } catch (error) {
+                console.log(error)
+            }
         } catch (error) {
             console.log(error)
         }
@@ -83,8 +85,8 @@ const AddOrganizationSuperAdmin = () => {
                             label="Có là ngân hàng máu"
                             className="lable">
                             <Select style={{ width: "20%" }} defaultValue="--Chọn có/không--">
-                                <Option value='1'>Có</Option>
-                                <Option value='0'>Không</Option>
+                                <Option value={true}>Có</Option>
+                                <Option value={false}>Không</Option>
                             </Select>
                         </Form.Item>
 
@@ -101,7 +103,13 @@ const AddOrganizationSuperAdmin = () => {
 
                             <Input placeholder='Địa chỉ' style={{ height: "100px" }} />
                         </Form.Item>
+                        <Form.Item
+                            name="description"
+                            label="Mô tả"
+                        >
 
+                            <Input placeholder='Mô tả' style={{ height: "100px" }} />
+                        </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="addEvenBtn">
                                 Thêm
