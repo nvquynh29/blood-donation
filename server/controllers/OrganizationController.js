@@ -1,5 +1,6 @@
 import path from 'path'
 import mongodb from 'mongodb'
+import fs from 'fs'
 import Organization from '../models/Organization.js'
 import User from '../models/User.js'
 import Event from '../models/Event.js'
@@ -10,18 +11,41 @@ const createOrganization = async (req, res) => {
   const {
     name, address, description, isBloodBank,
   } = req.body
-  console.log(req.body)
-  console.log(req.file)
-  let newOrganization = new Organization({
-    name,
-    address,
-    description,
-    is_blood_bank: isBloodBank,
-    img_path: req.file.path,
-  })
   try {
+    let newOrganization = new Organization({
+      name,
+      address,
+      description,
+      is_blood_bank: isBloodBank,
+      img_path: req.file.path,
+    })
+    console.log(newOrganization)
     newOrganization = await newOrganization.save()
     return res.status(200).json(newOrganization)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+const updateOrganization = async (req, res) => {
+  const {
+    name, address, description, isBloodBank,
+  } = req.body
+  try {
+    const updateInput = {
+      name,
+      address,
+      description,
+      is_blood_bank: isBloodBank,
+    }
+    if (req.file) {
+      updateInput.img_path = req.file.path
+    }
+    const organization = await Organization.findOneAndUpdate(
+      { _id: req.params.id },
+      updateInput,
+      { new: true },
+    )
+    return res.status(200).json(organization)
   } catch (err) {
     return res.status(500).json(err)
   }
@@ -99,6 +123,23 @@ const getDashboardInfo = async (req, res) => {
   }
 }
 
+const deleteOrganization = async (req, res) => {
+  try {
+    const { img_path } = await Organization.findById(req.params.id)
+    const orgUseSameImg = await Organization.find({ img_path })
+    if (orgUseSameImg.length <= 1) {
+      fs.unlink(path.join(path.resolve(), img_path), (err) => {
+        if (err) return console.log(err)
+        console.log('file deleted successfully')
+      })
+    }
+    const result = await Organization.findOneAndDelete({ _id: req.params.id })
+    return res.status(200).json(result)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 const getImage = async (req, res) => res.sendFile(path.join(path.resolve(), req.query.img_path))
 export const OrganizationController = {
   createOrganization,
@@ -107,4 +148,6 @@ export const OrganizationController = {
   getOrganization,
   getAllAdmins,
   getDashboardInfo,
+  updateOrganization,
+  deleteOrganization,
 }

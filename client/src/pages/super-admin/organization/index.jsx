@@ -59,7 +59,7 @@ export default function superAdmin() {
         const filtered = data.filter(
             (volunteer) =>
                 volunteer.name.toLowerCase().includes(value) ||
-                volunteer.is_blood_bank.toLowerCase().includes(value) ||
+                volunteer.description.toLowerCase().includes(value) ||
                 volunteer.address.toLowerCase().includes(value),
         )
         setFilterData(filtered)
@@ -80,7 +80,7 @@ export default function superAdmin() {
             content: 'Bạn có chắc chắn muốn xoá tổ chức này không?',
             onOk: async () => {
                 try {
-                    await volunteerApi.deleteVolunteer(id)
+                    await organizationApi.deleteOrganization(id)
                     removeVolunteer(id)
                     openNotificationSuccess()
                 } catch (error) {
@@ -104,7 +104,12 @@ export default function superAdmin() {
             title: 'Địa chỉ',
             dataIndex: 'address',
             key: 'address',
-            width: '35%',
+        },
+        {
+            title: 'Mô tả',
+            dataIndex: 'description',
+            key: 'description',
+            width: '30%'
         },
         {
             title: 'Có là ngân hàng máu ',
