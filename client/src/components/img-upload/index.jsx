@@ -9,7 +9,7 @@ const UploadAndDisplayImage = ({ props }) => {
     return (
         <>
             <Form.Item
-                label='Ảnh tổ chức'
+                label={props.label}
                 name='img_path' >
                 {selectedImage && (
                     <div>

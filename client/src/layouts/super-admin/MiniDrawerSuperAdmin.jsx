@@ -27,6 +27,7 @@ import {
   Bloodtype,
   Apartment,
   Logout,
+  CardGiftcard
 } from '@mui/icons-material'
 import { getUser } from '../../api/user'
 import { removeUser } from "../../store/actions/userAction";
@@ -246,31 +247,7 @@ export default function MiniDrawerSuperAdmin({ children }) {
               <ListItemText primary="Dashboard" />
             </ListItem>
           </Link>
-          <Link href='event'>
-            <ListItem button key="Sự kiện">
-              <ListItemIcon>
-                <Event style={{ color: '#fe3c47' }} />
-              </ListItemIcon>
-              <ListItemText primary="Sự kiện" />
-            </ListItem>
-          </Link>
-          <Link href='volunteers'>
-            <ListItem button key="Tình nguyện viên">
-              <ListItemIcon>
-                <SupervisedUserCircle style={{ color: '#fe3c47' }} />
-              </ListItemIcon>
-              <ListItemText primary="Tình nguyện viên" />
-            </ListItem>
-          </Link>
-          <Link href='blood/request'>
-            <ListItem button key="Đơn đăng ký tiếp nhận máu">
-              <ListItemIcon>
-                <Bloodtype style={{ color: '#fe3c47' }} />
-              </ListItemIcon>
-              <ListItemText primary="Đơn vị hiến máu" />
-            </ListItem>
-          </Link>
-          <Link href='organization-info'>
+          <Link href='organization'>
             <ListItem button key="Tổ chức">
               <ListItemIcon>
                 <Apartment style={{ color: '#fe3c47' }} />
@@ -278,18 +255,24 @@ export default function MiniDrawerSuperAdmin({ children }) {
               <ListItemText primary="Tổ chức" />
             </ListItem>
           </Link>
+          <Link href='request-for-blood'>
+            <ListItem button key="Đơn đăng ký tiếp nhận máu">
+              <ListItemIcon>
+                <Bloodtype style={{ color: '#fe3c47' }} />
+              </ListItemIcon>
+              <ListItemText primary="Đăng ký nhận máu" />
+            </ListItem>
+          </Link>
+          <Link href='gifts'>
+            <ListItem button key="Danh sách quà tặng">
+              <ListItemIcon>
+                <CardGiftcard style={{ color: '#fe3c47' }} />
+              </ListItemIcon>
+              <ListItemText primary="Danh sách quà tặng" />
+            </ListItem>
+          </Link>
+
         </List>
-        {/* <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
