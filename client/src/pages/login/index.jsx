@@ -41,12 +41,12 @@ const Login = () => {
 
   return (
     <div className="loginContainer">
-      <div className="asidepic">
-        <img src="https://wallpapercave.com/wp/wp4323511.jpg" alt="pic" />
+      <div className="asidepic rounded-tl-md rounded-bl-md">
+        <img className="bg-white" src="/favicon.png" alt="pic" />
       </div>
-      <div className="loginForm">
+      <div className="loginForm flex flex-col items-center justify-center rounded-r-md rounded-b-md">
         <div className="loginMain">
-          <h1 className="loginTitle">Log In</h1>
+          <h1 className="loginTitle text-center !font-Dosis">Đăng nhập</h1>
           <Form
             size="large"
             name="normal_login"
@@ -88,10 +88,10 @@ const Login = () => {
             <Form.Item>
               <div className="loginDetail">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox>Ghi nhớ tài khoản</Checkbox>
                 </Form.Item>
                 <a className="login-form-forgot" href="">
-                  Forgot password
+                  Quên mật khẩu
                 </a>
               </div>
             </Form.Item>
@@ -102,7 +102,7 @@ const Login = () => {
                 htmlType="submit"
                 className="loginBtn"
               >
-                Log in
+                Đăng nhập
               </Button>
             </Form.Item>
           </Form>

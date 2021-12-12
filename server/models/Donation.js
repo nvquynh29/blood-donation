@@ -30,7 +30,7 @@ const schema = new mongoose.Schema(
     },
     foreigner: {
       type: Boolean,
-      required: false,
+      required: true,
     },
     fulladdress_1: String,
     fulladdress_2: String,
@@ -108,9 +108,13 @@ const schema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    blood_type: String,
+    blood_type: {
+      type: String,
+      default: null,
+    },
     done_date: {
       type: Date,
+      required: true,
     },
   },
   {

@@ -36,5 +36,6 @@ const upload = multer({
 const organizationRouter = express.Router()
 organizationRouter.post('/', upload.single('organization_image'), OrganizationController.createOrganization)
 organizationRouter.get('/admins', [isAuth, isAdmin], OrganizationController.getAllAdmins)
+organizationRouter.get('/dashboard', [isAuth, isAdmin], OrganizationController.getDashboardInfo)
 
 export default organizationRouter

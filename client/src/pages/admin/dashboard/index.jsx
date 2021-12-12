@@ -7,41 +7,34 @@ import { Card } from 'antd'
 import { Table, Tag, Space } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
 import { Modal, Button } from 'antd'
+import { getDashbroad } from '../../../api/organization'
+import moment from 'moment'
+import Link from 'next/link'
+
 const Chart = dynamic(() => import('../../../components/chart'), {
   ssr: false,
 })
 
 function index() {
-  const [visible, setVisible] = useState(false)
-  const dataTb = [
-    {
-      key: '1',
-      name: 'John Brown',
-      date: new Date().toLocaleDateString(),
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      date: new Date().toLocaleDateString(),
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      date: new Date().toLocaleDateString(),
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ]
+  const [dashbroadData, setDashbroadData] = useState({})
+  const [part1, setPart1] = useState({})
+  const [part2, setPart2] = useState({})
+  const [part3, setPart3] = useState({})
+  const [part4, setPart4] = useState({})
+  const [dataTb, setDataTb] = useState([])
+
   const columns = [
     {
       title: 'Tên',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <a>{text}</a>,
+      render: (text, data) => {
+        return (
+          <Link href={'/admin/event/' + data.key + '/setting'}>
+            <a target="_blank">{text}</a>
+          </Link>
+        )
+      },
     },
     {
       title: 'Ngày diễn ra',
@@ -49,31 +42,50 @@ function index() {
       key: 'date',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Lượng máu cần thiết',
+      dataIndex: 'count_blood',
+      key: 'count_blood',
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (tags) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green'
-            if (tag === 'loser') {
-              color = 'volcano'
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            )
-          })}
-        </>
-      ),
+      title: 'Số đơn hiến máu đã tiếp nhận',
+      key: 'count_donation',
+      dataIndex: 'count_donation',
     },
   ]
+  const getDashbroadData = async () => {
+    getDashbroad().then((res) => {
+      setDashbroadData(res.data)
+    })
+  }
+  useEffect(() => {
+    setPart1(dashbroadData.part1)
+    setPart2(dashbroadData.part2)
+    setPart3(dashbroadData.part3)
+    setPart4(dashbroadData.part4)
+  }, [dashbroadData])
+
+  useEffect(() => {
+    const table = dashbroadData.part2?.future_events.map((item) => {
+      return {
+        key: item._id,
+        name: item.name,
+        date:
+          new Date(item.start_date).toLocaleDateString() +
+          ' - ' +
+          moment().add(item.duration, 'days').format('DD/MM/YYYY'),
+        count_blood: item.count_blood,
+        count_donation: item.count_donation,
+      }
+    })
+    setDataTb(table)
+  }, [dashbroadData.part2])
+  useEffect(() => {
+    console.log(dashbroadData)
+  }, [dashbroadData.part3])
+  useEffect(() => {
+    getDashbroadData()
+  }, [])
+
   return (
     <MiniDrawer>
       <div className=" w-full grid gap-4 grid-cols-4 mb-5">
@@ -85,8 +97,8 @@ function index() {
             borderBottomLeftRadius: '5px',
           }}
         >
-          <span className="text-3xl  font-bold"> 11</span>
-          <p className="text-xl">tổng đã hiến trong quá khứ</p>
+          <span className="text-3xl  font-bold">{part1?.donated_blood}</span>
+          <p className="text-xl">tổng lượng máu đã tiếp nhận </p>
         </Card>
         <Card
           className="font-Dosis shadow-md"
@@ -96,8 +108,8 @@ function index() {
             borderBottomLeftRadius: '5px',
           }}
         >
-          <span className="text-3xl  font-bold"> 8</span>
-          <p className="text-xl">tổng sk đã dien ra</p>
+          <span className="text-3xl  font-bold">{part1?.count_old_event}</span>
+          <p className="text-xl">tổng sự kiện đã dien ra</p>
         </Card>
         <Card
           className="font-Dosis shadow-md"
@@ -107,7 +119,9 @@ function index() {
             borderBottomLeftRadius: '5px',
           }}
         >
-          <span className="text-3xl  font-bold"> 18</span>
+          <span className="text-3xl  font-bold">
+            {part1?.count_blood_requests}
+          </span>
           <p className="text-xl">tổng số đơn đăng ký tiếp nhận máu</p>
         </Card>
         <Card
@@ -118,7 +132,9 @@ function index() {
             borderBottomLeftRadius: '5px',
           }}
         >
-          <span className="text-3xl  font-bold"> 25</span>
+          <span className="text-3xl  font-bold">
+            {part1?.count_given_blood_amount}
+          </span>
           <p className="text-xl">tổng số máu đã cho đi</p>
         </Card>
       </div>
@@ -131,6 +147,9 @@ function index() {
 }
 
 export async function getServerSideProps(context) {
+  // const res = await axios
+  console.log('res')
+
   return {
     props: {}, // will be passed to the page component as props
   }
