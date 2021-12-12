@@ -107,9 +107,13 @@ const schema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  blood_type: String,
+  blood_type: {
+    type: String,
+    default: null,
+  },
   done_date: {
     type: Date,
+    required: true,
   },
 }, {
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

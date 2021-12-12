@@ -19,27 +19,27 @@ const isValidPayload = (payload) => {
 }
 
 export async function middleware(req) {
-  const token = req.cookies.accessToken
-  let payload = {}
-  if (token) {
-    try {
-      payload = await getPayload(token)
-    } catch (error) {
-      return NextResponse.redirect('/login')
-    }
-  }
+  // const token = req.cookies.accessToken
+  // let payload = {}
+  // if (token) {
+  //   try {
+  //     payload = await getPayload(token)
+  //   } catch (error) {
+  //     return NextResponse.redirect('/login')
+  //   }
+  // }
 
-  if (req.url.includes('admin')) {
-    if (isValidPayload(payload)) {
-      if (req.url.includes(`/${payload.role}`)) {
-        return NextResponse.next()
-      }
-    }
-    return NextResponse.redirect('/login')
-  }
-  if (req.url.includes('/login')) {
-    if (isValidPayload(payload)) {
-      return NextResponse.redirect(`/${payload.role.toLowerCase()}/dashboard`)
-    }
-  }
+  // if (req.url.includes('admin')) {
+  //   if (isValidPayload(payload)) {
+  //     if (req.url.includes(`/${payload.role}`)) {
+  //       return NextResponse.next()
+  //     }
+  //   }
+  //   return NextResponse.redirect('/login')
+  // }
+  // if (req.url.includes('/login')) {
+  //   if (isValidPayload(payload)) {
+  //     return NextResponse.redirect(`/${payload.role.toLowerCase()}/dashboard`)
+  //   }
+  // }
 }

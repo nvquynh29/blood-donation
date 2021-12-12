@@ -11,7 +11,7 @@ export default function EventList({ events }) {
                 console.log(event)
                 const startDate = new Date(event.start_date) 
                 const endDate = new Date(event.start_date)
-                endDate.setDate(startDate.getDate() + event.duration)
+                endDate.setDate(startDate.getDate() + event.duration - 1)
                 return ( 
                     <Link href={`event/${event._id}/donate-booking`} className="cursor-pointer" >
                         <div class="max-w-md h-full mx-auto bg-white  shadow-md overflow-hidden md:max-w-2xl">
