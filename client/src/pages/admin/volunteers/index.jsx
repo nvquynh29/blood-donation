@@ -14,10 +14,17 @@ import router from 'next/router'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 import Link from 'next/link'
 
-
 function Volunteers() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState([])
+  const header = {
+    name: 'Họ và tên',
+    date_of_birth: 'Ngày sinh',
+    gender: 'Giới tính',
+    phone: 'SĐT',
+    address: 'Địa chỉ',
+    email: 'Email',
+  }
 
   useEffect(async () => {
     try {
@@ -83,7 +90,7 @@ function Volunteers() {
           console.log(error)
         }
       },
-      onCancel: () => { },
+      onCancel: () => {},
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -144,18 +151,15 @@ function Volunteers() {
 
   return (
     <MiniDrawer>
-      <div className='volunteers'>
-        <div className="adminTitle">
-          Danh sách tình nguyện viên
-        </div>
-        <Link href='volunteers/list-request'>
-          <Button style={{ marginBottom: "20px" }}>
-            Danh sách đơn đăng ký
-          </Button>
+      <div className="volunteers">
+        <div className="adminTitle">Danh sách tình nguyện viên</div>
+        <Link href="volunteers/list-request">
+          <Button>Danh sách đơn đăng ký</Button>
         </Link>
         <CustomTable
           data={filterData}
           columns={columns}
+          header={header}
           addBtnText="Thêm tình nguyện viên"
           onAddBtnClick={addVolunteer}
           searchPlaceHolder="Tìm kiếm tình nguyện viên"

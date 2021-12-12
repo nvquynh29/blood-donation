@@ -21,3 +21,10 @@ export const verifyToken = (token, secretSignature, options) =>
       return resolve(decoded)
     })
   })
+
+// Date: DD/MM/YYYY
+export const toISOString = (date) => {
+  const dateArr = date.split('/')
+  const dateStr = dateArr.reverse().join('-')
+  return new Date(dateStr).toISOString()
+}
