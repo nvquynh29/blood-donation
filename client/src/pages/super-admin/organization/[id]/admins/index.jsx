@@ -1,27 +1,21 @@
-import MiniDrawerSuperAdmin from '../../../layouts/super-admin/MiniDrawerSuperAdmin'
-import React, { useState, useEffect } from 'react'
-import { Space, Modal, notification } from 'antd'
 import {
-    EditOutlined,
-    DeleteOutlined,
-    CloseCircleOutlined,
-    CheckCircleTwoTone,
-    UserOutlined
+    CheckCircleTwoTone, CloseCircleOutlined, DeleteOutlined, EditOutlined
 } from '@ant-design/icons'
-import { Button } from 'antd'
-import CustomTable from '../../../components/custom-table/index'
-import * as organizationApi from '../../../api/organization'
-import moment from 'moment'
+import { Modal, notification, Space } from 'antd'
 import router from 'next/router'
-import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
+import * as adminApi from '../../../../../api/organization'
+import CustomTable from '../../../../../components/custom-table/index'
+import MiniDrawerSuperAdmin from '../../../../../layouts/super-admin/MiniDrawerSuperAdmin'
+import { env } from "../../../../../../next.config"
 
-export default function superAdmin() {
+export default function index() {
     const [data, setData] = useState([])
     const [filterData, setFilterData] = useState([])
 
     useEffect(async () => {
         try {
-            const res = await organizationApi.getAllOrganizations()
+            const res = await adminApi.getAdmins();
             const volunteers = res.data.map((volunteer) => {
                 return { ...volunteer, key: volunteer._id }
             })
@@ -34,17 +28,12 @@ export default function superAdmin() {
 
     const addVolunteer = () => {
         // TODO: implement function
-        router.push('organization/add')
+        router.push('admins/add')
     }
-    const editVolunteer = (id) => {
+    const editVolunteer = (_id) => {
         // TODO: implement function
         // await volunteerApi.updateVolunteer(id, newVolunteer)
-        router.push(`organization/${id}`)
-    }
-    const adminView = (id) => {
-        // TODO: implement function
-        // await volunteerApi.updateVolunteer(id, newVolunteer)
-        router.push(`organization/${id}/admins`)
+        router.push(`admins/${_id}`)
     }
 
     const removeVolunteer = (id) => {
@@ -59,8 +48,7 @@ export default function superAdmin() {
         const filtered = data.filter(
             (volunteer) =>
                 volunteer.name.toLowerCase().includes(value) ||
-                volunteer.is_blood_bank.toLowerCase().includes(value) ||
-                volunteer.address.toLowerCase().includes(value),
+                volunteer.email.toLowerCase().includes(value),
         )
         setFilterData(filtered)
     }
@@ -69,7 +57,7 @@ export default function superAdmin() {
         notification.success({
             icon: <CheckCircleTwoTone twoToneColor="#16ed31" />,
             duration: 3,
-            message: 'Đã xoá thành công tổ chức',
+            message: 'Đã xoá thành công quà tặng',
         })
     }
 
@@ -77,10 +65,11 @@ export default function superAdmin() {
         Modal.confirm({
             title: 'Xoá tình tổ chức',
             icon: <CloseCircleOutlined />,
-            content: 'Bạn có chắc chắn muốn xoá tổ chức này không?',
+            content: 'Bạn có chắc chắn muốn xoá quà tặng này không?',
             onOk: async () => {
                 try {
-                    await volunteerApi.deleteVolunteer(id)
+                    //TODO
+                    //await apiDeleteAdmin(id)
                     removeVolunteer(id)
                     openNotificationSuccess()
                 } catch (error) {
@@ -96,21 +85,14 @@ export default function superAdmin() {
 
     const columns = [
         {
-            title: 'Tên tổ chức',
+            title: 'Họ và tên',
             dataIndex: 'name',
             key: 'name',
         },
         {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
-            key: 'address',
-            width: '35%',
-        },
-        {
-            title: 'Có là ngân hàng máu ',
-            dataIndex: 'is_blood_bank',
-            key: 'is_blood_bank',
-            render: (key) => (key == 1 ? 'Có' : 'Không'),
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
             title: 'Hành động',
@@ -118,10 +100,6 @@ export default function superAdmin() {
             dataIndex: '_id',
             render: (id) => (
                 <Space size="middle">
-                    <UserOutlined
-                        className="cursor-pointer"
-                        onClick={() => adminView(id)}
-                    />
                     <EditOutlined
                         className="cursor-pointer"
                         onClick={() => editVolunteer(id)}
@@ -139,14 +117,14 @@ export default function superAdmin() {
         <MiniDrawerSuperAdmin>
             <div className='volunteers'>
                 <div className="adminTitle">
-                    Danh sách tổ chức
+                    Danh sách admin
                 </div>
                 <CustomTable
                     data={filterData}
                     columns={columns}
-                    addBtnText="Thêm tổ chức"
+                    addBtnText="Thêm admin"
                     onAddBtnClick={addVolunteer}
-                    searchPlaceHolder="Tìm kiếm tổ chức"
+                    searchPlaceHolder="Tìm kiếm admin"
                     onChange={searchVolunteer}
                 />
             </div>
