@@ -80,7 +80,6 @@ export default function HorizontalNonLinearStepper({ currentUrl }) {
           steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1
     setActiveStep(newActiveStep)
-
   }
 
   const handleBack = () => {
@@ -116,7 +115,6 @@ export default function HorizontalNonLinearStepper({ currentUrl }) {
     })
   }
   const handleSumbit = async (e) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
     setTrickger(true)
     e.preventDefault()
     const steps = ['step1', 'step2']
@@ -133,6 +131,7 @@ export default function HorizontalNonLinearStepper({ currentUrl }) {
     if (questionData.length < 16) {
       return openNotification('Vui lòng trả lời hết câu hỏi')
     } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       questionData.forEach((element) => {
         if (element.name === 'selectGift') return
         const { name, value } = element
@@ -140,11 +139,20 @@ export default function HorizontalNonLinearStepper({ currentUrl }) {
       })
     }
     allStepState.push({ step3: step3 })
-
-    console.log(moment(allStepState[0].step1.date_of_birth).startOf('day').utcOffset('+00:00', true))
+    console.log(allStepState)
+    allStepState[0].step1.gender ?? (allStepState[0].step1.gender = 'female')
+    console.log(
+      moment(allStepState[0].step1.date_of_birth)
+        .startOf('day')
+        .utcOffset('+00:00', true),
+    )
     try {
-      await createDonation({...allStepState, event_id: router.query.id,
-        date_of_birth: moment(allStepState[0].step1.date_of_birth).startOf('day').utcOffset('+00:00', true),
+      await createDonation({
+        ...allStepState,
+        event_id: router.query.id,
+        date_of_birth: moment(allStepState[0].step1.date_of_birth)
+          .startOf('day')
+          .utcOffset('+00:00', true),
       })
       notification.open({
         message: 'Ghi nhận thành công!',
@@ -159,6 +167,11 @@ export default function HorizontalNonLinearStepper({ currentUrl }) {
   }
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, [])
+  useEffect(() => {
+    return () => {
+      localStorage.clear()
+    }
   }, [])
   return (
     <Box sx={{ width: '100%' }} className="p-6 bg-[#f5f5f5]">
@@ -215,16 +228,11 @@ export default function HorizontalNonLinearStepper({ currentUrl }) {
                 <Box sx={{ flex: '1 1 auto' }} />
 
                 {/* <p>{activeStep}</p> */}
-                {activeStep === 3 ? <Button
-                  type='submit'
-                >
-                  Đăng ký
-                </Button> : <Button
-                  onClick={handleNext}
-                >
-                  Tiếp theo
-                </Button>}
-                
+                {activeStep === 3 ? (
+                  <Button type="submit">Đăng ký</Button>
+                ) : (
+                  <Button onClick={handleNext}>Tiếp theo</Button>
+                )}
               </Box>
             </React.Fragment>
           </form>

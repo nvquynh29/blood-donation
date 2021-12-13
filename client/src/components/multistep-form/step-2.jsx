@@ -24,7 +24,15 @@ const times = [
   '14h30 - 15h30',
   '15h30 - 16h30',
 ]
-
+const done_date = [
+  new Date('5/31/2080').toLocaleDateString(),
+  new Date('12/13/2079').toLocaleDateString(),
+  new Date('11/11/2060').toLocaleDateString(),
+  new Date('1/13/2041').toLocaleDateString(),
+  new Date('8/6/2073').toLocaleDateString(),
+  new Date('5/19/2076').toLocaleDateString(),
+  new Date('10/4/2023').toLocaleDateString(),
+]
 const amount = ['250', '350', '450']
 function index() {
   const [formLocal, setFormLocal] = useState({})
@@ -36,6 +44,7 @@ function index() {
   }, [])
   const handleChange = (e) => {
     const { name, value } = e.target
+    console.log(name, value)
     switch (name) {
       case 'time':
         localStorage.setItem(
@@ -52,6 +61,13 @@ function index() {
           JSON.stringify({ ...formLocal, amount: value }),
         )
         setFormLocal({ ...formLocal, amount: value })
+        return
+      case 'done_date':
+        localStorage.setItem(
+          'step2',
+          JSON.stringify({ ...formLocal, done_date: value }),
+        )
+        setFormLocal({ ...formLocal, done_date: value })
         return
       default:
         return
@@ -141,12 +157,37 @@ function index() {
                   >
                     {amount.map((item, index) => (
                       <MenuItem key={index} value={item}>
-                        {item}cc (={item}ml)
+                        {item}ml
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormControl sx={{ m: 1 }} variant="standard" className="block">
+                <InputLabel id="done_date">Ngày hiến </InputLabel>
+                <Select
+                  labelId="done_date"
+                  label="Ngày hiến "
+                  name="done_date"
+                  required
+                  {...(formLocal.done_date
+                    ? { value: formLocal.done_date }
+                    : { value: '' })}
+                  displayEmpty
+                  variant="standard"
+                  className="w-full"
+                  onChange={handleChange}
+                >
+                  {done_date.map((item, index) => (
+                    <MenuItem key={index} value={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
           </Box>
         </Paper>

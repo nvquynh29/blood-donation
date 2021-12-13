@@ -8,7 +8,7 @@ import { getAllGifts } from '../../api/gifts'
 function Gifts(props) {
   const [selected, setSelected] = useState(0)
   const [gifts, setGifts] = useState([])
-
+  const [propsGift, setPropsGift] = useState({})
   const [filteredGifts, setFilteredGifts] = useState([])
   const giftFilter = (value) => {
     if (value === '') return gifts
@@ -37,57 +37,94 @@ function Gifts(props) {
     }
     getGifts()
   }, [])
+  useEffect(() => {
+    const data = gifts.find((gift) => gift._id === props.selectedGift)
+    if (data) {
+      setPropsGift(data)
+    }
+  }, [props.amount, gifts, props.selectedGift])
   return (
     <div>
       <Box sx={{ flexGrow: 1 }} className="my-10 ">
         <Radio.Group onChange={onSelect} value={selected} name="selectGift">
           <Space className="!grid !justify-center xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 !gap-5">
-            {filteredGifts.map(
-              (item, index) =>
-                item.image_path && (
-                  <Radio.Button
-                    key={index}
-                    value={item._id}
-                    className="!h-0 !border-none !p-0 !m-0"
-                  >
-                    <Paper
-                      {...(item._id === selected ? { elevation: 15 } : {})}
+            {!props.selectedGift ? (
+              filteredGifts.map(
+                (item, index) =>
+                  item.image_path && (
+                    <Radio.Button
+                      key={index}
+                      value={item._id}
+                      className="!h-0 !border-none !p-0 !m-0"
                     >
-                      <Box>
-                        <div
-                          className={`${
-                            item._id === selected
-                              ? 'absolute font-Dosis right-3 top-1 animate-bounce'
-                              : 'hidden'
-                          }`}
-                        >
-                          <CheckCircleTwoTone
-                            className="text-xl"
-                            twoToneColor="#1976d2"
+                      <Paper
+                        {...(item._id === selected ? { elevation: 15 } : {})}
+                      >
+                        <Box>
+                          <div
+                            className={`${
+                              item._id === selected
+                                ? 'absolute font-Dosis right-3 top-1 animate-bounce'
+                                : 'hidden'
+                            }`}
+                          >
+                            <CheckCircleTwoTone
+                              className="text-xl"
+                              twoToneColor="#1976d2"
+                            />
+                          </div>
+                          <img
+                            class="w-full object-contain max-h-64 h-full "
+                            style={{
+                              width: 'fit-content',
+                            }}
+                            src={
+                              item.image_path
+                                ? `${env.API_URL}/getFile?img_path=${item.image_path}`
+                                : '../images/slider-1.jpg'
+                            }
+                            alt="Man looking at item at a store"
                           />
-                        </div>
-                        <img
-                          class="w-full object-contain max-h-64 h-full "
-                          style={{
-                            width: 'fit-content',
-                          }}
-                          src={
-                            item.image_path
-                              ? `${env.API_URL}/getFile?img_path=${item.image_path}`
-                              : '../images/slider-1.jpg'
-                          }
-                          alt="Man looking at item at a store"
-                        />
-                        <Typography
-                          variant="h6"
-                          className="text-center font-Dosis"
-                        >
-                          {item.name}
-                        </Typography>
-                      </Box>
-                    </Paper>
-                  </Radio.Button>
-                ),
+                          <Typography
+                            variant="h6"
+                            className="text-center font-Dosis"
+                          >
+                            {item.name}
+                          </Typography>
+                        </Box>
+                      </Paper>
+                    </Radio.Button>
+                  ),
+              )
+            ) : (
+              <Box className="">
+                <Typography variant="h6" className="text-center font-Dosis">
+                  Phần quà đã chọn
+                </Typography>
+                <div className="relative p-1">
+                  <div className="absolute font-Dosis right-3 top-3 ">
+                    <CheckCircleTwoTone
+                      className="text-xl"
+                      twoToneColor="#1976d2"
+                    />
+                  </div>
+                  <img
+                    className="w-full object-contain max-h-64 h-full "
+                    style={{
+                      width: 'fit-content',
+                    }}
+                    src={
+                      propsGift.image_path
+                        ? `${env.API_URL}/getFile?img_path=${propsGift.image_path}`
+                        : '../images/slider-1.jpg'
+                    }
+                    alt="Man looking at propsGift at a store"
+                  />
+                </div>
+                <Typography variant="h6" className="text-center font-Dosis">
+                  {propsGift.name}
+                </Typography>
+              </Box>
             )}
           </Space>
         </Radio.Group>

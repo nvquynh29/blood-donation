@@ -1,22 +1,20 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   Grid,
+  InputLabel,
   MenuItem,
   Paper,
   Radio,
   RadioGroup,
-  TextField,
   Select,
-  InputLabel,
+  TextField,
 } from '@mui/material'
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from '../datepicker'
 import ProvinceSelector from '../provinceSelector/provinceSelector'
-import moment from 'moment'
 
 const major = [
   'Học sinh - Sinh viên',
@@ -51,7 +49,7 @@ function index(props) {
     formData.forEach((element) => {
       if (element.value) {
         if (element.name === 'gender' && !element.checked) {
-          return  
+          return
         }
         if (element.name === 'foreigner') {
           console.log(element.checked)
@@ -124,7 +122,9 @@ function index(props) {
                 <FormControl required>
                   <DatePicker
                     name="date_of_birth"
-                    {...(step1State.date_of_birth ? { value: step1State.date_of_birth } : {})}
+                    {...(step1State.date_of_birth
+                      ? { value: step1State.date_of_birth }
+                      : {})}
                     onChange={handleChange}
                   />
                 </FormControl>
@@ -134,7 +134,7 @@ function index(props) {
                     aria-label="gender"
                     value={step1State.gender || 'female'}
                     onChange={handleChange}
-                    name="gender" 
+                    name="gender"
                   >
                     <FormControlLabel
                       value="male"
@@ -205,9 +205,7 @@ function index(props) {
                 <TextField
                   label="Số Điện thoại*"
                   name="phone"
-                  {...(step1State.phone
-                    ? { value: step1State.phone }
-                    : {})}
+                  {...(step1State.phone ? { value: step1State.phone } : {})}
                   variant="standard"
                   className="mx-4 w-1/3"
                   onChange={handleChange}

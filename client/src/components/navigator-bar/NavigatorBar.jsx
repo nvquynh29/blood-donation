@@ -12,7 +12,7 @@ function NavigatorBar() {
   return (
     <>
       <nav className="block sticky top-0 z-50">
-        <div className="flex  z-50 shadow-lg w-full items-center flex-wrap bg-white p-3 transform transition duration-500 ease-in-out px-16">
+        <div className="flex  z-50 shadow-lg w-full items-center flex-wrap bg-white transform transition duration-500 ease-in-out px-16">
           <Link href="/">
             <a className="inline-flex items-center p-2 mr-4 ">
               <img srcSet="/images/logo.svg" alt="" className="h-16" />
@@ -38,7 +38,9 @@ function NavigatorBar() {
             </svg>
           </button>
           <div
-            className={`${active ? '' : 'hidden'}   w-full md:inline-flex md:flex-grow md:w-auto`}
+            className={`${
+              active ? '' : 'hidden'
+            }   w-full md:inline-flex md:flex-grow md:w-auto`}
           >
             <div className="md:inline md:flex-row md:ml-auto md:w-auto w-full md:items-center items-start  flex flex-col md:h-auto">
               <Link href="/">

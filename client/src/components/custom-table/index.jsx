@@ -48,7 +48,7 @@ function CustomTable({
           allowClear
           placeholder={searchPlaceHolder}
           onChange={onChange}
-          className="max-w-xs"
+          className="max-w-xs !p-0 !m-0"
         />
       </div>
       <Table
