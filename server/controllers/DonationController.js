@@ -1,7 +1,53 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import moment from 'moment'
+import dotenv from 'dotenv'
 import Donation from '../models/Donation.js'
+import QRCode from '../models/QRCode.js'
+import qrHelper from '../helpers/qr.helper.js'
+
+dotenv.config()
+
+const formatDonations = async (donations) => {
+  const { _id, name, citizenID, phone, gender, city_1, district_1, ward_1, date_of_birth, email, blood_type } =
+    donations[0]
+  const address = [ward_1, district_1, city_1].join(', ')
+  const info = {
+    _id,
+    name,
+    citizenID,
+    phone,
+    gender,
+    address,
+    date_of_birth,
+    email,
+    blood_type,
+  }
+  const history = []
+  donations.forEach((donation) => {
+    const { amount, done_date, gift_type, gift_id, is_done, event_id } = donation
+    if (is_done) {
+      const donate = {
+        eventAddress: event_id.address,
+        amount,
+        time: done_date,
+        gift_type,
+        gift_id,
+        is_done,
+      }
+      history.push(donate)
+    }
+  })
+  const count = history.length
+  const totalAmount = history.reduce((accumulator, donate) => accumulator + donate.amount, 0)
+  try {
+    const { qr_code } = await QRCode.findOne({ citizen_id: citizenID })
+    const donateHistory = { ...info, history: history, count, totalAmount, qr_code }
+    return donateHistory
+  } catch (error) {
+    throw new Error(error)
+  }
+}
 
 export const findDonation = async (req, res) => {
   try {
@@ -13,34 +59,9 @@ export const findDonation = async (req, res) => {
         time: 1,
       })
       .exec()
-    console.log(donations)
     if (donations.length) {
-      const { _id, name, citizenID, phone, gender, address, date_of_birth, email, blood_type } = donations[0]
-      const info = {
-        _id,
-        name,
-        citizenID,
-        phone,
-        gender,
-        address,
-        date_of_birth,
-        email,
-        blood_type,
-      }
-      const history = []
-      donations.forEach((donation) => {
-        const { amount, created_at, gift_type, gift_id, is_done, event_id } = donation
-        const donate = { eventAddress: event_id.address,
-          amount,
-          time: created_at,
-          gift_type,
-          gift_id,
-          is_done }
-        history.push(donate)
-      })
-      const count = history.length
-      const totalAmount = history.reduce((accumulator, donate) => accumulator + donate.amount, 0)
-      return res.status(200).json({ ...info, history: history, count, totalAmount })
+      const donateHistory = await formatDonations(donations)
+      return res.status(200).json(donateHistory)
     }
     return res.status(200).json(donations)
   } catch (error) {
@@ -83,18 +104,51 @@ export const deleteDonation = async (req, res) => {
   }
 }
 
+const generateQR = async (id) => {
+  const { citizenID } = await Donation.findOne({ _id: id })
+  const record = await QRCode.findOne({ citizen_id: citizenID })
+  if (!record) {
+    const url = `${process.env.APP_URL}/donate-history/${citizenID}`
+    const qrCode = await qrHelper.generateQRCode(url)
+    const newQRCode = new QRCode({ citizen_id: citizenID, qr_code: qrCode })
+    await newQRCode.save()
+  }
+}
+
 export const updateDonationStatus = async (req, res) => {
   try {
     const { id } = req.params
     const { status } = req.body
+    if (status) {
+      await generateQR(id)
+    }
     const response = await Donation.findOneAndUpdate(
       { _id: id },
       { is_done: status },
-      { new: true },
+      { new: true }
     )
     return res.status(200).json(response)
   } catch (error) {
     console.log(error)
+    return res.status(500).json(error)
+  }
+}
+
+export const donateHistory = async (req, res) => {
+  try {
+    const { citizen_id } = req.params
+    const donations = await Donation.find({ citizenID: citizen_id })
+      .populate('event_id', { address: 1 })
+      .sort({
+        time: 1,
+      })
+      .exec()
+    if (donations.length) {
+      const response = await formatDonations(donations)
+      return res.status(200).json(response)
+    }
+    return res.status(200).json(donations)
+  } catch (error) {
     return res.status(500).json(error)
   }
 }
