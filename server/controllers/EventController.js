@@ -43,12 +43,55 @@ const updateEvent = async (req, res) => {
   }
 }
 
-const getAllEvent = async (req, res) => {
+const getOngoingAndFutureEvent = async (req, res) => {
   try {
     let events = Event.find({
-      start_date: {
-        $gt: new Date(new Date().getTime()),
-        $lte: new Date(new Date().getTime() + 1000 * 86400 * 30),
+      $expr: {
+        $or: [
+          {
+            $and: [
+              { $gt: ['$start_date', new Date(new Date().getTime())] },
+              { $lte: ['$start_date', new Date(new Date().getTime() + 1000 * 86400 * 30)] },
+            ],
+          },
+          {
+            $and: [
+              {
+                $lte: [
+                  '$start_date', {
+                    $add: [
+                      '$$NOW', {
+                        $multiply: [
+                          1, 7 * 60 * 60000,
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              }, {
+                $gt: [
+                  {
+                    $add: [
+                      '$start_date', {
+                        $multiply: [
+                          '$duration', 24 * 60 * 60000,
+                        ],
+                      },
+                    ],
+                  }, {
+                    $add: [
+                      '$$NOW', {
+                        $multiply: [
+                          1, 7 * 60 * 60000,
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     }, {
       volunteers: 0,
@@ -90,11 +133,25 @@ const getEventVolunteerId = async (req, res) => {
   }
 }
 
+const getAllEvent = async (req, res) => {
+  try {
+    const { _id } = req.user
+    const { organization_id } = await User.findOne({ _id })
+    const events = await Event.find({ organization_id }, {
+      volunteers: 0,
+    })
+    return res.status(200).json(events)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 export const EventController = {
   createEvent,
-  getAllEvent,
+  getOngoingAndFutureEvent,
   updateEvent,
   deleteEvent,
   getEventDetail,
   getEventVolunteerId,
+  getAllEvent,
 }
