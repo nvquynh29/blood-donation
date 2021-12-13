@@ -16,7 +16,7 @@ function OrganizationAdmins({ admins }) {
 
     const addVolunteer = () => {
         // TODO: implement function
-        router.push('admins/add')
+        router.push(`/super-admin/organization/${router.query.id}/admins/add/`)
     }
     const removeVolunteer = (id) => {
         let updatedData = filterData.filter((volunteer) => volunteer._id !== id)

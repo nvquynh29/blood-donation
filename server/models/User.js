@@ -14,25 +14,15 @@ const schema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  photoUrl: {
-    type: String,
-    required: false,
-    default: '',
-  },
   refreshToken: {
     type: String,
     required: false,
     default: null,
   },
-  citizenID: String,
   phone: {
     type: String,
     required: true,
   },
-  date_of_birth: {
-    type: Date,
-  },
-  blood_type: String,
   organization_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Organization',

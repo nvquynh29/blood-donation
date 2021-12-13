@@ -1,6 +1,7 @@
 import { Button, Form, Input, notification, Select } from 'antd';
 import router from 'next/router';
 import React from 'react';
+import { addUser } from '../../../../../../api/user'
 import MiniDrawerSuperAdmin from '../../../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 
@@ -8,14 +9,13 @@ const { Option } = Select;
 const AddOrganizationSuperAdmin = () => {
     const onFinish = async (values) => {
         try {
-            //TODO:
-            // call api add
+            await addUser({...values, organization_id: router.query.id})
             notification.open({
                 type: "success",
                 message: "Ghi nhận thành công",
                 description: "Đăng ký Admin mới thành công!"
             })
-            router.push('/super-admin/organization')
+            router.push(`/super-admin/organization/${router.query.id}/admins`)
         } catch (error) {
             console.log(error)
         }

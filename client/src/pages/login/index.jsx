@@ -29,11 +29,16 @@ const Login = () => {
   const login = async (credential) => {
     try {
       const res = await auth.login(credential)
-      console.log(res)
+      console.log(res.data.role)
       if (res.status === 200) {
         writeCookies(res.data)
-        router.push('/admin/dashboard')
         store.dispatch(requestUserApi(res.data.accessToken))
+        if (res.data.role === 'admin') {
+          router.push('/admin/dashboard')
+        } else {
+          console.log(1)
+          router.push('/super-admin/organization')
+        }
       }
     } catch (error) {
       console.log(error)

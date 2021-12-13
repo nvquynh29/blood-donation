@@ -9,5 +9,6 @@ const userRouter = express.Router()
 userRouter.get('/', isAuth, UserController.getUser)
 userRouter.put('/', isAuth, UserController.updateUser)
 userRouter.delete('/:id', [isAuth, isSuperAdmin], UserController.deleteUser)
+userRouter.post('/', [isAuth, isSuperAdmin], UserController.addUser)
 
 export default userRouter
