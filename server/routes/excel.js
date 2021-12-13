@@ -32,7 +32,7 @@ const upload = multer({
 })
 
 const excelRouter = express.Router()
-excelRouter.post('/', upload.single('file'), excelHelper.readExcelFile)
+excelRouter.post('/', [upload.single('file'), isAuth, isAdmin], excelHelper.readExcelFile)
 excelRouter.post('/export', [isAuth, isAdmin], excelHelper.writeExcelFile)
 
 export default excelRouter

@@ -24,7 +24,19 @@ export const verifyToken = (token, secretSignature, options) =>
 
 // Date: DD/MM/YYYY
 export const toISOString = (date) => {
-  const dateArr = date.split('/')
-  const dateStr = dateArr.reverse().join('-')
-  return new Date(dateStr).toISOString()
+  if (date) {
+    const dateArr = date.split('/')
+    const dateStr = dateArr.reverse().join('-')
+    return new Date(dateStr).toISOString()
+  }
+  return ''
+}
+
+export const getGenderVie = (gender) => {
+  if (gender === 'male') {
+    return 'Nam'
+  } else if (gender === 'female') {
+    return 'Nữ'
+  }
+  return gender
 }

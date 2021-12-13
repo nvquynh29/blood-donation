@@ -13,18 +13,11 @@ import moment from 'moment'
 import router from 'next/router'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 import Link from 'next/link'
+import { getGenderVie } from '../../../utils'
 
 function Volunteers() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState([])
-  const header = {
-    name: 'Họ và tên',
-    date_of_birth: 'Ngày sinh',
-    gender: 'Giới tính',
-    phone: 'SĐT',
-    address: 'Địa chỉ',
-    email: 'Email',
-  }
 
   useEffect(async () => {
     try {
@@ -113,6 +106,7 @@ function Volunteers() {
       title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
+      render: (gender) => getGenderVie(gender),
     },
     {
       title: 'SĐT',
@@ -149,6 +143,26 @@ function Volunteers() {
     },
   ]
 
+  const header = {
+    name: 'Họ và tên',
+    date_of_birth: 'Ngày sinh',
+    gender: 'Giới tính',
+    phone: 'SĐT',
+    address: 'Địa chỉ',
+    email: 'Email',
+  }
+
+  const mapFields = {
+    male: 'Nam',
+    female: 'Nữ',
+  }
+
+  const additionalFields = {
+    accepted: true,
+    organization_id: true,
+    model: 'volunteer',
+  }
+
   return (
     <MiniDrawer>
       <div className="volunteers">
@@ -160,6 +174,8 @@ function Volunteers() {
           data={filterData}
           columns={columns}
           header={header}
+          mapFields={mapFields}
+          additionalFields={additionalFields}
           addBtnText="Thêm tình nguyện viên"
           onAddBtnClick={addVolunteer}
           searchPlaceHolder="Tìm kiếm tình nguyện viên"

@@ -14,7 +14,7 @@ import router from 'next/router'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 import Link from 'next/link'
 import { Select } from 'antd'
-
+import { getGenderVie } from '../../../utils'
 const { Option } = Select
 
 function BloodRequestAccepted() {
@@ -115,7 +115,7 @@ function BloodRequestAccepted() {
       dataIndex: 'gender',
       key: 'gender',
       align: 'center',
-      render: (gender) => (gender === 'male' ? 'Nam' : 'Nữ'),
+      render: (gender) => getGenderVie(gender),
     },
     {
       title: 'CCCD',
@@ -183,6 +183,31 @@ function BloodRequestAccepted() {
     },
   ]
 
+  const header = {
+    name: 'Họ và tên',
+    date_of_birth: 'Ngày sinh',
+    gender: 'Giới tính',
+    identity_card: 'CCCD',
+    phone_number: 'SĐT',
+    amount: 'Lượng máu (ml)',
+    blood_type: 'Nhóm máu',
+    note: 'Ghi chú',
+    is_done: 'Trạng thái',
+  }
+
+  const mapFields = {
+    truthy: 'Đã hỗ trợ',
+    falsy: 'Đang duyệt',
+    male: 'Nam',
+    female: 'Nữ'
+  }
+
+  const additionalFields = {
+    accepted: true,
+    organization_id: true,
+    model: 'requestBlood',
+  }
+
   return (
     <MiniDrawer>
       <div className="volunteers">
@@ -193,6 +218,9 @@ function BloodRequestAccepted() {
         <CustomTable
           data={filterData}
           columns={columns}
+          header={header}
+          mapFields={mapFields}
+          additionalFields={additionalFields}
           addBtnText="Thêm yêu cầu"
           onAddBtnClick={addRequest}
           searchPlaceHolder="Tìm kiếm đơn xin hỗ trợ"

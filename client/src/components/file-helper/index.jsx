@@ -1,11 +1,17 @@
 import React from 'react'
-import { Upload, notification, Button } from 'antd'
+import { Upload, notification, Button, Modal } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import moment from 'moment'
 import { importExcel, exportExcel } from '../../api/file'
-import { toISOString } from '../../utils'
 
-function FileHelper({ tableData, header }) {
+function FileHelper({
+  tableData,
+  header,
+  callback,
+  mapFields,
+  additionalFields,
+  disableImport,
+}) {
   const excelFileType = [
     'application/vnd.ms-excel',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -14,6 +20,16 @@ function FileHelper({ tableData, header }) {
     notification.success({
       type: 'success',
       message,
+    })
+  }
+
+  const showAlertModal = (titles) => {
+    const titlesStr = titles.join(', ')
+    Modal.error({
+      title: 'Thêm dữ liệu thất bại',
+      content: `File excel cần có ${titles.length} cột là: ${titlesStr}`,
+      okText: 'Đã hiểu',
+      centered: true,
     })
   }
 
@@ -28,34 +44,38 @@ function FileHelper({ tableData, header }) {
     })
   }
 
+  // pick only header fields to export
   const pick = (obj, keys) => {
     const result = {}
     keys.forEach((key) => {
+      const headerKey = header[key]
+      const genders = ['male', 'female']
       if (key.includes('date')) {
-        result[header[key]] = moment(obj[key]).format('DD/MM/YYYY')
+        if (key === 'end_date') {
+          result[headerKey] = moment(obj.start_date)
+            .add(obj.duration, 'days')
+            .format('DD/MM/YYYY')
+        } else {
+          result[headerKey] = moment(obj[key]).format('DD/MM/YYYY')
+        }
       } else {
-        result[header[key]] = obj[key]
+        result[headerKey] = obj[key]
+      }
+      if (typeof obj[key] === 'boolean') {
+        if (obj[key]) {
+          result[headerKey] = mapFields.truthy
+        } else {
+          result[headerKey] = mapFields.falsy
+        }
+      }
+      if (
+        typeof obj[key] === 'string' &&
+        genders.includes(obj[key]?.toLowerCase())
+      ) {
+        result[headerKey] = mapFields[obj[key]?.toLowerCase()]
       }
     })
     return result
-  }
-
-  const excelToJson = (excelRow, titles) => {
-    const result = {}
-    titles.forEach((title) => {
-      const key = getKeyByValue(header, title)
-      if (key.includes('date')) {
-        // TODO: validate
-        result[key] = toISOString(excelRow[title])
-      } else {
-        result[key] = excelRow[title]
-      }
-    })
-    return result
-  }
-
-  function getKeyByValue(object, value) {
-    return Object.keys(object).find((key) => object[key] === value)
   }
 
   const toSheetData = (data) => {
@@ -64,21 +84,20 @@ function FileHelper({ tableData, header }) {
     return sheetData
   }
 
-  const toJsonData = (sheetData) => {
-    const titles = Object.values(header)
-    const jsonData = sheetData.map((row) => excelToJson(row, titles))
-    return jsonData
-  }
-
   const uploadExcel = async (info) => {
     try {
       const file = info.file.originFileObj
       file.fieldname = getFileName(file.name)
-      const res = await importExcel(info.file)
-      console.log(toJsonData(res.data))
-      openNotificationSuccess('Nhập dữ liệu thành công')
+      const res = await importExcel(
+        info.file,
+        header,
+        mapFields,
+        additionalFields,
+      )
+      callback([...res.data, ...tableData])
+      openNotificationSuccess('Thêm dữ liệu thành công')
     } catch (error) {
-      console.log(error)
+      showAlertModal(Object.values(header))
     }
   }
 
@@ -107,10 +126,11 @@ function FileHelper({ tableData, header }) {
     },
     showUploadList: false,
   }
+  console.log(disableImport)
 
   return (
     <div className="file-helper">
-      <Upload {...props}>
+      <Upload {...props} className={disableImport ? 'hidden' : ''}>
         <Button icon={<UploadOutlined />}>Nhập từ excel</Button>
       </Upload>
       <Button onClick={exportData}>Xuất ra excel</Button>

@@ -19,7 +19,9 @@ function Event() {
   useEffect(async () => {
     try {
       const res = await getAllEvent()
-      res.data.map((el) => { return { ...el, key: el._id } })
+      res.data.map((el) => {
+        return { ...el, key: el._id }
+      })
       setData(res.data)
       setFilterData(res.data)
     } catch (error) {
@@ -47,7 +49,7 @@ function Event() {
     const filtered = data.filter(
       (event) =>
         event.name.toLowerCase().includes(value) ||
-        event.address.toLowerCase().includes(value)
+        event.address.toLowerCase().includes(value),
     )
     setFilterData(filtered)
   }
@@ -75,7 +77,7 @@ function Event() {
           console.log(error)
         }
       },
-      onCancel: () => { },
+      onCancel: () => {},
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -99,7 +101,9 @@ function Event() {
       dataIndex: 'end_date',
       key: 'end_date',
       render: (_, record) => {
-        return moment(record.start_date).add(record.duration, 'days').format('DD/MM/YYYY')
+        return moment(record.start_date)
+          .add(record.duration, 'days')
+          .format('DD/MM/YYYY')
       },
     },
     {
@@ -114,32 +118,52 @@ function Event() {
       dataIndex: '_id',
       render: (id) => (
         <Space size="middle">
-          <EditOutlined className="cursor-pointer" onClick={() => onDetailEvent(id)} />
-          <DeleteOutlined className="cursor-pointer" onClick={() => onDeleteEvent(id)} />
+          <EditOutlined
+            className="cursor-pointer"
+            onClick={() => onDetailEvent(id)}
+          />
+          <DeleteOutlined
+            className="cursor-pointer"
+            onClick={() => onDeleteEvent(id)}
+          />
         </Space>
       ),
     },
   ]
 
+  const header = {
+    name: 'Tên',
+    start_date: 'Ngày bắt đầu',
+    end_date: 'Ngày kết thúc',
+    address: 'Địa chỉ',
+  }
+
+  const additionalFields = {
+    is_blood_bank: false,
+    organization_id: true,
+    model: 'event',
+  }
+
   return (
     <MiniDrawer>
-      <div className='volunteers'>
-        <div className="adminTitle">
-          Danh sách sự kiện
-        </div>
+      <div className="volunteers">
+        <div className="adminTitle">Danh sách sự kiện</div>
         <CustomTable
           data={filterData}
           columns={columns}
+          header={header}
+          additionalFields={additionalFields}
           addBtnText="Thêm sự kiện"
           onAddBtnClick={addEvent}
+          disableImport={true}
           searchPlaceHolder="Tìm kiếm sự kiện "
           onChange={searchEvent}
           onRow={(record, rowIndex) => {
             return {
-              onClick: event => {
+              onClick: (event) => {
                 router.push(`/admin/event/${record._id}/setting`)
               }, // click row
-            };
+            }
           }}
         />
       </div>
