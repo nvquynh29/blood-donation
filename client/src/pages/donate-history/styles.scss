@@ -1,0 +1,30 @@
+.historySearch {
+    margin-top: 50px;
+    .historySearchForm {
+        .ant-form-item-label {
+            margin-left: 10px;
+        }
+        .ant-form-item-explain-error {
+            margin-left: 10px;
+        }
+        .ant-form-item-label > label.ant-form-item-required::before {
+            display: none;
+        }
+    }
+}
+.otpModel {
+    .ant-btn-primary {
+        border-color: #fe3c47;
+        background: #fe3c47;
+    }
+    .ant-btn-primary:hover {
+        background: #cf2f37;
+    }
+    .flex {
+        gap: 5px;
+    }
+    .ant-modal-title {
+        font-size: 20px;
+        font-weight: 500;
+    }
+}

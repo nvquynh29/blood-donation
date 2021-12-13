@@ -118,10 +118,10 @@ function DonateHistory() {
     <MainLayout>
       <div>
         <div className="historySearch">
-          <div className="adviseTitle" style={{ 'text-align': 'center' }}>
-            <h1>Tra cứu lịch sử hiến máu</h1>
-          </div>
           <div className="historySearchForm">
+            <div className="adviseTitle" style={{ 'text-align': 'center' }}>
+              <h1>Tra cứu lịch sử hiến máu</h1>
+            </div>
             <Form
               name="basic"
               layout={'inline'}
@@ -253,7 +253,7 @@ function DonateHistory() {
                     htmlType="submit"
                     style={{ 'background-color': '#FE3C47' }}
                     className="hisSearchB"
-                    // onClick={}
+                  // onClick={}
                   >
                     <SearchOutlined style={{ position: 'relative', bottom: '3px' }} />
                     Tra cứu
@@ -273,9 +273,10 @@ function DonateHistory() {
           okText="Xác nhận"
           closable
           afterClose={handleCloseModal}
+          className='otpModel'
         >
           <div>
-            <p>Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký</p>
+            <p style={{ textAlign: "center", fontSize: "16px", fontWeight: '500' }}>Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký</p>
             <div className="flex flex-col items-center justify-center">
               <OtpInput
                 value={otp}
@@ -290,7 +291,7 @@ function DonateHistory() {
               </span>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p>Nếu bạn không nhận được tin nhắn, vui lòng thử lại sau:</p>
+              <p style={{ marginTop: "10px" }}>Nếu bạn không nhận được tin nhắn, vui lòng thử lại sau:</p>
               <Countdown
                 date={startTimer + time}
                 renderer={(props) => (

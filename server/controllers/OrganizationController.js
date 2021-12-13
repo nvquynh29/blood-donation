@@ -38,6 +38,14 @@ const updateOrganization = async (req, res) => {
       is_blood_bank: isBloodBank,
     }
     if (req.file) {
+      const { img_path } = await Organization.findById(req.params.id)
+      const orgUseSameImg = await Organization.find({ img_path })
+      if (orgUseSameImg.length <= 1) {
+        fs.unlink(path.join(path.resolve(), img_path), (err) => {
+          if (err) return console.log(err)
+          console.log('file deleted successfully')
+        })
+      }
       updateInput.img_path = req.file.path
     }
     const organization = await Organization.findOneAndUpdate(
@@ -140,6 +148,20 @@ const deleteOrganization = async (req, res) => {
   }
 }
 
+const getOrgAdmins = async (req, res) => {
+  try {
+    const admins = await User.find({
+      organization_id: req.params.id,
+      role: {
+        $in: ['admin', 'ADMIN', 'Admin'],
+      },
+    })
+    return res.status(200).json(admins)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 const getImage = async (req, res) => res.sendFile(path.join(path.resolve(), req.query.img_path))
 export const OrganizationController = {
   createOrganization,
@@ -150,4 +172,5 @@ export const OrganizationController = {
   getDashboardInfo,
   updateOrganization,
   deleteOrganization,
+  getOrgAdmins,
 }

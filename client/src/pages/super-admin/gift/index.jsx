@@ -30,12 +30,12 @@ export default function index() {
 
     const addVolunteer = () => {
         // TODO: implement function
-        router.push('gifts/add')
+        router.push('/super-admin/gift/add')
     }
     const editVolunteer = (id) => {
         // TODO: implement function
         // await volunteerApi.updateVolunteer(id, newVolunteer)
-        router.push(`gifts/${id}`)
+        router.push(`/super-admin/gift/${id}`)
     }
 
     const removeVolunteer = (id) => {
@@ -71,7 +71,7 @@ export default function index() {
             onOk: async () => {
                 try {
                     //TODO
-                    //await apiDeleteGift(id)
+                    await giftApi.deleteGift(id)
                     removeVolunteer(id)
                     openNotificationSuccess()
                 } catch (error) {

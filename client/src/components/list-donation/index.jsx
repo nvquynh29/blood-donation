@@ -121,7 +121,12 @@ function DonationList() {
       key: 'phone',
     },
     {
-      title: 'Lượng máu (CC)',
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Lượng máu (ml)',
       dataIndex: 'amount',
       key: 'amount',
     },
