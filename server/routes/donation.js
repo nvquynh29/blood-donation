@@ -12,4 +12,5 @@ router.put('/:id', DonationController.updateDonation)
 router.get('/event/:event_id', [isAuth, isAdmin], DonationController.getEventDonation)
 router.get('/:id', [isAuth, isAdmin], DonationController.getDonation)
 router.delete('/:id', [isAuth, isAdmin], DonationController.deleteDonation)
+router.get('/:citizen_id', DonationController.donateHistory)
 export default router
