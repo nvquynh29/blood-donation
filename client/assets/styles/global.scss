@@ -1,11 +1,12 @@
-@import '../fonts/fonts.scss';
-@import '../../src/components/advise-section/advise.scss';
-@import '../../src/pages/organization/[id]/style.scss';
-@import '../../src/components/search-result/styles.scss';
-@import '../../src/pages/admin/volunteers/styles.scss';
-@import '../../src/layouts/trial/styles.scss';
-@import '../../src/pages/admin/event/add/styles.scss';
-@import '../../src/pages/admin/organization-info/styles.scss';
+@import "../fonts/fonts.scss";
+@import "../../src/components/advise-section/advise.scss";
+@import "../../src/pages/organization/[id]/style.scss";
+@import "../../src/components/search-result/styles.scss";
+@import "../../src/pages/admin/volunteers/styles.scss";
+@import "../../src/layouts/trial/styles.scss";
+@import "../../src/pages/admin/event/add/styles.scss";
+@import "../../src/pages/admin/organization-info/styles.scss";
+@import "../../src/pages/donate-history/styles.scss";
 * {
   margin: 0;
   padding: 0;
@@ -27,7 +28,7 @@ body {
 body,
 input,
 button {
-  font: 14px 'Roboto', sans-serif;
+  font: 14px "Roboto", sans-serif;
 }
 a {
   color: black;
@@ -113,7 +114,7 @@ img {
       padding: 10px;
     }
     .content h3 {
-      font-family: 'Source Sans Pro', sans-serif;
+      font-family: "Source Sans Pro", sans-serif;
       color: #1a1a1a;
       font-weight: 700;
       text-transform: uppercase;
@@ -125,7 +126,7 @@ img {
       letter-spacing: 0.03em;
       position: relative;
       overflow: hidden;
-      font-family: 'Source Sans Pro', sans-serif;
+      font-family: "Source Sans Pro", sans-serif;
       line-height: 70px;
       font-weight: 700;
       margin: 24px 0 0;
@@ -136,7 +137,7 @@ img {
 
   .slider-info:before,
   .slider-info:after {
-    content: '';
+    content: "";
     width: 130px;
     height: 130px;
     background: transparent;
@@ -205,7 +206,7 @@ img {
   font-size: 40px;
   font-weight: 750;
   color: #1a1a1a;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 .loginDetail {
   display: flex;
@@ -305,7 +306,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 .requestBloodForm {
@@ -376,9 +377,9 @@ input[type='number'] {
   padding-left: 15px;
   margin-left: auto;
   margin-right: auto;
-  -webkit-box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
-  -moz-box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
-  box-shadow: -1px 33px 39px -40px rgba(153, 145, 153, 1);
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.27);
+  -moz-box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.27);
+  box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.27);
 }
 
 .hisFormInputs {
