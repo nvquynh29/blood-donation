@@ -5,6 +5,7 @@ import moment from 'moment'
 import CustomTable from '../../../../components/custom-table'
 import * as requestBloodApi from '../../../../api/requestBlood'
 import MiniDrawer from '../../../../layouts/trial/MiniDrawer'
+import { getGenderVie } from '../../../../utils'
 
 function BloodRequest() {
   const [data, setData] = useState([])
@@ -50,7 +51,7 @@ function BloodRequest() {
       dataIndex: 'gender',
       key: 'gender',
       align: 'center',
-      render: (gender) => (gender === 'male' ? 'Nam' : 'Nữ'),
+      render: (gender) => getGenderVie(gender),
     },
     {
       title: 'CCCD',
@@ -84,6 +85,27 @@ function BloodRequest() {
       align: 'center',
     },
   ]
+
+  const header = {
+    name: 'Họ và tên',
+    date_of_birth: 'Ngày sinh',
+    gender: 'Giới tính',
+    identity_card: 'CCCD',
+    phone_number: 'SĐT',
+    amount: 'Lượng máu (ml)',
+    blood_type: 'Nhóm máu',
+    note: 'Ghi chú',
+  }
+
+  const mapFields = {
+    male: 'Nam',
+    female: 'Nữ',
+  }
+
+  const additionalFields = {
+    accepted: false,
+    model: 'requestBlood',
+  }
 
   const onSelectChange = (selectedRowKeys) => {
     setSelectedKeys(selectedRowKeys)
@@ -119,11 +141,14 @@ function BloodRequest() {
 
   return (
     <MiniDrawer>
-      <div className="request-blood">
+      <div className="volunteers">
         <div className="adminTitle">Danh sách đơn xin hỗ trợ máu</div>
         <CustomTable
           data={filterData}
           columns={columns}
+          header={header}
+          mapFields={mapFields}
+          additionalFields={additionalFields}
           addBtnText="Chấp nhận đơn"
           onAddBtnClick={onAccept}
           searchPlaceHolder="Tìm kiếm đơn xin hỗ trợ"
