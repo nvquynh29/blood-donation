@@ -1,11 +1,14 @@
 import React from 'react'
 import RequestBloodForm from '../../../../../components/request-blood-form/RequestBloodForm'
+import MiniDrawer from '../../../../../layouts/trial/MiniDrawer'
 
 function AddRequestBlood() {
   return (
-    <div>
-      <RequestBloodForm />
-    </div>
+    <MiniDrawer>
+      <div>
+        <RequestBloodForm />
+      </div>
+    </MiniDrawer>
   )
 }
 
