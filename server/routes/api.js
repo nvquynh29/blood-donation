@@ -35,7 +35,6 @@ const initAPIs = (app) => {
   router.get('/organization', OrganizationController.getAllOrganizations)
   router.get('/organization/:id', OrganizationController.getOrganization)
   router.get('/getFile', OrganizationController.getImage)
-  router.get('/event', EventController.getAllEvent)
   // middleware routes
   router.use(isAuth)
   return app.use('/', router)

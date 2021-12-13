@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Input, Button, notification, Select } from 'antd';
 import router from 'next/router'
-import { updateEvent, getOrganization } from '../../../../api/organization'
+import { updateOrganization, getOrganization } from '../../../../api/organization'
 import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 import UploadAndDisplayImage from '../../../../components/img-upload'
@@ -9,28 +9,32 @@ import UploadAndDisplayImage from '../../../../components/img-upload'
 
 
 
-function EditOrganizationSuperAdmin({ event }) {
-    console.log(event.img_path);
+function EditOrganizationSuperAdmin({ organization }) {
     const props = {
-        url: event.img_path
+        url: organization.img_path
     };
 
     const onFinish = async (values) => {
         try {
             let inpFile = document.getElementById('img_path');
             values.img_path = inpFile.files[0];
-            console.log(values);
 
             //TODO:
             //Call api update
-            //await updateEvent(router.query.id, values)
+            
+            try {
+                await updateOrganization(router.query.id, values)
+                notification.open({
+                    type: "success",
+                    message: "Ghi nhận thành công",
+                    description: "Chỉnh sửa tổ chức thành công!"
+                })
+                router.push('/super-admin/organization')
+            } catch(error) {
+                console.log(error)
+            }
 
-            notification.open({
-                type: "success",
-                message: "Ghi nhận thành công",
-                description: "Chỉnh sửa tổ chức thành công!"
-            })
-            // router.push('/super-admin/organization')
+           
         } catch (error) {
             console.log(error)
         }
@@ -54,9 +58,10 @@ function EditOrganizationSuperAdmin({ event }) {
                         autoComplete="off"
                         layout="vertical"
                         initialValues={{
-                            name: event.name,
-                            is_blood_bank: event.is_blood_bank,
-                            address: event.address,
+                            name: organization.name,
+                            is_blood_bank: organization.is_blood_bank,
+                            address: organization.address,
+                            description: organization.description,
                         }}
                     >
                         <UploadAndDisplayImage props={props}></UploadAndDisplayImage>
@@ -86,8 +91,8 @@ function EditOrganizationSuperAdmin({ event }) {
                             label="Có là ngân hàng máu"
                             className="lable">
                             <Select style={{ width: "20%" }} defaultValue="--Chọn có/không--">
-                                <Option value='1'>Có</Option>
-                                <Option value='0'>Không</Option>
+                                <Option value={true}>Có</Option>
+                                <Option value={false}>Không</Option>
                             </Select>
                         </Form.Item>
 
@@ -104,10 +109,16 @@ function EditOrganizationSuperAdmin({ event }) {
 
                             <Input placeholder='Địa chỉ' style={{ height: "100px" }} />
                         </Form.Item>
+                        <Form.Item
+                            name="description"
+                            label="Mô tả"
+                        >
 
+                            <Input placeholder='Mô tả' style={{ height: "100px" }} />
+                        </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="addEvenBtn">
-                                Thêm
+                            Lưu
                             </Button>
                         </Form.Item>
                     </Form>
@@ -118,10 +129,9 @@ function EditOrganizationSuperAdmin({ event }) {
 }
 
 EditOrganizationSuperAdmin.getInitialProps = async (ctx) => {
-    const event = await getOrganization(ctx.query.id)
-    console.log(event.data);
+    const organization = await getOrganization(ctx.query.id)
     return {
-        event: event.data
+        organization: organization.data
     }
 }
 

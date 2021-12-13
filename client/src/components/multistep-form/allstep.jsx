@@ -1,4 +1,7 @@
 import { CheckCircleOutlined, CheckOutlined } from '@ant-design/icons'
+import CancelIcon from '@mui/icons-material/Cancel'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import EditIcon from '@mui/icons-material/Edit'
 import {
   Box,
   Checkbox,
@@ -14,16 +17,16 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { Empty } from 'antd'
+import { Empty, notification, Select as AntSelect } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { getEventDonation } from '../../api/donation'
 import { getAllEvent, getEventDetail } from '../../api/event'
-import { getDashbroad } from '../../api/organization'
 import DatePicker from '../datepicker'
 import Gifts from '../list-gift'
 import ProvinceSelector from '../provinceSelector/provinceSelector'
+
 const times = [
   '7h30 - 8h30',
   '8h30 - 9h30',
@@ -35,7 +38,7 @@ const times = [
   '14h30 - 15h30',
   '15h30 - 16h30',
 ]
-
+const bloodType = ['A', 'B', 'AB', 'O']
 const amount = ['250', '350', '450']
 const major = [
   'Học sinh - Sinh viên',
@@ -59,107 +62,168 @@ const major = [
   'VIP',
   'N/A',
 ]
-const questions = [
+
+const initialQuestions = [
   {
     title: 'Trước đây bạn đã từng hiến máu chưa?',
-    subquestion: [],
+    answer: null,
   },
   {
     title:
       'Quý vị đã từng mắc các bệnh  như  thần kinh, hô hấp, vàng da/viêm gan, tim mạch, huyết áp thấp/cao, bệnh thận, ho kéo dài, bệnh máu,  lao, ung thư,v.v??',
+    answer: null,
   },
   {
     title: 'Trong vòng 6 tháng gần đây, Quí vị có:',
+    answer: null,
     subquestion: [
       {
         title: 'Sút cân >= 4kg không rõ nguyên nhân? Nổi hạch kéo dài?',
+        answer: null,
       },
       {
         title: 'Phẫu thuật?',
+        answer: null,
       },
       {
         title: 'Xăm hình, xỏ lỗ tai, xỏ lỗ mũi,châm cứu?',
+        answer: null,
       },
       {
         title: 'Được truyền máu, chế phẩm máu?',
+        answer: null,
       },
       {
         title: 'Sử dụng ma túy, tiêm chích?',
+        answer: null,
       },
       {
         title:
           'Quan hệ tình dục với người nhiễm hoặc có nguy cơ nhiễm HIV/AIDS, viêm gan',
+        answer: null,
       },
       {
         title:
           'Quan hệ tình dục với nhiều người và/hoặc không có biện pháp an toàn tránh lây nhiễm?',
+        answer: null,
       },
       {
         title: 'Tiêm vác xin phòng bệnh?',
+        answer: null,
       },
       {
         title:
           'Có liên quan đến/ở vùng có dịch lưu hành(sốt xuất huyết, sốt rét, bò điên,...?',
+        answer: null,
       },
     ],
   },
   {
     title: 'Trong vòng 1 tuần gần đây, Quí vị có:',
+    answer: null,
     subquestion: [
       {
         title: 'Bị cúm, ho, nhức đầu, sốt?',
+        answer: null,
       },
       {
         title: 'Dùng thuốc khác sinh, Aspirin, Corticoid?',
+        answer: null,
       },
       {
         title: 'Xăm hình, xỏ lỗ tai, xỏ lỗ mũi,châm cứu?',
+        answer: null,
       },
       {
         title: 'Đi khám sức khỏe, làm xét nghiệm, chữa răng?',
+        answer: null,
       },
     ],
   },
   {
     title:
       ' Quý vị hiện là đối tượng tàn tật hoặc hưởng trợ cấp tàn tật hoặc nạn nhân chất độc màu da cam không?',
+    answer: null,
   },
 ]
+const { Option } = AntSelect
 
-function allstep() {
+function allstep(props) {
   const [data, setData] = useState([])
   const router = useRouter()
   const [done_date, setDone_date] = useState([])
-  const { id } = router.query
+  const [childState, setChildState] = useState({})
+  const [questions, setQuestions] = useState(initialQuestions)
+  const [disable, setDisable] = useState(true)
+  const [bloodData, setBloodData] = useState('')
+  const [isDone, setIsDone] = useState('')
+  const [ans, setAns] = useState({})
   const handleFormSubmit = () => {}
   const handleChange = (e) => {
     const { name, value } = e.target
-    console.log({ name, value })
     setData({ ...data, [name]: value })
   }
-  const handleChildCallBack = () => {}
+  const handleChildCallBack = (data) => {
+    setChildState({ ...childState, data })
+    // setData({ ...data, childState })
+  }
   const onChecked = (e) => {
-    console.log(e.target.value)
+    const { name, value } = e.target
+
+    const rep = ans.find((item) => item.title === name)
+    setAns([
+      ...ans.filter((item) => item.title !== name),
+      {
+        title: name,
+        answer: value === 'true',
+      },
+    ])
+  }
+  const saveLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value))
+  }
+
+  // isDone === true && done_date < 7 khong co nut edit: co nut edit
+  useEffect(() => {}, [ans])
+  const setAnswer = (list_answer) => {
+    const flat_questions = questions.reduce((acc, cur) => {
+      acc.push(cur)
+      if (cur.subquestion) {
+        acc.push(...cur.subquestion)
+      }
+      return acc
+    }, [])
+    const all = list_answer.map((answer) => {
+      const ques = flat_questions.find(
+        (question) => question.title === answer[0],
+      )
+      if (ques) {
+        ques.answer = answer[1] === 'true'
+      }
+      return ques
+    })
+    setAns(all)
   }
   useEffect(async () => {
     try {
-      const res = await getEventDonation('61a8fd1d907eb0af1e7b5708')
-      console.log(res.data[0].list_answer)
+      const res = await getEventDonation(
+        props.eventId || '61a8fd1d907eb0af1e7b5708',
+      )
+      const list_answer = Object.entries(res.data[0].list_answer)
+      setAnswer(list_answer)
+
       res.data[0].done_date = new Date(
         res.data[0].done_date,
       ).toLocaleDateString()
 
       setData(res.data[0])
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }, [])
+
   useEffect(async () => {
-    const res1 = await getDashbroad()
-    console.log(res1.data)
-  }, [])
-  useEffect(async () => {
-    const res1 = await getEventDetail('61a8fd1d907eb0af1e7b5708')
+    const res1 = await getEventDetail(
+      props.eventId || '61a8fd1d907eb0af1e7b5708',
+    )
     const startDate = new Date(res1.data.start_date)
     const endDate = new Date(res1.data.start_date)
     endDate.setDate(startDate.getDate() + res1.data.duration - 1)
@@ -171,10 +235,60 @@ function allstep() {
   }, [])
   useEffect(async () => {
     const res = await getAllEvent()
-    console.log(res.data)
   }, [])
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // return an object from all answer
+    const newListAnswer = ans.reduce((acc, cur) => {
+      acc[cur.title] = cur.answer
+      return acc
+    }, {})
+    data.list_answer = newListAnswer
+    if (bloodData === '' || isDone === '') {
+      return notification.error({
+        message: 'Thông báo',
+        description: 'Vui lòng nhập đầy đủ thông tin',
+      })
+    }
+    const newAddress = childState?.data
+    setDisable(!disable)
+    console.log({ ...data, bloodData, isDone, ...newAddress })
+
+    return notification.success({
+      message: 'Thông báo',
+      description: 'Cập nhật thành công',
+    })
+  }
   return (
     <div>
+      {disable ? (
+        <div
+          className="sticky z-50 flex items-center justify-center top-10 right-10 bg-[#1976d2] rounded-[50%] w-11 h-11 mr-0 ml-auto shadow-lg hover:cursor-pointer "
+          onClick={() => {
+            setDisable(!disable)
+          }}
+        >
+          <EditIcon />
+        </div>
+      ) : (
+        <div className="flex sticky z-50 gap-4 items-center justify-end top-10 right-10 mr-5">
+          <div
+            className=" flex items-center justify-center text-[#f5f5dc] bg-[#adff2f] rounded-[50%] w-11 h-11  shadow-lg hover:cursor-pointer "
+            onClick={handleSubmit}
+          >
+            <CheckCircleIcon />
+          </div>
+          <div
+            className=" flex items-center justify-center  bg-[#de1515b3] rounded-[50%] w-11 h-11  shadow-lg hover:cursor-pointer "
+            onClick={() => {
+              setDisable(!disable)
+            }}
+          >
+            <CancelIcon />
+          </div>
+        </div>
+      )}
+
       <div className="mb-10 mx-2">
         <form autoComplete="off" onSubmit={handleFormSubmit}>
           <Paper className="py-10">
@@ -185,6 +299,7 @@ function allstep() {
                     id="standard-basic"
                     label="Họ và tên"
                     name="name"
+                    disabled={disable}
                     variant="standard"
                     required
                     {...(data.name ? { value: data.name } : { value: '' })}
@@ -193,6 +308,7 @@ function allstep() {
                   />
                   <FormControl required>
                     <DatePicker
+                      disabled={disable}
                       name="date_of_birth"
                       {...(data.date_of_birth
                         ? { value: data.date_of_birth }
@@ -210,12 +326,14 @@ function allstep() {
                     >
                       <FormControlLabel
                         value="male"
+                        disabled={disable}
                         name="gender"
                         control={<Radio />}
                         label="Nam"
                       />
                       <FormControlLabel
                         value="female"
+                        disabled={disable}
                         name="gender"
                         control={<Radio />}
                         label="Nữ"
@@ -224,6 +342,7 @@ function allstep() {
                   </FormControl>
                   <FormControl>
                     <FormControlLabel
+                      disabled={disable}
                       control={<Checkbox checked={data.foreigner ?? false} />}
                       onChange={() => {
                         setData({
@@ -240,6 +359,7 @@ function allstep() {
                   <TextField
                     label="Số CMND/CCCD"
                     name="citizenID"
+                    disabled={disable}
                     required
                     // type="number"
                     {...(data.citizenID
@@ -251,6 +371,7 @@ function allstep() {
                   />
                   <TextField
                     label="Nơi cấp"
+                    disabled={disable}
                     name="uid_place"
                     {...(data.uid_place
                       ? { value: data.uid_place }
@@ -260,6 +381,7 @@ function allstep() {
                     onChange={handleChange}
                   />
                   <TextField
+                    disabled={disable}
                     label="Mã thẻ SV/Quân nhân"
                     name="user_role_uid"
                     required
@@ -273,6 +395,7 @@ function allstep() {
                 </div>
                 <div className="mt-5">
                   <TextField
+                    disabled={disable}
                     label="Số Điện thoại*"
                     name="phone"
                     {...(data.phone ? { value: data.phone } : { value: '' })}
@@ -282,6 +405,7 @@ function allstep() {
                   />
                   <TextField
                     label="Email"
+                    disabled={disable}
                     name="email"
                     {...(data.email ? { value: data.email } : { value: '' })}
                     variant="standard"
@@ -298,6 +422,7 @@ function allstep() {
                     <InputLabel id="major">Nghề nghiệp</InputLabel>
 
                     <Select
+                      disabled={disable}
                       labelId="major"
                       label="Nghề nghiệp"
                       name="major"
@@ -317,6 +442,7 @@ function allstep() {
                   </FormControl>
                   <FormControl sx={{ m: 1 }} variant="standard" className="">
                     <TextField
+                      disabled={disable}
                       label="Lớp/Phòng"
                       name="class"
                       {...(data.class ? { value: data.class } : { value: '' })}
@@ -326,6 +452,7 @@ function allstep() {
                   </FormControl>
                   <FormControl sx={{ m: 1 }} variant="standard" className="">
                     <TextField
+                      disabled={disable}
                       label="Nơi công tác"
                       name="work_place"
                       {...(data.work_place
@@ -343,6 +470,7 @@ function allstep() {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <ProvinceSelector
+                  disabled={disable}
                   title="Địa chỉ thường trú"
                   localStorageData={data}
                   ProvinceSelectorID={'1'}
@@ -351,6 +479,7 @@ function allstep() {
               </Grid>
               <Grid item xs={6}>
                 <ProvinceSelector
+                  disabled={disable}
                   title="Địa chỉ liên lạc"
                   localStorageData={data}
                   ProvinceSelectorID={'2'}
@@ -401,6 +530,7 @@ function allstep() {
                   >
                     <InputLabel id="time">Khung giờ</InputLabel>
                     <Select
+                      disabled={disable}
                       labelId="time"
                       label="Khung giờ"
                       name="time"
@@ -427,6 +557,7 @@ function allstep() {
                   >
                     <InputLabel id="amount">Lượng máu</InputLabel>
                     <Select
+                      disabled={disable}
                       labelId="amount"
                       label="Lượng máu"
                       name="amount"
@@ -453,6 +584,7 @@ function allstep() {
                 <FormControl sx={{ m: 1 }} variant="standard" className="block">
                   <InputLabel id="done_date">Ngày hiến máu </InputLabel>
                   <Select
+                    disabled={disable}
                     labelId="done_date"
                     label="Ngày hiến "
                     name="done_date"
@@ -496,7 +628,7 @@ function allstep() {
         {/* <Button type="submit">Submit</Button> */}
       </div>
 
-      <Paper className="w-full px-3  ">
+      <Paper className="w-full px-3  mx-3">
         <Box sx={{ flexGrow: 1 }} className="p-5 pb-10 flex flex-col ">
           <Typography variant="h4" className="mb-5 font-Dosis">
             Câu hỏi hiến máu
@@ -529,15 +661,23 @@ function allstep() {
                       <RadioGroup
                         name={item.title}
                         required
+                        {...(ans[index]
+                          ? {
+                              value: ans.find((i) => item.title === i.title)
+                                ?.answer,
+                            }
+                          : { value: '' })}
                         style={{ flexDirection: 'row' }}
                         className="flex !flex-row !flex-nowrap"
                       >
                         <Radio
+                          disabled={disable}
                           defaultChecked={false}
                           value={true}
                           onChange={onChecked}
                         />
                         <Radio
+                          disabled={disable}
                           defaultChecked={false}
                           value={false}
                           onChange={onChecked}
@@ -562,16 +702,25 @@ function allstep() {
                             <RadioGroup
                               required
                               name={subitem.title}
+                              {...(ans[index + subindex]
+                                ? {
+                                    value: ans.find(
+                                      (i) => subitem.title === i.title,
+                                    )?.answer,
+                                  }
+                                : { value: null })}
                               className="flex !flex-row !flex-nowrap"
                               style={{ flexDirection: 'row' }}
                             >
                               <Radio
+                                disabled={disable}
                                 // name={index + '-' + subindex}
                                 defaultChecked={false}
                                 value={true}
                                 onChange={onChecked}
                               />
                               <Radio
+                                disabled={disable}
                                 // name={index + '-' + subindex}
                                 defaultChecked={false}
                                 value={false}
@@ -589,6 +738,43 @@ function allstep() {
           </div>
         </Box>
       </Paper>
+
+      <div>
+        <Paper className="my-10 py-10 mx-3">
+          <Box sx={{ flexGrow: 1 }} className="px-5">
+            <Typography className="mb-5 font-bold text-2xl font-Dosis">
+              Thông tin người nhận máu
+            </Typography>
+            <div className="flex">
+              <AntSelect
+                placeholder="-- Chọn sự kiện --"
+                style={{ width: 240 }}
+                onChange={(e) => {
+                  setBloodData(e)
+                }}
+              >
+                {bloodType.map((type, index) => {
+                  return (
+                    <Option key={index} value={type}>
+                      {type}
+                    </Option>
+                  )
+                })}
+              </AntSelect>
+              <AntSelect
+                placeholder="-- Chọn hành động --"
+                style={{ width: 240, marginLeft: 20 }}
+                onChange={(e) => {
+                  setIsDone(e)
+                }}
+              >
+                <Option value="true">Đã hoàn thành</Option>
+                <Option value="false">Chưa hoàn thành</Option>
+              </AntSelect>
+            </div>
+          </Box>
+        </Paper>
+      </div>
     </div>
   )
 }

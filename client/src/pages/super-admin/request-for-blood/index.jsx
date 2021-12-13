@@ -6,11 +6,11 @@ import {
     DeleteOutlined,
     CloseCircleOutlined,
     CheckCircleTwoTone,
-    UserOutlined
 } from '@ant-design/icons'
 import { Button } from 'antd'
 import CustomTable from '../../../components/custom-table/index'
 import * as organizationApi from '../../../api/organization'
+import * as bloodApi from '../../../api/requestBlood'
 import moment from 'moment'
 import router from 'next/router'
 import Link from 'next/link'
@@ -21,12 +21,13 @@ export default function superAdmin() {
 
     useEffect(async () => {
         try {
-            const res = await organizationApi.getAllOrganizations()
+            const res = await bloodApi.getPendingRequests();
             const volunteers = res.data.map((volunteer) => {
                 return { ...volunteer, key: volunteer._id }
             })
             setData(volunteers)
             setFilterData(volunteers)
+            console.log(res);
         } catch (error) {
             console.log(error)
         }
@@ -34,17 +35,12 @@ export default function superAdmin() {
 
     const addVolunteer = () => {
         // TODO: implement function
-        router.push('organization/add')
+        router.push('request-for-blood/add')
     }
     const editVolunteer = (id) => {
         // TODO: implement function
         // await volunteerApi.updateVolunteer(id, newVolunteer)
-        router.push(`organization/${id}`)
-    }
-    const adminView = (id) => {
-        // TODO: implement function
-        // await volunteerApi.updateVolunteer(id, newVolunteer)
-        router.push(`organization/${id}/admins`)
+        router.push(`request-for-blood/${id}`)
     }
 
     const removeVolunteer = (id) => {
@@ -59,8 +55,13 @@ export default function superAdmin() {
         const filtered = data.filter(
             (volunteer) =>
                 volunteer.name.toLowerCase().includes(value) ||
-                volunteer.description.toLowerCase().includes(value) ||
-                volunteer.address.toLowerCase().includes(value),
+                volunteer.date_of_birth.toLowerCase().includes(value) ||
+                volunteer.gender.toLowerCase().includes(value) ||
+                volunteer.identity_card.toLowerCase().includes(value) ||
+                // volunteer.note.toLowerCase().includes(value) ||
+                // volunteer.amount.toLowerCase().includes(value) ||
+                volunteer.blood_type.toLowerCase().includes(value) ||
+                volunteer.phone_number.toLowerCase().includes(value),
         )
         setFilterData(filtered)
     }
@@ -80,7 +81,7 @@ export default function superAdmin() {
             content: 'Bạn có chắc chắn muốn xoá tổ chức này không?',
             onOk: async () => {
                 try {
-                    await organizationApi.deleteOrganization(id)
+                    await bloodApi.deleteRequest(id)
                     removeVolunteer(id)
                     openNotificationSuccess()
                 } catch (error) {
@@ -96,26 +97,46 @@ export default function superAdmin() {
 
     const columns = [
         {
-            title: 'Tên tổ chức',
+            title: 'Họ và tên ',
             dataIndex: 'name',
             key: 'name',
         },
         {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Ngày sinh',
+            dataIndex: 'date_of_birth',
+            key: 'date_of_birth',
+            render: (dob) => moment(dob).format('DD/MM/YYYY'),
         },
         {
-            title: 'Mô tả',
-            dataIndex: 'description',
-            key: 'description',
-            width: '30%'
+            title: 'Giới tính',
+            dataIndex: 'gender',
+            key: 'gender',
+            render: (gender) => (gender === 'male' ? 'Nam' : 'Nữ'),
         },
         {
-            title: 'Có là ngân hàng máu ',
-            dataIndex: 'is_blood_bank',
-            key: 'is_blood_bank',
-            render: (key) => (key == 1 ? 'Có' : 'Không'),
+            title: 'CCCD',
+            dataIndex: 'identity_card',
+            key: 'identity_card',
+        },
+        {
+            title: 'SĐT',
+            dataIndex: 'phone_number',
+            key: 'phone_number',
+        },
+        {
+            title: 'Lượng máu (ml)',
+            dataIndex: 'amount',
+            key: 'amount',
+        },
+        {
+            title: 'Nhóm máu',
+            dataIndex: 'blood_type',
+            key: 'blood_type',
+        },
+        {
+            title: 'Ghi chú',
+            dataIndex: 'note',
+            key: 'note',
         },
         {
             title: 'Hành động',
@@ -123,10 +144,6 @@ export default function superAdmin() {
             dataIndex: '_id',
             render: (id) => (
                 <Space size="middle">
-                    <UserOutlined
-                        className="cursor-pointer"
-                        onClick={() => adminView(id)}
-                    />
                     <EditOutlined
                         className="cursor-pointer"
                         onClick={() => editVolunteer(id)}
@@ -144,14 +161,14 @@ export default function superAdmin() {
         <MiniDrawerSuperAdmin>
             <div className='volunteers'>
                 <div className="adminTitle">
-                    Danh sách tổ chức
+                    Danh sách đơn đăng ký nhận máu
                 </div>
                 <CustomTable
                     data={filterData}
                     columns={columns}
-                    addBtnText="Thêm tổ chức"
+                    addBtnText="Thêm đơn đăng ký nhận máu"
                     onAddBtnClick={addVolunteer}
-                    searchPlaceHolder="Tìm kiếm tổ chức"
+                    searchPlaceHolder="Tìm kiếm đơn đăng ký nhận máu"
                     onChange={searchVolunteer}
                 />
             </div>

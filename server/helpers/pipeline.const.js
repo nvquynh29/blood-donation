@@ -265,6 +265,82 @@ export const eventPipeline = (organizationId) => [
                 ],
               },
             },
+            group_a_amount: {
+              $sum: {
+                $cond: [
+                  {
+                    $and: [
+                      {
+                        $eq: [
+                          '$donations.is_done', true,
+                        ],
+                      }, {
+                        $eq: [
+                          '$donations.blood_type', 'A',
+                        ],
+                      },
+                    ],
+                  }, '$donations.amount', 0,
+                ],
+              },
+            },
+            group_b_amount: {
+              $sum: {
+                $cond: [
+                  {
+                    $and: [
+                      {
+                        $eq: [
+                          '$donations.is_done', true,
+                        ],
+                      }, {
+                        $eq: [
+                          '$donations.blood_type', 'B',
+                        ],
+                      },
+                    ],
+                  }, '$donations.amount', 0,
+                ],
+              },
+            },
+            group_o_amount: {
+              $sum: {
+                $cond: [
+                  {
+                    $and: [
+                      {
+                        $eq: [
+                          '$donations.is_done', true,
+                        ],
+                      }, {
+                        $eq: [
+                          '$donations.blood_type', 'O',
+                        ],
+                      },
+                    ],
+                  }, '$donations.amount', 0,
+                ],
+              },
+            },
+            group_ab_amount: {
+              $sum: {
+                $cond: [
+                  {
+                    $and: [
+                      {
+                        $eq: [
+                          '$donations.is_done', true,
+                        ],
+                      }, {
+                        $eq: [
+                          '$donations.blood_type', 'AB',
+                        ],
+                      },
+                    ],
+                  }, '$donations.amount', 0,
+                ],
+              },
+            },
           },
         },
       ],

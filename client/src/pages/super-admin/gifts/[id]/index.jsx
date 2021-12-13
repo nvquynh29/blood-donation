@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Input, Button, notification, Select } from 'antd';
 import router from 'next/router'
 import moment from 'moment'
-import { addOrganization } from '../../../../api/organization'
+import { addEvent } from '../../../../api/event'
 import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 import UploadAndDisplayImage from '../../../../components/img-upload'
@@ -17,17 +17,15 @@ const AddOrganizationSuperAdmin = () => {
             console.log(values);
 
             //TODO:
-            try {
-                await addOrganization(values)
-                notification.open({
-                    type: "success",
-                    message: "Ghi nhận thành công",
-                    description: "Đăng ký tổ chức mới thành công!"
-                })
-                router.push('/super-admin/organization')
-            } catch (error) {
-                console.log(error)
-            }
+            // call api add
+
+
+            notification.open({
+                type: "success",
+                message: "Ghi nhận thành công",
+                description: "Đăng ký tổ chức mới thành công!"
+            })
+            router.push('/super-admin/organization')
         } catch (error) {
             console.log(error)
         }
@@ -38,14 +36,14 @@ const AddOrganizationSuperAdmin = () => {
     }
     const props = {
         url: null,
-        label: 'Ảnh tổ chức'
+        label: 'Ảnh quà tặng'
     };
 
     return (
         <MiniDrawerSuperAdmin>
             <div className="addEvent">
                 <div className="title">
-                    Thêm tổ chức
+                    Chỉnh sửa quà tặng
                 </div>
                 <hr />
                 <div className="formContainer">
@@ -64,52 +62,29 @@ const AddOrganizationSuperAdmin = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Nhập tên tổ chức!',
+                                    message: 'Nhập tên quà tặng!',
                                 },
                             ]}
-                            label="Tên tổ chức"
+                            label="Tên quà tặng"
                             className="lable"
                         >
 
-                            <Input placeholder='Tên tổ chức' style={{ height: '40px' }} />
+                            <Input placeholder='Tên quà tặng' style={{ height: '40px' }} />
                         </Form.Item>
 
                         <Form.Item
-                            name="is_blood_bank"
+                            name="type"
                             rules={[
                                 {
                                     required: true,
                                     message: 'Chọn trường này!',
                                 },
                             ]}
-                            label="Có là ngân hàng máu"
+                            label="Loại quà tặng"
                             className="lable">
-                            <Select style={{ width: "20%" }} defaultValue="--Chọn có/không--">
-                                <Option value={true}>Có</Option>
-                                <Option value={false}>Không</Option>
-                            </Select>
+                            <Input placeholder='Loại quà tặng' style={{ height: '40px' }} />
                         </Form.Item>
 
-                        <Form.Item
-                            name="address"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Nhập địa chỉ!',
-                                },
-                            ]}
-                            label="Địa chỉ"
-                        >
-
-                            <Input placeholder='Địa chỉ' style={{ height: "100px" }} />
-                        </Form.Item>
-                        <Form.Item
-                            name="description"
-                            label="Mô tả"
-                        >
-
-                            <Input placeholder='Mô tả' style={{ height: "100px" }} />
-                        </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="addEvenBtn">
                                 Thêm

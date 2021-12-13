@@ -80,11 +80,12 @@ function index() {
     setDataTb(table)
   }, [dashbroadData.part2])
   useEffect(() => {
-    console.log(dashbroadData)
+    console.log(dashbroadData.part3)
   }, [dashbroadData.part3])
   useEffect(() => {
     getDashbroadData()
   }, [])
+  useEffect(() => {}, [dashbroadData.part4])
 
   return (
     <MiniDrawer>
@@ -109,7 +110,7 @@ function index() {
           }}
         >
           <span className="text-3xl  font-bold">{part1?.count_old_event}</span>
-          <p className="text-xl">tổng sự kiện đã dien ra</p>
+          <p className="text-xl">tổng sự kiện đã diễn ra</p>
         </Card>
         <Card
           className="font-Dosis shadow-md"
@@ -141,7 +142,7 @@ function index() {
       <div className="w-full block">
         <Table columns={columns} dataSource={dataTb} />
       </div>
-      <Chart />
+      <Chart data={dashbroadData} />
     </MiniDrawer>
   )
 }

@@ -10,5 +10,7 @@ eventRouter.put('/:id', [isAuth, isAdmin], EventController.updateEvent)
 eventRouter.post('/', [isAuth, isAdmin], EventController.createEvent)
 eventRouter.get('/detail/:id', EventController.getEventDetail)
 eventRouter.get('/listVolunteer/:id', EventController.getEventVolunteerId)
+eventRouter.get('/ongoing', EventController.getOngoingAndFutureEvent)
+eventRouter.get('/', [isAuth, isAdmin], EventController.getAllEvent)
 
 export default eventRouter

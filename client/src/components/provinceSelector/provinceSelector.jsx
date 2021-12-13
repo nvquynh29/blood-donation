@@ -124,6 +124,7 @@ function ProvinceSelector(props) {
             <Select
               labelId="province-1"
               required
+              disabled={props.disabled}
               variant="standard"
               className="w-full"
               displayEmpty
@@ -172,6 +173,7 @@ function ProvinceSelector(props) {
               labelId="district-1"
               defaultValue=""
               required
+              disabled={props.disabled}
               {...(localData['district_' + props.ProvinceSelectorID]
                 ? { value: localData['district_' + props.ProvinceSelectorID] }
                 : { value: '' })}
@@ -190,6 +192,7 @@ function ProvinceSelector(props) {
           <FormControl fullWidth variant="standard" required>
             <InputLabel id="ward-1">Xã/Phường</InputLabel>
             <Select
+              disabled={props.disabled}
               labelId="ward-1"
               required
               {...(localData['ward_' + props.ProvinceSelectorID]
@@ -212,6 +215,7 @@ function ProvinceSelector(props) {
               className="pt-2"
               fullWidth
               required
+              disabled={props.disabled}
               name={'address_' + props.ProvinceSelectorID}
               label="Địa chỉ"
               {...(localData['address_' + props.ProvinceSelectorID]
@@ -228,6 +232,7 @@ function ProvinceSelector(props) {
             <TextField
               className="pt-5"
               fullWidth
+              disabled={props.disabled}
               {...(localData['fulladdress_' + props.ProvinceSelectorID]
                 ? {
                     value: localData['fulladdress_' + props.ProvinceSelectorID],
