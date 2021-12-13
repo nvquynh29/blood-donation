@@ -12,6 +12,7 @@ import {
   MenuItem,
   Paper,
   Radio,
+  Button,
   RadioGroup,
   Select,
   TextField,
@@ -747,7 +748,7 @@ function allstep(props) {
             </Typography>
             <div className="flex">
               <AntSelect
-                placeholder="-- Chọn sự kiện --"
+                placeholder="-- Chọn sự loại máu --"
                 style={{ width: 240 }}
                 onChange={(e) => {
                   setBloodData(e)
@@ -763,7 +764,8 @@ function allstep(props) {
               </AntSelect>
               <AntSelect
                 placeholder="-- Chọn hành động --"
-                style={{ width: 240, marginLeft: 20 }}
+                style={{ width: 240, margin: '0px 20px' }}
+                defaultValue="false"
                 onChange={(e) => {
                   setIsDone(e)
                 }}
@@ -771,6 +773,13 @@ function allstep(props) {
                 <Option value="true">Đã hoàn thành</Option>
                 <Option value="false">Chưa hoàn thành</Option>
               </AntSelect>
+              <Button
+                onClick={(e) => {
+                  console.log(e)
+                }}
+              >
+                Update
+              </Button>
             </div>
           </Box>
         </Paper>

@@ -2,30 +2,27 @@ import React, { useState } from 'react'
 import { Form, Input, Button, notification, Select } from 'antd';
 import router from 'next/router'
 import moment from 'moment'
-import { addEvent } from '../../../../api/event'
+import { updateGift, getGift } from '../../../../api/gifts'
 import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 import UploadAndDisplayImage from '../../../../components/img-upload'
+import { getFabUtilityClass } from '@mui/material';
 
 
-const AddOrganizationSuperAdmin = () => {
+const editGift = ({ gift }) => {
     const onFinish = async (values) => {
         try {
 
             let inpFile = document.getElementById('img_path');
-            values.img_path = inpFile.files[0];
-            console.log(values);
-
+            values.img = inpFile.files[0];
             //TODO:
-            // call api add
-
-
+            await updateGift(router.query.id, values)
             notification.open({
                 type: "success",
                 message: "Ghi nhận thành công",
                 description: "Đăng ký tổ chức mới thành công!"
             })
-            router.push('/super-admin/organization')
+            router.push('/super-admin/gift')
         } catch (error) {
             console.log(error)
         }
@@ -35,7 +32,7 @@ const AddOrganizationSuperAdmin = () => {
         console.log('Failed:', errorInfo);
     }
     const props = {
-        url: null,
+        url: gift.image_path,
         label: 'Ảnh quà tặng'
     };
 
@@ -43,7 +40,7 @@ const AddOrganizationSuperAdmin = () => {
         <MiniDrawerSuperAdmin>
             <div className="addEvent">
                 <div className="title">
-                    Thêm quà tặng
+                    Chỉnh sửa quà tặng
                 </div>
                 <hr />
                 <div className="formContainer">
@@ -53,6 +50,12 @@ const AddOrganizationSuperAdmin = () => {
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
                         layout="vertical"
+                        initialValues={
+                           {
+                                name: gift.name,
+                                type: gift.type,
+                           }
+                        }
                     >
                         <UploadAndDisplayImage props={props}>
                         </UploadAndDisplayImage>
@@ -87,7 +90,7 @@ const AddOrganizationSuperAdmin = () => {
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="addEvenBtn">
-                                Thêm
+                            Lưu
                             </Button>
                         </Form.Item>
                     </Form>
@@ -96,5 +99,10 @@ const AddOrganizationSuperAdmin = () => {
         </MiniDrawerSuperAdmin>
     )
 }
-
-export default AddOrganizationSuperAdmin
+editGift.getInitialProps = async (ctx) => {
+    const res = await getGift(ctx.query.id)
+    return {
+        gift: res.data
+    }
+}
+export default editGift

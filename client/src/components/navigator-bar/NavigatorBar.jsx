@@ -12,7 +12,7 @@ function NavigatorBar() {
   return (
     <>
       <nav className="block sticky top-0 z-50">
-        <div className="flex  z-50 shadow-lg w-full items-center flex-wrap bg-white transform transition duration-500 ease-in-out px-16">
+        <div className="flex  z-50 shadow-lg w-full items-center  bg-white transform transition duration-500 ease-in-out px-16 flex-nowrap">
           <Link href="/">
             <a className="inline-flex items-center p-2 mr-4 ">
               <img srcSet="/images/logo.svg" alt="" className="h-16" />

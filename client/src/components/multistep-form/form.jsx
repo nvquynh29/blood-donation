@@ -49,7 +49,7 @@ function getStepCompnent(step, callback) {
   //   </div>
   // )
 }
-export default function HorizontalNonLinearStepper({ currentUrl }) {
+export default function HorizontalNonLinearStepper({ eventId, currentUrl }) {
   const [activeStep, setActiveStep] = useState(0)
   const [completed, setCompleted] = useState({})
   const [trickger, setTrickger] = useState(false)
@@ -207,7 +207,7 @@ export default function HorizontalNonLinearStepper({ currentUrl }) {
                   activeStep === 1 ? '' : activeStep === 3 ? '' : 'hidden'
                 }
               >
-                <Step2Container callback={getStepContent} />
+                <Step2Container callback={getStepContent} eventId={eventId} />
               </div>
               <div
                 className={

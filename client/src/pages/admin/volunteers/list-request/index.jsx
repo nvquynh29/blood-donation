@@ -6,6 +6,8 @@ import moment from 'moment'
 import router from 'next/router'
 import { data } from 'autoprefixer'
 import MiniDrawer from '../../../../layouts/trial/MiniDrawer'
+import { getGenderVie } from '../../../../utils'
+
 function VolunteerRequests() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(data)
@@ -58,6 +60,7 @@ function VolunteerRequests() {
       title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
+      render: (gender) => getGenderVie(gender),
     },
     {
       title: 'SĐT',
@@ -76,6 +79,26 @@ function VolunteerRequests() {
       key: 'email',
     },
   ]
+
+  const header = {
+    name: 'Họ và tên',
+    date_of_birth: 'Ngày sinh',
+    gender: 'Giới tính',
+    phone: 'SĐT',
+    address: 'Địa chỉ',
+    email: 'Email',
+  }
+
+  const mapFields = {
+    male: 'Nam',
+    female: 'Nữ',
+  }
+
+  const additionalFields = {
+    organization_id: true,
+    accepted: false,
+    model: 'volunteer',
+  }
 
   const [selectedKeys, setSelectedKeys] = useState([])
   const onSelectChange = selectedRowKeys => {
@@ -100,13 +123,14 @@ function VolunteerRequests() {
   }
   return (
     <MiniDrawer>
-      <div className='volunteers'>
-        <div className="adminTitle">
-          Danh sách đăng ký tình nguyện viên
-        </div>
+      <div className="volunteers">
+        <div className="adminTitle">Danh sách đăng ký tình nguyện viên</div>
         <CustomTable
           data={filterData}
           columns={columns}
+          header={header}
+          mapFields={mapFields}
+          additionalFields={additionalFields}
           addBtnText="Chấp nhận Đơn đăng ký"
           onAddBtnClick={onAccept}
           searchPlaceHolder="Tìm kiếm..."

@@ -2,16 +2,17 @@ import React, { useState } from 'react'
 import { Form, Input, Button, notification, Select, DatePicker } from 'antd';
 import router from 'next/router'
 import moment from 'moment'
-import { addEvent } from '../../../../api/event'
+import { getRequest, updateRequestBlood } from '../../../../api/requestBlood'
 import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 
-const AddOrganizationSuperAdmin = () => {
+const editRequestSuperAdmin = ({ requestBlood }) => {
     const onFinish = async (values) => {
         try {
             //TODO:
             // call api add
-            console.log(values);
+            values.date_of_birth = values.date_of_birth._d
+            updateRequestBlood(router.query.id, values)
             notification.open({
                 type: "success",
                 message: "Ghi nhận thành công",
@@ -40,6 +41,7 @@ const AddOrganizationSuperAdmin = () => {
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
                         layout="vertical"
+                        initialValues={{ ...requestBlood, date_of_birth: moment(requestBlood.date_of_birth) }}
                     >
                         <Form.Item
                             name="name"
@@ -146,7 +148,7 @@ const AddOrganizationSuperAdmin = () => {
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="addEvenBtn">
-                                Thêm
+                            Lưu
                             </Button>
                         </Form.Item>
                     </Form>
@@ -155,5 +157,10 @@ const AddOrganizationSuperAdmin = () => {
         </MiniDrawerSuperAdmin>
     )
 }
-
-export default AddOrganizationSuperAdmin
+editRequestSuperAdmin.getInitialProps = async (ctx) => {
+    const res = await getRequest(ctx.query.id)
+    return {
+        requestBlood: res.data
+    }
+}
+export default editRequestSuperAdmin

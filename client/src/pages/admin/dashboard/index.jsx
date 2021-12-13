@@ -79,9 +79,7 @@ function index() {
     })
     setDataTb(table)
   }, [dashbroadData.part2])
-  useEffect(() => {
-    console.log(dashbroadData.part3)
-  }, [dashbroadData.part3])
+  useEffect(() => {}, [dashbroadData.part3])
   useEffect(() => {
     getDashbroadData()
   }, [])
@@ -149,7 +147,6 @@ function index() {
 
 export async function getServerSideProps(context) {
   // const res = await axios
-  console.log('res')
 
   return {
     props: {}, // will be passed to the page component as props

@@ -81,9 +81,7 @@ function index(props) {
       },
     ],
   })
-  const handleChangeEvent = (data, e) => {
-    console.log(data, e)
-  }
+  const handleChangeEvent = (data, e) => {}
   useEffect(async () => {
     getAllEvent().then((res) => {
       setEvents(res.data)
@@ -130,7 +128,7 @@ function index(props) {
       ],
     }
     const abloodType = { A: 0, B: 0, AB: 0, O: 0 }
-    props.data.part4.done_events.forEach((element) => {
+    props.data?.part4?.done_events.forEach((element) => {
       const ev = events.find((e) => e._id === element._id)
       temp.labels.push(ev?.name)
       temp.datasets[0].data.push(element.done_donations_count)
@@ -170,7 +168,7 @@ function index(props) {
       </div>
       <div className="max-w-xl flex flex-col flex-1  items-end ">
         <div className="flex">
-          <Select
+          {/* <Select
             placeholder="-- Chọn sự kiện --"
             style={{ width: 240 }}
             onChange={handleChangeEvent}
@@ -182,7 +180,7 @@ function index(props) {
                 </Option>
               )
             })}
-          </Select>
+          </Select> */}
         </div>
       </div>
     </div>

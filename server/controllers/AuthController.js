@@ -32,7 +32,7 @@ const login = async (req, res) => {
         '30d',
       )
       updateRefreshToken(user._id, refreshToken)
-      return res.status(200).json({ accessToken, refreshToken })
+      return res.status(200).json({ accessToken, refreshToken, role: user.role })
     }
     return res.status(401).json('Password incorrect')
   } catch (error) {

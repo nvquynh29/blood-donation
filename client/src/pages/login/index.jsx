@@ -29,10 +29,16 @@ const Login = () => {
   const login = async (credential) => {
     try {
       const res = await auth.login(credential)
+      console.log(res.data.role)
       if (res.status === 200) {
         writeCookies(res.data)
-        router.push('/admin/dashboard')
         store.dispatch(requestUserApi(res.data.accessToken))
+        if (res.data.role === 'admin') {
+          router.push('/admin/dashboard')
+        } else {
+          console.log(1)
+          router.push('/super-admin/organization')
+        }
       }
     } catch (error) {
       console.log(error)
@@ -42,7 +48,7 @@ const Login = () => {
   return (
     <div className="loginContainer">
       <div className="asidepic rounded-tl-md rounded-bl-md">
-        <img className="bg-white" src="/favicon.png" alt="pic" />
+        <img className="bg-white" src="/logo-giot-hong.png" alt="pic" />
       </div>
       <div className="loginForm flex flex-col items-center justify-center rounded-r-md rounded-b-md">
         <div className="loginMain">

@@ -83,6 +83,30 @@ const updateRequestStatus = async (req, res) => {
   }
 }
 
+const getRequestBlood = async (req, res) => {
+  try {
+    const request = await RequestBlood.findById(req.params.id)
+    return res.status(200).json(request)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+const updateRequestBlood = async (req, res) => {
+  try {
+    const { id } = req.params
+    const response = await RequestBlood.findOneAndUpdate(
+      { _id: id },
+      req.body,
+      { new: true },
+    )
+    return res.status(200).json(response)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json(error)
+  }
+}
+
 export const RequestBloodController = {
   addRequestBlood,
   getAcceptedRequests,
@@ -90,4 +114,6 @@ export const RequestBloodController = {
   markAsAccepted,
   deleteRequest,
   updateRequestStatus,
+  getRequestBlood,
+  updateRequestBlood,
 }
