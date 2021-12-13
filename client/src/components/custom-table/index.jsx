@@ -29,7 +29,7 @@ function CustomTable({
   }
 
   return (
-    <div>
+    <div className='customTable'>
       <div className="flex flex-row justify-between">
         {disableExcel ? null : (
           <FileHelper
