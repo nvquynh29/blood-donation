@@ -183,6 +183,7 @@ function DonationList() {
         columns={columns}
         addBtnText="Thêm đơn hiến máu"
         onAddBtnClick={addDonation}
+        disableExcel={true}
         searchPlaceHolder="Tìm kiếm đơn hiến máu"
         onChange={searchDonation}
       />
