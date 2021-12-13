@@ -11,7 +11,7 @@ import MainLayout from '../../layouts/main-layout/Default'
 function DonateHistory() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [otp, setOtp] = useState('')
-  const time = 120000
+  const time = 120000  // 2 min
   const [form] = Form.useForm()
   const [showResult, setShowResult] = useState(false)
   const [result, setResult] = useState([])
@@ -44,7 +44,7 @@ function DonateHistory() {
         if (res.data && !Array.isArray(res.data)) {
           setResult(res.data)
           showModal()
-          // await sendOTP(phone)
+          await sendOTP(phone)
         } else {
           openNotification()
         }
@@ -68,24 +68,19 @@ function DonateHistory() {
   }
 
   const checkOTP = async (otp) => {
-    // const { phone } = form.getFieldsValue()
-    // try {
-    //   const res = await verifyOTP(phone, otp)
-    //   if (res.status === 200) {
-    //     if (res.data.valid) {
-    //       return true
-    //     }
-    //     return false
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    //   return false
-    // }
-
-    if (otp === '123456') {
-      return true
+    const { phone } = form.getFieldsValue()
+    try {
+      const res = await verifyOTP(phone, otp)
+      if (res.status === 200) {
+        if (res.data.valid) {
+          return true
+        }
+        return false
+      }
+    } catch (error) {
+      console.log(error)
+      return false
     }
-    return false
   }
 
   const handleOk = async () => {
@@ -239,7 +234,10 @@ function DonateHistory() {
                       form.resetFields()
                     }}
                   >
-                    <SyncOutlined style={{ position: 'relative', bottom: '3px' }} /> Nhập lại
+                    <SyncOutlined
+                      style={{ position: 'relative', bottom: '3px' }}
+                    />{' '}
+                    Nhập lại
                   </Button>
                 </Form.Item>
                 <Form.Item
@@ -253,9 +251,11 @@ function DonateHistory() {
                     htmlType="submit"
                     style={{ 'background-color': '#FE3C47' }}
                     className="hisSearchB"
-                  // onClick={}
+                    // onClick={}
                   >
-                    <SearchOutlined style={{ position: 'relative', bottom: '3px' }} />
+                    <SearchOutlined
+                      style={{ position: 'relative', bottom: '3px' }}
+                    />
                     Tra cứu
                   </Button>
                 </Form.Item>
@@ -273,10 +273,18 @@ function DonateHistory() {
           okText="Xác nhận"
           closable
           afterClose={handleCloseModal}
-          className='otpModel'
+          className="otpModel"
         >
           <div>
-            <p style={{ textAlign: "center", fontSize: "16px", fontWeight: '500' }}>Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký</p>
+            <p
+              style={{
+                textAlign: 'center',
+                fontSize: '16px',
+                fontWeight: '500',
+              }}
+            >
+              Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký
+            </p>
             <div className="flex flex-col items-center justify-center">
               <OtpInput
                 value={otp}
@@ -291,18 +299,23 @@ function DonateHistory() {
               </span>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p style={{ marginTop: "10px" }}>Nếu bạn không nhận được tin nhắn, vui lòng thử lại sau:</p>
+              <p style={{ marginTop: '10px' }}>
+                Nếu bạn không nhận được tin nhắn, vui lòng thử lại sau:
+              </p>
               <Countdown
                 date={startTimer + time}
                 renderer={(props) => (
-                  <span>{`${zeroPad(props.minutes)}:${zeroPad(props.seconds)}`}</span>
+                  <span>{`${zeroPad(props.minutes)}:${zeroPad(
+                    props.seconds,
+                  )}`}</span>
                 )}
               />
             </div>
           </div>
         </Modal>
-
-        <SearchResult hidden={!showResult} data={result} />
+        <div className={showResult ? '' : 'hidden'}>
+          <SearchResult data={result} />
+        </div>
       </div>
     </MainLayout>
   )
