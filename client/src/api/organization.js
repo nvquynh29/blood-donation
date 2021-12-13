@@ -4,6 +4,7 @@ export const getOrganization = (id) => {
     return instance.get(`/organization/${id}`)
 }
 export const getAdmins = () => instance.get('/organization/admins')
+export const getOrgAdmins = (id) => instance.get(`/organization/admins/${id}`)
 export const getAllOrganizations = () => instance.get('/organization')
 export const getFile = (url) => instance.get('/getFile', url)
 export const addOrganization = (arg) => {

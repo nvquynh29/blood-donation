@@ -4,38 +4,20 @@ import {
 import { Modal, notification, Space } from 'antd'
 import router from 'next/router'
 import React, { useEffect, useState } from 'react'
-import * as adminApi from '../../../../../api/organization'
+import { getOrgAdmins } from '../../../../../api/organization'
+import { deleteUser } from '../../../../../api/user'
 import CustomTable from '../../../../../components/custom-table/index'
 import MiniDrawerSuperAdmin from '../../../../../layouts/super-admin/MiniDrawerSuperAdmin'
 import { env } from "../../../../../../next.config"
 
-export default function index() {
-    const [data, setData] = useState([])
-    const [filterData, setFilterData] = useState([])
-
-    useEffect(async () => {
-        try {
-            const res = await adminApi.getAdmins();
-            const volunteers = res.data.map((volunteer) => {
-                return { ...volunteer, key: volunteer._id }
-            })
-            setData(volunteers)
-            setFilterData(volunteers)
-        } catch (error) {
-            console.log(error)
-        }
-    }, [])
+function OrganizationAdmins({ admins }) {
+    const [data, setData] = useState(admins)
+    const [filterData, setFilterData] = useState(admins)
 
     const addVolunteer = () => {
         // TODO: implement function
-        router.push('admins/add')
+        router.push(`/super-admin/organization/${router.query.id}/admins/add/`)
     }
-    const editVolunteer = (_id) => {
-        // TODO: implement function
-        // await volunteerApi.updateVolunteer(id, newVolunteer)
-        router.push(`admins/${_id}`)
-    }
-
     const removeVolunteer = (id) => {
         let updatedData = filterData.filter((volunteer) => volunteer._id !== id)
         setFilterData(updatedData)
@@ -69,7 +51,7 @@ export default function index() {
             onOk: async () => {
                 try {
                     //TODO
-                    //await apiDeleteAdmin(id)
+                    await deleteUser(id)
                     removeVolunteer(id)
                     openNotificationSuccess()
                 } catch (error) {
@@ -90,6 +72,11 @@ export default function index() {
             key: 'name',
         },
         {
+            title: 'Số điện thoại',
+            dataIndex: 'phone',
+            key: 'phone',
+        },
+        {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
@@ -100,10 +87,6 @@ export default function index() {
             dataIndex: '_id',
             render: (id) => (
                 <Space size="middle">
-                    <EditOutlined
-                        className="cursor-pointer"
-                        onClick={() => editVolunteer(id)}
-                    />
                     <DeleteOutlined
                         className="cursor-pointer"
                         onClick={() => deleteVolunteer(id)}
@@ -131,3 +114,19 @@ export default function index() {
         </MiniDrawerSuperAdmin>
     )
 }
+
+OrganizationAdmins.getInitialProps = async (ctx) => {
+    try {
+        const res = await getOrgAdmins(ctx.query.id);
+        const admins = res.data.map((admin) => {
+            return { ...admin, key: admin._id }
+        })
+        return {
+            admins
+        }
+    } catch (error) {
+        console.log(error)
+    }
+} 
+
+export default OrganizationAdmins

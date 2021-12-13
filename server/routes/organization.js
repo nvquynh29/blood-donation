@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
     cb(null, './uploads/')
   },
   filename: function (req, file, cb) {
+    console.log(file)
     const ext = mime.extension(file.mimetype)
     cb(null, `${new Date().getTime()}.${ext}`)
   },
@@ -38,6 +39,7 @@ const organizationRouter = express.Router()
 organizationRouter.post('/', [upload.single('organization_image'), isAuth, isSuperAdmin], OrganizationController.createOrganization)
 organizationRouter.put('/:id', [upload.single('organization_image'), isAuth, isSuperAdmin], OrganizationController.updateOrganization)
 organizationRouter.get('/admins', [isAuth, isAdmin], OrganizationController.getAllAdmins)
+organizationRouter.get('/admins/:id', OrganizationController.getOrgAdmins)
 organizationRouter.get('/dashboard', [isAuth, isAdmin], OrganizationController.getDashboardInfo)
 organizationRouter.delete('/:id', [isAuth, isSuperAdmin], OrganizationController.deleteOrganization)
 

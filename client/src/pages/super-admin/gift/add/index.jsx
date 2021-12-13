@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Input, Button, notification, Select } from 'antd';
 import router from 'next/router'
 import moment from 'moment'
-import { addEvent } from '../../../../api/event'
+import { addGift } from '../../../../api/gifts'
 import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 import UploadAndDisplayImage from '../../../../components/img-upload'
@@ -13,19 +13,15 @@ const AddOrganizationSuperAdmin = () => {
         try {
 
             let inpFile = document.getElementById('img_path');
-            values.img_path = inpFile.files[0];
-            console.log(values);
-
+            values.img = inpFile.files[0];
             //TODO:
-            // call api add
-
-
+            await addGift(values)
             notification.open({
                 type: "success",
                 message: "Ghi nhận thành công",
                 description: "Đăng ký tổ chức mới thành công!"
             })
-            router.push('/super-admin/organization')
+            router.push('/super-admin/gift')
         } catch (error) {
             console.log(error)
         }
@@ -43,7 +39,7 @@ const AddOrganizationSuperAdmin = () => {
         <MiniDrawerSuperAdmin>
             <div className="addEvent">
                 <div className="title">
-                    Chỉnh sửa quà tặng
+                    Thêm quà tặng
                 </div>
                 <hr />
                 <div className="formContainer">
