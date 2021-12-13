@@ -1,6 +1,7 @@
 import instance from './axios'
 
 export const getEvent = (limit) => instance.get(`/event?limit=${limit}`)
+export const getOngoingEvent = () => instance.get(`/event/ongoing`)
 export const getAllEvent = () => instance.get(`/event`)
 export const updateEvent = (id, arg) => instance.put(`/event/${id}`, arg)
 export const deleteEvent = (id) => instance.delete(`/event/${id}`)
