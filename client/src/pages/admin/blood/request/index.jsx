@@ -119,7 +119,7 @@ function BloodRequest() {
 
   return (
     <MiniDrawer>
-      <div className="request-blood">
+      <div className="volunteers">
         <div className="adminTitle">Danh sách đơn xin hỗ trợ máu</div>
         <CustomTable
           data={filterData}

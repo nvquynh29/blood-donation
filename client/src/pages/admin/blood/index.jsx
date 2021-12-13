@@ -81,7 +81,7 @@ function BloodRequestAccepted() {
           console.log(error)
         }
       },
-      onCancel: () => {},
+      onCancel: () => { },
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -185,10 +185,10 @@ function BloodRequestAccepted() {
 
   return (
     <MiniDrawer>
-      <div className="request-blood">
+      <div className="volunteers">
         <div className="adminTitle">Danh sách đơn xin hỗ trợ máu</div>
         <Link href="blood/request">
-          <Button>Danh sách đơn đăng ký</Button>
+          <Button style={{ marginBottom: "20px" }}>Danh sách đơn đăng ký</Button>
         </Link>
         <CustomTable
           data={filterData}
