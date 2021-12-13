@@ -13,7 +13,7 @@ import moment from 'moment'
 import router from 'next/router'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
 import Link from 'next/link'
-
+import { getGenderVie } from '../../../utils'
 
 function Volunteers() {
   const [data, setData] = useState([])
@@ -83,7 +83,7 @@ function Volunteers() {
           console.log(error)
         }
       },
-      onCancel: () => { },
+      onCancel: () => {},
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -106,6 +106,7 @@ function Volunteers() {
       title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
+      render: (gender) => getGenderVie(gender),
     },
     {
       title: 'SĐT',
@@ -142,20 +143,39 @@ function Volunteers() {
     },
   ]
 
+  const header = {
+    name: 'Họ và tên',
+    date_of_birth: 'Ngày sinh',
+    gender: 'Giới tính',
+    phone: 'SĐT',
+    address: 'Địa chỉ',
+    email: 'Email',
+  }
+
+  const mapFields = {
+    male: 'Nam',
+    female: 'Nữ',
+  }
+
+  const additionalFields = {
+    accepted: true,
+    organization_id: true,
+    model: 'volunteer',
+  }
+
   return (
     <MiniDrawer>
-      <div className='volunteers'>
-        <div className="adminTitle">
-          Danh sách tình nguyện viên
-        </div>
-        <Link href='volunteers/list-request'>
-          <Button style={{ marginBottom: "20px" }}>
-            Danh sách đơn đăng ký
-          </Button>
+      <div className="volunteers">
+        <div className="adminTitle">Danh sách tình nguyện viên</div>
+        <Link href="volunteers/list-request">
+          <Button>Danh sách đơn đăng ký</Button>
         </Link>
         <CustomTable
           data={filterData}
           columns={columns}
+          header={header}
+          mapFields={mapFields}
+          additionalFields={additionalFields}
           addBtnText="Thêm tình nguyện viên"
           onAddBtnClick={addVolunteer}
           searchPlaceHolder="Tìm kiếm tình nguyện viên"

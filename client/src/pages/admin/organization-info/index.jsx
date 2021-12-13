@@ -9,8 +9,6 @@ import moment from "moment"
 import MiniDrawer from "../../../layouts/trial/MiniDrawer"
 
 function OrganizationDetail() {
-
-
   const [admins, setAdmins] = useState([])
   const [adminData, setAdminData] = useState([])
   const [organization, setOrganization] = useState({})
@@ -63,6 +61,7 @@ function OrganizationDetail() {
       width: "25%",
     },
   ]
+
   return (
     <MiniDrawer>
       <div className="grid xl:grid-cols-2 grid-cols-1 organizationDetail gap-5 organizationInfo">
@@ -90,6 +89,7 @@ function OrganizationDetail() {
           <CustomTable
             data={adminData}
             columns={columns}
+            disableExcel={true}
             searchPlaceHolder="Tìm kiếm người quản lý"
             onChange={searchAdmin}
           />

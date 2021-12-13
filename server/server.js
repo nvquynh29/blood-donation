@@ -3,16 +3,15 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import path from 'path'
 import initAPIs from './routes/api.js'
 import organizationRouter from './routes/organization.js'
 import eventRouter from './routes/event.js'
 import volunteerRouter from './routes/volunteer.js'
 import donationRouter from './routes/donation.js'
-import isAdmin from './middleware/AdminMiddleware.js'
 import requestBloodRouter from './routes/requestBlood.js'
 import userRouter from './routes/user.js'
 import giftRouter from './routes/gift.js'
+import excelRouter from './routes/excel.js'
 
 dotenv.config()
 const app = express()
@@ -31,6 +30,8 @@ app.use('/donation', donationRouter)
 app.use('/request-blood', requestBloodRouter)
 app.use('/user', userRouter)
 app.use('/gift', giftRouter)
+app.use('/excel', excelRouter)
+
 initAPIs(app) // use isAuth middleware from this line
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })

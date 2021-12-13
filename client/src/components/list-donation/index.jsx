@@ -117,7 +117,12 @@ function DonationList() {
       key: 'phone',
     },
     {
-      title: 'Lượng máu (CC)',
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Lượng máu (ml)',
       dataIndex: 'amount',
       key: 'amount',
     },
@@ -130,8 +135,7 @@ function DonationList() {
       title: 'Thời gian',
       dataIndex: 'time',
       key: 'time',
-    }
-    ,
+    },
     {
       title: 'Trạng thái',
       dataIndex: 'is_done',
@@ -177,6 +181,7 @@ function DonationList() {
         <CustomTable
           data={filterData}
           columns={columns}
+          disableExcel={true}
           addBtnText="Thêm đơn hiến máu"
           onAddBtnClick={addDonation}
           searchPlaceHolder="Tìm kiếm đơn hiến máu"
