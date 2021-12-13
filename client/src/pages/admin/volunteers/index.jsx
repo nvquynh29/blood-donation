@@ -34,12 +34,12 @@ function Volunteers() {
 
   const addVolunteer = () => {
     // TODO: implement function
-    router.push('volunteers/add')
+    router.push('/admin/volunteers/add')
   }
   const editVolunteer = (id) => {
     // TODO: implement function
     // await volunteerApi.updateVolunteer(id, newVolunteer)
-    router.push(`volunteers/${id}`)
+    router.push(`/admin/volunteers/${id}`)
   }
 
   const removeVolunteer = (id) => {
@@ -167,7 +167,7 @@ function Volunteers() {
     <MiniDrawer>
       <div className="volunteers">
         <div className="adminTitle">Danh sách tình nguyện viên</div>
-        <Link href="volunteers/list-request">
+        <Link href="/admin/volunteers/list-request">
           <Button>Danh sách đơn đăng ký</Button>
         </Link>
         <CustomTable

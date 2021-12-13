@@ -34,6 +34,7 @@ function Event() {
     router.push('/admin/event/add')
   }
   const onDetailEvent = (id) => {
+    console.log(id)
     router.push(`/admin/event/${id}`)
   }
 
@@ -120,7 +121,10 @@ function Event() {
         <Space size="middle">
           <EditOutlined
             className="cursor-pointer"
-            onClick={() => onDetailEvent(id)}
+            onClick={(e) => {
+              e.preventDefault()
+              onDetailEvent(id)
+            }}
           />
           <DeleteOutlined
             className="cursor-pointer"
