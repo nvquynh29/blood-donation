@@ -14,6 +14,7 @@ export default function BasicDatePicker(props) {
       <DatePicker
         label="Ngày sinh"
         value={value}
+        disabled={props.disabled}
         onChange={(newValue) => {
           setValue(newValue)
           props.onChange(newValue)

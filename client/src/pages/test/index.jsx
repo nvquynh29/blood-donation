@@ -1,5 +1,5 @@
 import React from 'react'
-import MultiStepForm from '../../components/multistep-form/form'
+import MultiStepForm from '../../components/multistep-form/allstep'
 import OrganizationDetail from '../organization/[id]/index'
 
 function index() {

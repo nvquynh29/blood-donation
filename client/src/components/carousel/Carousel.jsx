@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Carousel } from 'antd'
-import { LeftOutlined, RightOutlined, SwapRightOutlined } from '@ant-design/icons'
+import {
+  LeftOutlined,
+  RightOutlined,
+  SwapRightOutlined,
+} from '@ant-design/icons'
 import Link from 'next/link'
+import { getAllEvent } from '../../api/event'
 
 // import './styles.scss'
 function MyCarousel() {
@@ -25,17 +30,24 @@ function MyCarousel() {
       imgUrl: '/images/slider-1.jpg',
     },
   ]
+  useEffect(async () => {
+    const res = await getAllEvent()
+    console.log(res.data)
+  }, [])
   return (
-    <div className="carousel">
-      <Carousel autoplay arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />}>
+    <div className="carousel !font-Dosis">
+      <Carousel
+        autoplay
+        arrows
+        prevArrow={<LeftOutlined />}
+        nextArrow={<RightOutlined />}
+      >
         {events.map((event) => (
           <div className="relative" key={event.id}>
             <div className="slider-info absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50 h-1/2 w-3/4 ">
               <div className="content text-center">
-                <h3 className="xl:text-5xl lg:text-3xl md:text-2xl text-base">{event.name}</h3>
-                <h2 className="font-SourceSans md:text-2xl lg:text-4xl lg:mt-[1rem] xl:text-[3.6rem]">
-                  {event.sologan}
-                </h2>
+                <h3 className="text-[2vw] text-base">{event.name}</h3>
+                <h2 className="font-Dosis text-[3.6rem]">{event.sologan}</h2>
 
                 <Link href="/event">
                   <a className="custom-btn inline-flex items-center p-2 mr-4 mt-5">

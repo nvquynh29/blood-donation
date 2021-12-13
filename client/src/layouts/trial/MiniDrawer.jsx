@@ -1,35 +1,35 @@
-import React, { useEffect, useRef, useState, useContext } from 'react'
-import { styled, useTheme } from '@mui/material/styles'
-import router from 'next/router'
-import Link from 'next/link'
-import Cookies from 'universal-cookie'
-import Box from '@mui/material/Box'
-import MuiDrawer from '@mui/material/Drawer'
-import MuiAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import CssBaseline from '@mui/material/CssBaseline'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
+import {
+  Apartment,
+  Bloodtype,
+  Event,
+  Home,
+  Logout,
+  SupervisedUserCircle,
+} from '@mui/icons-material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import MenuIcon from '@mui/icons-material/Menu'
+import { Avatar } from '@mui/material'
+import MuiAppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import Divider from '@mui/material/Divider'
+import MuiDrawer from '@mui/material/Drawer'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import { styled, useTheme } from '@mui/material/styles'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Link from 'next/link'
+import router from 'next/router'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { ReactReduxContext } from 'react-redux'
-import { Avatar } from '@mui/material'
-import {
-  Home,
-  SupervisedUserCircle,
-  Event,
-  Bloodtype,
-  Apartment,
-  Logout,
-} from '@mui/icons-material'
+import Cookies from 'universal-cookie'
 import { getUser } from '../../api/user'
-import { removeUser } from "../../store/actions/userAction";
+import { removeUser } from '../../store/actions/userAction'
 
 const drawerWidth = 240
 
@@ -144,7 +144,7 @@ export default function MiniDrawer({ children }) {
       const firstChar = arr[arr.length - 1][0]
       return firstChar
     }
-    return 'A';
+    return 'A'
   }
 
   const userDropDown = useRef(null)

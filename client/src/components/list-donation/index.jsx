@@ -8,25 +8,29 @@ import {
 } from '@ant-design/icons'
 import { Button } from 'antd'
 import CustomTable from '../../components/custom-table'
-import { getEventDonation, deleteDonation, updateDonationStatus } from '../../api/donation'
+import {
+  getEventDonation,
+  deleteDonation,
+  updateDonationStatus,
+} from '../../api/donation'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import MiniDrawer from '../../layouts/trial/MiniDrawer'
 import Link from 'next/link'
-
 
 function DonationList() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState([])
 
   const router = useRouter()
-  const {id} = router.query
+  const { id } = router.query
   useEffect(async () => {
     try {
       const res = await getEventDonation(id)
       const donations = res.data.map((donation) => {
         return { ...donation, key: donation._id }
       })
+      console.log(res.data)
       setData(donations)
       setFilterData(donations)
     } catch (error) {
@@ -57,7 +61,7 @@ function DonationList() {
       (donation) =>
         donation.name.toLowerCase().includes(value) ||
         donation.phone.toLowerCase().includes(value) ||
-        donation.email.toLowerCase().includes(value) 
+        donation.email.toLowerCase().includes(value),
     )
     setFilterData(filtered)
   }
@@ -72,7 +76,7 @@ function DonationList() {
 
   const updateStatus = async (id, status) => {
     try {
-      await updateDonationStatus(id, {status: status})
+      await updateDonationStatus(id, { status: status })
     } catch (error) {
       console.log(error)
     }
@@ -92,7 +96,7 @@ function DonationList() {
           console.log(error)
         }
       },
-      onCancel: () => { },
+      onCancel: () => {},
       centered: true,
       okText: 'Xác nhận',
       cancelText: 'Huỷ',
@@ -145,14 +149,13 @@ function DonationList() {
         <Select
           defaultValue={isDone ?? false}
           onChange={(status) => updateStatus(record._id, status)}
-          style={{ width: 120 }}
+          style={{ width: 140 }}
         >
-          <Option value={true}>Đã thành công</Option>
-          <Option value={false}>Đang duyệt</Option>
+          <Option value={true}>Đã hiến máu</Option>
+          <Option value={false}>Đang tiến hành</Option>
         </Select>
       ),
-    }
-    ,
+    },
     {
       title: 'Hành động',
       key: 'action',
@@ -173,22 +176,18 @@ function DonationList() {
   ]
 
   return (
-    <MiniDrawer>
-      <div className='volunteers'>
-        <div className="adminTitle">
-         Danh sách đơn hiến máu
-        </div>
-        <CustomTable
-          data={filterData}
-          columns={columns}
-          disableExcel={true}
-          addBtnText="Thêm đơn hiến máu"
-          onAddBtnClick={addDonation}
-          searchPlaceHolder="Tìm kiếm đơn hiến máu"
-          onChange={searchDonation}
-        />
-      </div>
-    </MiniDrawer>
+    <div className="volunteers">
+      <div className="adminTitle">Danh sách đơn hiến máu</div>
+      <CustomTable
+        data={filterData}
+        columns={columns}
+        addBtnText="Thêm đơn hiến máu"
+        onAddBtnClick={addDonation}
+        disableExcel={true}
+        searchPlaceHolder="Tìm kiếm đơn hiến máu"
+        onChange={searchDonation}
+      />
+    </div>
   )
 }
 
