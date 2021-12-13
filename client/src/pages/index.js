@@ -10,7 +10,7 @@ import router from 'next/router'
 import VolunteerForm from '../components/vonlunteer-form/VolunteerForm'
 import { ReactReduxContext } from 'react-redux'
 import Advise from '../components/advise-section/Advise'
-import {getEvent} from '../api/event'
+import {getOngoingEvent} from '../api/event'
 import {env} from '../../next.config'
 import EventList from '../components/event-list'
 import React, { useState, useEffect, useContext } from 'react'
@@ -19,7 +19,7 @@ const Home = () => {
   const [events, setEvents] = useState([])
     useEffect(() => {
         try {
-            getEvent(4).then(res => {
+            getOngoingEvent(4).then(res => {
                 setEvents(res.data)
             })
         } catch (err) {

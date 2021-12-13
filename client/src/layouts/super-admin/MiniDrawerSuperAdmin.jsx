@@ -239,15 +239,7 @@ export default function MiniDrawerSuperAdmin({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          <Link href='dashboard'>
-            <ListItem button key="Dashboard">
-              <ListItemIcon>
-                <Home style={{ color: '#fe3c47' }} />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
-          </Link>
-          <Link href='organization'>
+          <Link href='/super-admin/organization'>
             <ListItem button key="Tổ chức">
               <ListItemIcon>
                 <Apartment style={{ color: '#fe3c47' }} />
@@ -255,7 +247,7 @@ export default function MiniDrawerSuperAdmin({ children }) {
               <ListItemText primary="Tổ chức" />
             </ListItem>
           </Link>
-          <Link href='request-for-blood'>
+          <Link href='/super-admin/request-for-blood'>
             <ListItem button key="Đơn đăng ký tiếp nhận máu">
               <ListItemIcon>
                 <Bloodtype style={{ color: '#fe3c47' }} />
@@ -263,7 +255,7 @@ export default function MiniDrawerSuperAdmin({ children }) {
               <ListItemText primary="Đăng ký nhận máu" />
             </ListItem>
           </Link>
-          <Link href='gifts'>
+          <Link href='/super-admin/gift'>
             <ListItem button key="Danh sách quà tặng">
               <ListItemIcon>
                 <CardGiftcard style={{ color: '#fe3c47' }} />

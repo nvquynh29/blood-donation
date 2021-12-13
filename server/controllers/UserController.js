@@ -45,7 +45,17 @@ const updateUser = async (req, res) => {
   }
 }
 
+const deleteUser = async (req, res) => {
+  try {
+    const result = await User.findOneAndDelete({ _id: req.params.id })
+    return res.status(200).json(result)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 export const UserController = {
   getUser,
   updateUser,
+  deleteUser,
 }

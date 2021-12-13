@@ -73,6 +73,20 @@ const AddOrganizationSuperAdmin = () => {
 
                             <Input placeholder='Email' style={{ height: '40px' }} />
                         </Form.Item>
+                        <Form.Item
+                            name="phone"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Nhập số điện thoại!',
+                                }
+                            ]}
+                            label="Số điện thoại"
+                            className="lable"
+                        >
+
+                            <Input placeholder='Số điện thoại' style={{ height: '40px' }} />
+                        </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="addEvenBtn">
                                 Thêm

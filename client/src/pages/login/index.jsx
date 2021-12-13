@@ -29,6 +29,7 @@ const Login = () => {
   const login = async (credential) => {
     try {
       const res = await auth.login(credential)
+      console.log(res)
       if (res.status === 200) {
         writeCookies(res.data)
         router.push('/admin/dashboard')

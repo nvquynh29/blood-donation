@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Input, Button, notification, Select, DatePicker } from 'antd';
 import router from 'next/router'
 import moment from 'moment'
-import { addEvent } from '../../../../api/event'
+import { addRequestBlood } from '../../../../api/requestBlood'
 import MiniDrawerSuperAdmin from '../../../../layouts/super-admin/MiniDrawerSuperAdmin';
 const { Option } = Select;
 
@@ -11,7 +11,7 @@ const AddOrganizationSuperAdmin = () => {
         try {
             //TODO:
             // call api add
-            console.log(values);
+            await addRequestBlood(values)
             notification.open({
                 type: "success",
                 message: "Ghi nhận thành công",
