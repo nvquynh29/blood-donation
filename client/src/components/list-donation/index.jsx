@@ -36,12 +36,12 @@ function DonationList() {
 
   const addDonation = () => {
     // TODO: implement function
-    router.push(`admin/event/${router.query.id}/setting/add-donation`)
+    router.push(`/admin/event/${router.query.id}/setting/add-donation`)
   }
   const editDonation = (id) => {
     // TODO: implement function
     // await volunteerApi.updateVolunteer(id, newVolunteer)
-    router.push(`volunteers/${id}`)
+    // router.push(`volunteers/${id}`)
   }
 
   const removeDonation = (id) => {
