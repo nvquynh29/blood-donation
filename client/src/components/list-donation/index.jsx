@@ -12,6 +12,7 @@ import {
   getEventDonation,
   deleteDonation,
   updateDonationStatus,
+  updateDonation
 } from '../../api/donation'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -45,7 +46,7 @@ function DonationList() {
   const editDonation = (id) => {
     // TODO: implement function
     // await volunteerApi.updateVolunteer(id, newVolunteer)
-    // router.push(`volunteers/${id}`)
+    router.push(`/admin/event/${router.query.id}/setting/${id}/view-donation`)
   }
 
   const removeDonation = (id) => {
@@ -110,12 +111,6 @@ function DonationList() {
       key: 'name',
     },
     {
-      title: 'Ngày sinh',
-      dataIndex: 'date_of_birth',
-      key: 'date_of_birth',
-      render: (dob) => moment(dob).format('DD/MM/YYYY'),
-    },
-    {
       title: 'SĐT',
       dataIndex: 'phone',
       key: 'phone',
@@ -136,6 +131,16 @@ function DonationList() {
       key: 'citizenID',
     },
     {
+      title: 'Ngày hiến',
+      dataIndex: 'done_date',
+      key: 'done_date',
+      render: (done_date) => {
+        return (
+          <span>{moment(done_date).format("YYYY/MM/DD")}</span>
+        )
+      }
+    },
+    {
       title: 'Thời gian',
       dataIndex: 'time',
       key: 'time',
@@ -153,6 +158,25 @@ function DonationList() {
         >
           <Option value={true}>Đã hiến máu</Option>
           <Option value={false}>Đang tiến hành</Option>
+        </Select>
+      ),
+    },
+    
+    {
+      title: 'Nhóm máu',
+      dataIndex: 'blood_type',
+      key: 'blood_type',
+      align: 'center',
+      render: (bloodType, record) => (
+        <Select
+          defaultValue={bloodType ?? 'A'}
+          onChange={(blood_type) => updateDonation(record._id, {blood_type})}
+          style={{ width: 140 }}
+        >
+          <Option value='A'>A</Option>
+          <Option value='B'>B</Option>
+          <Option value='O'>O</Option>
+          <Option value='AB'>AB</Option>
         </Select>
       ),
     },

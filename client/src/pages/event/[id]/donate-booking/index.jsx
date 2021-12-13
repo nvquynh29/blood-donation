@@ -3,8 +3,8 @@ import MainLayout from '../../../../layouts/main-layout/Default'
 
 export default function DonationBook() {
   return (
-    // <MainLayout>
-    <MultistepForm />
-    // </MainLayout>
+    <MainLayout>
+      <MultistepForm />
+    </MainLayout>
   )
 }

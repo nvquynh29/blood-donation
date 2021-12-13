@@ -9,8 +9,7 @@ import qrHelper from '../helpers/qr.helper.js'
 dotenv.config()
 
 const formatDonations = async (donations) => {
-  const { _id, name, citizenID, phone, gender, city_1, district_1, ward_1, date_of_birth, email, blood_type } =
-    donations[0]
+  const { _id, name, citizenID, phone, gender, city_1, district_1, ward_1, date_of_birth, email, blood_type } = donations[0]
   const address = [ward_1, district_1, city_1].join(', ')
   const info = {
     _id,
@@ -125,7 +124,7 @@ export const updateDonationStatus = async (req, res) => {
     const response = await Donation.findOneAndUpdate(
       { _id: id },
       { is_done: status },
-      { new: true }
+      { new: true },
     )
     return res.status(200).json(response)
   } catch (error) {
@@ -149,6 +148,32 @@ export const donateHistory = async (req, res) => {
     }
     return res.status(200).json(donations)
   } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+export const getDonation = async (req, res) => {
+  try {
+    const response = await Donation.findOne({ _id: req.params.id })
+    return res.status(200).json(response)
+  } catch (e) {
+    return res.status(500).json(e)
+  }
+}
+
+export const updateDonation = async (req, res) => {
+  try {
+    let { done_date } = req.body
+    done_date = moment(done_date, 'DD/MM/YYYY')
+    const { id } = req.params
+    const response = await Donation.findOneAndUpdate(
+      { _id: id },
+      { ...req.body, done_date: done_date.format('YYYY-MM-DD') },
+      { new: true },
+    )
+    return res.status(200).json(response)
+  } catch (error) {
+    console.log(error)
     return res.status(500).json(error)
   }
 }

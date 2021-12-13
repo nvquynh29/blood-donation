@@ -21,7 +21,7 @@ import { Empty, notification, Select as AntSelect } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { getEventDonation } from '../../api/donation'
+import { getDonation, updateDonation } from '../../api/donation'
 import { getAllEvent, getEventDetail } from '../../api/event'
 import DatePicker from '../datepicker'
 import Gifts from '../list-gift'
@@ -148,7 +148,7 @@ const initialQuestions = [
 ]
 const { Option } = AntSelect
 
-function allstep(props) {
+function AllStepForm(props) {
   const [data, setData] = useState([])
   const router = useRouter()
   const [done_date, setDone_date] = useState([])
@@ -206,17 +206,15 @@ function allstep(props) {
   }
   useEffect(async () => {
     try {
-      const res = await getEventDonation(
-        props.eventId || '61a8fd1d907eb0af1e7b5708',
+      const res = await getDonation(
+        props.donationId,
       )
-      const list_answer = Object.entries(res.data[0].list_answer)
+      const list_answer = Object.entries(res.data.list_answer)
       setAnswer(list_answer)
 
-      res.data[0].done_date = new Date(
-        res.data[0].done_date,
-      ).toLocaleDateString()
+      res.data.done_date = moment(res.data.done_date).format('DD/MM/YYYY')
 
-      setData(res.data[0])
+      setData(res.data)
     } catch (error) {}
   }, [])
 
@@ -252,8 +250,7 @@ function allstep(props) {
     }
     const newAddress = childState?.data
     setDisable(!disable)
-    console.log({ ...data, bloodData, isDone, ...newAddress })
-
+    await updateDonation(props.donationId, { ...data, bloodData, isDone, ...newAddress })
     return notification.success({
       message: 'Thông báo',
       description: 'Cập nhật thành công',
@@ -779,4 +776,4 @@ function allstep(props) {
   )
 }
 
-export default allstep
+export default AllStepForm
