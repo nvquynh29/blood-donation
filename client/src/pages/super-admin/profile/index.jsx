@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Form, Button, notification } from 'antd'
-import MiniDrawer from '../../../layouts/trial/MiniDrawer'
+import MiniDrawerSuperAdmin from '../../../layouts/super-admin/MiniDrawerSuperAdmin'
 import * as userApi from '../../../api/user'
 import { getDatasetAtEvent } from 'react-chartjs-2'
 
-function Profile({ props }) {
+function Profile() {
   const [user, setUser] = useState({})
   const [form] = Form.useForm();
 
@@ -49,7 +49,7 @@ function Profile({ props }) {
 
 
   return (
-    <MiniDrawer>
+    <MiniDrawerSuperAdmin>
       <div className="profile">
         <div className="title">Thông tin cá nhân</div>
         <div className="mx-auto form">
@@ -105,7 +105,7 @@ function Profile({ props }) {
           </Form>
         </div>
       </div>
-    </MiniDrawer>
+    </MiniDrawerSuperAdmin>
   )
 }
 

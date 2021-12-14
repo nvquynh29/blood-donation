@@ -12,7 +12,7 @@ requestBloodRouter.get('/:id', RequestBloodController.getRequestBlood)
 requestBloodRouter.get('/all/accepted', [isAuth, isAdmin], RequestBloodController.getAcceptedRequests)
 requestBloodRouter.delete('/:id', isAuth, RequestBloodController.deleteRequest)
 requestBloodRouter.put('/markAsAccepted/list', isAuth, RequestBloodController.markAsAccepted)
-requestBloodRouter.put('/all/:id', [isAuth, isSuperAdmin], RequestBloodController.updateRequestBlood)
+requestBloodRouter.put('/all/:id', isAuth, RequestBloodController.updateRequestBlood)
 requestBloodRouter.patch('/:id', [isAuth, isAdmin], RequestBloodController.updateRequestStatus)
 
 export default requestBloodRouter

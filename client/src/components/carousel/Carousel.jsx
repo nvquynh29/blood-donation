@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Carousel } from 'antd'
 import {
   LeftOutlined,
@@ -6,7 +6,8 @@ import {
   SwapRightOutlined,
 } from '@ant-design/icons'
 import Link from 'next/link'
-import { getAllEvent } from '../../api/event'
+import { getAllEvent, getOngoingEvent } from '../../api/event'
+import { env } from '../../../next.config'
 
 // import './styles.scss'
 function MyCarousel({ events }) {

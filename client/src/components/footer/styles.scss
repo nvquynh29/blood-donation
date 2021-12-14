@@ -1,0 +1,79 @@
+.footer {
+    color: white;
+    img {
+        flex: 1;
+        width: 50px;
+        height: 50px;
+    }
+    .title {
+        flex: 4;
+    }
+    .footer-widget-area-bg {
+        background: #1a1a1a;
+    }
+    .about-footer {
+        border-bottom: 1 px solid #2c2c2c;
+        margin-bottom: 60 px;
+        padding-bottom: 50 px;
+    }
+    .row {
+        display: flex;
+        margin-right: -15 px;
+        margin-left: -15 px;
+    }
+    p {
+        font-size: 18px;
+        color: white;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        margin: 0 0 12 px;
+        padding: 0;
+    }
+    .footer-widget-area .textwidget p {
+        padding-left: 42 px;
+    }
+    .fa-envelope-o:before {
+        content: "\f003";
+    }
+    .footer-widget-area .footer-widget-header h3 {
+        position: relative;
+        font-size: 24px;
+        margin-bottom: 24 px;
+        text-transform: uppercase;
+        font-family: "Dosis", sans-serif;
+        letter-spacing: 0.03em;
+        font-weight: 500;
+        display: inline-block;
+        color: #ffffff;
+    }
+    a {
+        color: #ffffff;
+    }
+    .footer-widget-area .fa-footer {
+        display: inline;
+        text-align: center;
+        width: 12 px;
+        height: 12 px;
+        color: #fe555f;
+        padding: 4 px 6 px 6 px 0;
+        margin-right: 0 px;
+    }
+    .footer-widget-area .fa-contact {
+        display: inline-block;
+        text-align: center;
+        width: 12 px;
+        height: 12 px;
+        color: #fe555f;
+        padding: 6 px 6 px 6 px 0;
+        margin-right: 6 px;
+    }
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14 px / 1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}

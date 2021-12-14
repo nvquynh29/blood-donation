@@ -11,6 +11,7 @@ import Event from '../models/Event.js'
 import Organization from '../models/Organization.js'
 import RequestBlood from '../models/RequestBlood.js'
 import Volunteer from '../models/Volunteer.js'
+import Donation from '../models/Donation.js'
 
 const models = {
   event: Event,
@@ -19,6 +20,7 @@ const models = {
   requestBlood: RequestBlood,
   volunteer: Volunteer,
   user: User,
+  donation: Donation,
 }
 
 const readExcel = (filePath) => {

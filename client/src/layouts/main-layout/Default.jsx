@@ -3,6 +3,7 @@ import Head from 'next/head'
 import NavigatorBar from '../../components/navigator-bar/NavigatorBar'
 import Carousel from '../../components/carousel/Carousel'
 import dynamic from 'next/dynamic'
+import Footer from '../../components/footer/Footer'
 const ContactBar = dynamic(
   () => import('../../components/contact-bar/ContactBar'),
   { ssr: false },
@@ -21,9 +22,8 @@ function MainLayout({ children }) {
       </div>
       <NavigatorBar />
       <div className="content block">{children}</div>
-      <footer>
-        <hr />
-      </footer>
+      <hr />
+      <Footer />
     </div>
   )
 }

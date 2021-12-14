@@ -105,6 +105,7 @@ function OrganizationAdmins({ admins }) {
                 <CustomTable
                     data={filterData}
                     columns={columns}
+                    disableExcel={true}
                     addBtnText="Thêm admin"
                     onAddBtnClick={addVolunteer}
                     searchPlaceHolder="Tìm kiếm admin"
