@@ -12,6 +12,7 @@ import {
   MenuItem,
   Paper,
   Radio,
+  Button,
   RadioGroup,
   Select,
   TextField,
@@ -156,7 +157,7 @@ function AllStepForm(props) {
   const [questions, setQuestions] = useState(initialQuestions)
   const [disable, setDisable] = useState(true)
   const [bloodData, setBloodData] = useState('')
-  const [isDone, setIsDone] = useState('')
+  const [isDone, setIsDone] = useState('false')
   const [ans, setAns] = useState({})
   const handleFormSubmit = () => {}
   const handleChange = (e) => {
@@ -205,10 +206,9 @@ function AllStepForm(props) {
     setAns(all)
   }
   useEffect(async () => {
+    if (!props.donationId) return
     try {
-      const res = await getDonation(
-        props.donationId,
-      )
+      const res = await getDonation(props.donationId)
       const list_answer = Object.entries(res.data.list_answer)
       setAnswer(list_answer)
 
@@ -216,7 +216,7 @@ function AllStepForm(props) {
 
       setData(res.data)
     } catch (error) {}
-  }, [])
+  }, [props.donationId])
 
   useEffect(async () => {
     const res1 = await getEventDetail(
@@ -250,17 +250,40 @@ function AllStepForm(props) {
     }
     const newAddress = childState?.data
     setDisable(!disable)
-    await updateDonation(props.donationId, { ...data, bloodData, isDone, ...newAddress })
+    await updateDonation(props.donationId, {
+      ...data,
+      bloodData,
+      isDone,
+      ...newAddress,
+    })
     return notification.success({
       message: 'Thông báo',
       description: 'Cập nhật thành công',
     })
   }
+  const handleChangeBlood = async (e) => {
+    if (bloodData === '' || isDone === '') {
+      return notification.error({
+        message: 'Thông báo',
+        description: 'Vui lòng chọn nhóm máu',
+      })
+    }
+    await updateDonation(props.donationId, {
+      blood_type: bloodData,
+      is_done: isDone,
+    })
+    console.log(bloodData, isDone)
+    //  return notification.success({
+    //    message: 'Thông báo',
+    //    description: 'Cập nhật thành công',
+    //  })
+    // setBloodData(e.target.value)
+  }
   return (
     <div>
       {disable ? (
         <div
-          className="sticky z-50 flex items-center justify-center top-10 right-10 bg-[#1976d2] rounded-[50%] w-11 h-11 mr-0 ml-auto shadow-lg hover:cursor-pointer "
+          className="sticky z-50 flex items-center justify-center top-[20%] right-10 bg-[#1976d2] rounded-[50%] w-11 h-11 mr-0 ml-auto shadow-lg hover:cursor-pointer "
           onClick={() => {
             setDisable(!disable)
           }}
@@ -268,7 +291,7 @@ function AllStepForm(props) {
           <EditIcon />
         </div>
       ) : (
-        <div className="flex sticky z-50 gap-4 items-center justify-end top-10 right-10 mr-5">
+        <div className="flex sticky z-50 gap-4 items-center justify-end top-[20%] right-10 mr-5">
           <div
             className=" flex items-center justify-center text-[#f5f5dc] bg-[#adff2f] rounded-[50%] w-11 h-11  shadow-lg hover:cursor-pointer "
             onClick={handleSubmit}
@@ -744,12 +767,18 @@ function AllStepForm(props) {
             </Typography>
             <div className="flex">
               <AntSelect
-                placeholder="-- Chọn sự kiện --"
+                // defaultValue={null}
+                {...(data.blood_type
+                  ? { value: data.blood_type }
+                  : { value: null })}
                 style={{ width: 240 }}
                 onChange={(e) => {
                   setBloodData(e)
                 }}
               >
+                <Option disabled key={null} value={null}>
+                  {'Chọn nhóm máu '}
+                </Option>
                 {bloodType.map((type, index) => {
                   return (
                     <Option key={index} value={type}>
@@ -760,7 +789,8 @@ function AllStepForm(props) {
               </AntSelect>
               <AntSelect
                 placeholder="-- Chọn hành động --"
-                style={{ width: 240, marginLeft: 20 }}
+                style={{ width: 240, margin: '0px 20px' }}
+                defaultValue="false"
                 onChange={(e) => {
                   setIsDone(e)
                 }}
@@ -768,6 +798,7 @@ function AllStepForm(props) {
                 <Option value="true">Đã hoàn thành</Option>
                 <Option value="false">Chưa hoàn thành</Option>
               </AntSelect>
+              <Button onClick={handleChangeBlood}>Cập nhật</Button>
             </div>
           </Box>
         </Paper>

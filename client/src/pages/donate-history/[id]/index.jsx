@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import SearchResult from '../../../components/search-result'
-import { getDonation } from '../../../api/donation'
+import { getDonation, getDonationHistory } from '../../../api/donation'
 
 function index({ data }) {
   const router = useRouter()
@@ -20,7 +20,7 @@ function index({ data }) {
 index.getInitialProps = async (ctx) => {
   try {
     const { id } = ctx.query
-    const res = await getDonation(id)
+    const res = await getDonationHistory(id)
     return { data: res.data }
   } catch (error) {
     console.log(error)

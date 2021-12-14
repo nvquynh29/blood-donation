@@ -174,6 +174,7 @@ function DonationList() {
       dataIndex: 'blood_type',
       key: 'blood_type',
       align: 'center',
+
       render: (bloodType, record) => (
         <Select
           defaultValue={bloodType ?? 'A'}

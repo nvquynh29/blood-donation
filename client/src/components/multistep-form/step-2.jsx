@@ -12,6 +12,8 @@ import {
 import Gifts from '../list-gift'
 import React, { useEffect, useState } from 'react'
 import { Empty } from 'antd'
+import { getEventDetail } from '../../api/event'
+import moment from 'moment'
 
 const times = [
   '7h30 - 8h30',
@@ -24,17 +26,18 @@ const times = [
   '14h30 - 15h30',
   '15h30 - 16h30',
 ]
-const done_date = [
-  new Date('5/31/2080').toLocaleDateString(),
-  new Date('12/13/2079').toLocaleDateString(),
-  new Date('11/11/2060').toLocaleDateString(),
-  new Date('1/13/2041').toLocaleDateString(),
-  new Date('8/6/2073').toLocaleDateString(),
-  new Date('5/19/2076').toLocaleDateString(),
-  new Date('10/4/2023').toLocaleDateString(),
-]
+// const done_date = [
+//   new Date('5/31/2080').toLocaleDateString(),
+//   new Date('12/13/2079').toLocaleDateString(),
+//   new Date('11/11/2060').toLocaleDateString(),
+//   new Date('1/13/2041').toLocaleDateString(),
+//   new Date('8/6/2073').toLocaleDateString(),
+//   new Date('5/19/2076').toLocaleDateString(),
+//   new Date('10/4/2023').toLocaleDateString(),
+// ]
 const amount = ['250', '350', '450']
-function index() {
+function index({ eventId }) {
+  const [done_date, setDone_date] = useState([])
   const [formLocal, setFormLocal] = useState({})
   useEffect(() => {
     const localStorageData = JSON.parse(localStorage.getItem('step2'))
@@ -42,6 +45,19 @@ function index() {
       setFormLocal(localStorageData)
     }
   }, [])
+  useEffect(async () => {
+    if (!eventId) return
+    const { data } = await getEventDetail(eventId)
+    console.log(data)
+    //loop duration add date from start_date to duration
+    const duration = data.duration
+    const start_date = data.start_date
+    const ans = []
+    for (let i = 0; i < duration; i++) {
+      ans.push(moment(start_date).add(i, 'days').format('DD/MM/YYYY'))
+    }
+    setDone_date(ans)
+  }, [eventId])
   const handleChange = (e) => {
     const { name, value } = e.target
     console.log(name, value)

@@ -9,7 +9,19 @@ import qrHelper from '../helpers/qr.helper.js'
 dotenv.config()
 
 const formatDonations = async (donations) => {
-  const { _id, name, citizenID, phone, gender, city_1, district_1, ward_1, date_of_birth, email, blood_type } = donations[0]
+  const {
+    _id,
+    name,
+    citizenID,
+    phone,
+    gender,
+    city_1,
+    district_1,
+    ward_1,
+    date_of_birth,
+    email,
+    blood_type,
+  } = donations[0]
   const address = [ward_1, district_1, city_1].join(', ')
   const info = {
     _id,
@@ -124,7 +136,7 @@ export const updateDonationStatus = async (req, res) => {
     const response = await Donation.findOneAndUpdate(
       { _id: id },
       { is_done: status },
-      { new: true },
+      { new: true }
     )
     return res.status(200).json(response)
   } catch (error) {

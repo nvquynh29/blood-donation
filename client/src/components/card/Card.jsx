@@ -37,13 +37,13 @@ function CustomCard(props, { children }) {
   )
 }
 CustomCard.propTypes = {
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
-  cardTitle: PropTypes.string.isRequired,
-  subTitle: PropTypes.string.isRequired,
-  cardTitleStyle: PropTypes.string.isRequired,
-  cardDescription: PropTypes.string.isRequired,
-  imgUrl: PropTypes.string.isRequired,
-  imgPosition: PropTypes.string.isRequired,
+  width: PropTypes.string,
+  height: PropTypes.string,
+  cardTitle: PropTypes.string,
+  subTitle: PropTypes.string,
+  cardTitleStyle: PropTypes.string,
+  cardDescription: PropTypes.string,
+  imgUrl: PropTypes.string,
+  imgPosition: PropTypes.string,
 }
 export default CustomCard
