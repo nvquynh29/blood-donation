@@ -23,7 +23,6 @@ function MainLayout({ children }) {
       <NavigatorBar />
       <div className="content block">{children}</div>
       <hr />
-      <Footer />
     </div>
   )
 }
