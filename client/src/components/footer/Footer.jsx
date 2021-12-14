@@ -14,8 +14,9 @@ export default function Footer() {
                                     </div>
                                     <div class="title">
                                         <p>
-                                            We are world largest and trustful blood donation center. We have been working since 1973 with a prestigious vision to helping patient to provide blood.
-                                            We are working all over the world, organizing blood donation campaign to grow awareness among the people to donate blood.
+                                            Máu của chúng ta là một dược phẩm vô giá, là một loại thuốc điều trị đặc biệt mà cho đến nay chưa có một loại thuốc nào có thể thay thế được, cũng như chưa chế tạo ra nó được, ngoại trừ cơ thể con người tự sản xuất ra máu cho con người. Do vậy, để có máu dùng trong điều trị và cấp cứu trong tất cả các cơ sở y tế hiện nay, chỉ trông chờ vào nguồn máu duy nhất đó là máu hiến của những người tình nguyện.
+                                            <br></br>
+                                            Giọt hồng là website hỗ trợ tổ chức các sự kiện hiến máu nhân đạo.
                                         </p>
                                     </div>
                                 </div>
