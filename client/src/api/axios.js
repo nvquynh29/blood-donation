@@ -5,7 +5,7 @@ import { env } from '../../next.config'
 const cookies = new Cookies()
 
 const getHeader = () => {
-  const headers = { 'Content-Type': 'application/json' }
+  let headers = { 'Content-Type': 'application/json' }
   if (cookies.get('accessToken')) {
     headers = { ...headers, 'X-ACCESS-TOKEN': cookies.get('accessToken') }
   }

@@ -28,8 +28,9 @@ function DonateHistory() {
   }
 
   const onFinish = async (values) => {
-    const { name, date_of_birth, gender, phone, citizenID, email } = values
-    date_of_birth = moment(date_of_birth.startOf('day')).utcOffset('+00:00', true)
+    let { name, gender, phone, citizenID, email } = values
+    let dob = values.date_of_birth
+    const date_of_birth = moment(dob.startOf('day')).utcOffset('+00:00', true)
     const payload = { date_of_birth, gender, phone, citizenID }
     if (name) {
       payload.name = name
