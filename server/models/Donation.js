@@ -87,7 +87,6 @@ const schema = new mongoose.Schema(
     selectGift: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Gift',
-      required: true,
     },
     time: {
       type: String,

@@ -149,6 +149,7 @@ export default function superAdmin() {
                 <CustomTable
                     data={filterData}
                     columns={columns}
+                    disableExcel={true}
                     addBtnText="Thêm tổ chức"
                     onAddBtnClick={addVolunteer}
                     searchPlaceHolder="Tìm kiếm tổ chức"

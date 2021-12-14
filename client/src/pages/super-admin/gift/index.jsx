@@ -132,6 +132,7 @@ export default function index() {
                 <CustomTable
                     data={filterData}
                     columns={columns}
+                    disableExcel={true}
                     addBtnText="Thêm quà tặng"
                     onAddBtnClick={addVolunteer}
                     searchPlaceHolder="Tìm kiếm quà tặng"

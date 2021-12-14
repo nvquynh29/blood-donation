@@ -3,6 +3,7 @@ import instance from './axios'
 export const getOrganization = (id) => {
   return instance.get(`/organization/${id}`)
 }
+export const checkBloodBank = () => instance.get('/organization/is-blood-bank')
 export const getAdmins = () => instance.get('/organization/admins')
 export const getDashbroad = () => instance.get('/organization/dashboard')
 export const getOrgAdmins = (id) => instance.get(`/organization/admins/${id}`)
