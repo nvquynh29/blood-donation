@@ -103,7 +103,7 @@ function Event() {
       key: 'end_date',
       render: (_, record) => {
         return moment(record.start_date)
-          .add(record.duration, 'days')
+          .add(record.duration - 1, 'days')
           .format('DD/MM/YYYY')
       },
     },
