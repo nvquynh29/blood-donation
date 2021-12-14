@@ -41,13 +41,22 @@ function MyCarousel({ events }) {
                 </Link>
               </div>
             </div>
-            <div className="block relative h-full object-contain bg-slidePlaceHolder">
+            <div className="block  h-full object-contain bg-slidePlaceHolder">
+              {/* <img src={'/' + event.organization_id.img_path} alt="" /> */}
               <img
-                src={event.organization_id.img_path}
-                alt=""
                 className="block absolute z-10 h-full object-contain"
+                src={
+                  event.organization_id.img_path
+                    ? `${env.API_URL}/getFile?img_path=${event.organization_id.img_path}`
+                    : '/images/slider-1.jpg'
+                }
+                alt="Man looking at item at a store"
               />
-              <img src="/images/slider-1.jpg" alt="" className=" z-0" />
+              <img
+                src="/images/slider-1.jpg"
+                alt=""
+                className="opacity-0 z-0"
+              />
             </div>
           </div>
         ))}

@@ -11,7 +11,7 @@ import { getAllEvent, deleteEvent } from '../../../api/event'
 import moment from 'moment'
 import router from 'next/router'
 import MiniDrawer from '../../../layouts/trial/MiniDrawer'
-
+import Link from 'next/link'
 function Event() {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState([])
@@ -90,6 +90,11 @@ function Event() {
       title: 'Tên',
       dataIndex: 'name',
       key: 'name',
+      render: (text, record) => (
+        <Link href={`/admin/event/${record._id}`}>
+          <a>{text}</a>
+        </Link>
+      ),
     },
     {
       title: 'Ngày bắt đầu',
@@ -103,7 +108,7 @@ function Event() {
       key: 'end_date',
       render: (_, record) => {
         return moment(record.start_date)
-          .add(record.duration, 'days')
+          .add(record.duration - 1, 'days')
           .format('DD/MM/YYYY')
       },
     },
@@ -116,18 +121,19 @@ function Event() {
     {
       title: 'Hành động',
       key: 'action',
+      width: '7%',
       dataIndex: '_id',
       render: (id) => (
         <Space size="middle">
           <EditOutlined
-            className="cursor-pointer"
+            className="cursor-pointer text-xl"
             onClick={(e) => {
               e.preventDefault()
               onDetailEvent(id)
             }}
           />
           <DeleteOutlined
-            className="cursor-pointer"
+            className="cursor-pointer text-xl"
             onClick={() => onDeleteEvent(id)}
           />
         </Space>
@@ -162,13 +168,6 @@ function Event() {
           disableImport={true}
           searchPlaceHolder="Tìm kiếm sự kiện "
           onChange={searchEvent}
-          onRow={(record, rowIndex) => {
-            return {
-              onClick: (event) => {
-                router.push(`/admin/event/${record._id}/setting`)
-              }, // click row
-            }
-          }}
         />
       </div>
     </MiniDrawer>

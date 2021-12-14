@@ -29,14 +29,12 @@ const Login = () => {
   const login = async (credential) => {
     try {
       const res = await auth.login(credential)
-      console.log(res.data.role)
       if (res.status === 200) {
-        writeCookies(res.data)
+        writeCookies({ accessToken: res.data.accessToken, refreshToken: res.data.refreshToken })
         store.dispatch(requestUserApi(res.data.accessToken))
         if (res.data.role === 'admin') {
           router.push('/admin/dashboard')
         } else {
-          console.log(1)
           router.push('/super-admin/organization')
         }
       }

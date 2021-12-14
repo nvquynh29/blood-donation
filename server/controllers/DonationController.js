@@ -181,11 +181,13 @@ export const updateDonation = async (req, res) => {
       done_date = moment(done_date, 'DD/MM/YYYY')
     }
     const { id } = req.params
-    const updateInput =
-      done_date === undefined
-        ? { ...req.body }
-        : { ...req.body, done_date: done_date.format('YYYY-MM-DD') }
-    const response = await Donation.findOneAndUpdate({ _id: id }, updateInput, { new: true })
+    const updateInput = (done_date === undefined)
+      ? { ...req.body } : { ...req.body, done_date: done_date.format('YYYY-MM-DD') }
+    const response = await Donation.findOneAndUpdate(
+      { _id: id },
+      updateInput,
+      { new: true },
+    )
     return res.status(200).json(response)
   } catch (error) {
     console.log(error)
