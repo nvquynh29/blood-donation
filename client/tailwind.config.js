@@ -16,6 +16,7 @@ module.exports = {
     },
     backgroundImage: {
       separator: "url('/images/separator.png')",
+      slidePlaceHolder: "url('/images/slider-1.jpg')",
     },
   },
   variants: {

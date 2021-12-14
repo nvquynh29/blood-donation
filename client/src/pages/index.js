@@ -17,20 +17,31 @@ import React, { useState, useEffect, useContext } from 'react'
 const Home = () => {
   const { store } = useContext(ReactReduxContext)
   const [events, setEvents] = useState([])
-  const fetchEvents = async () => {
-    const { data } = await getOngoingEvent()
-    setEvents(data)
-  }
+  // const fetchEvents = async () => {
+  //   const { data } = await getOngoingEvent()
+  //   setEvents(data)
+  // }
 
+  // useEffect(() => {
+  //   fetchEvents()
+  // }, [])
   useEffect(() => {
-    fetchEvents()
+    try {
+      getOngoingEvent(4).then((res) => {
+        setEvents(res.data)
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
   return (
     <MainLayout className="font-Dosis">
       <div className="landingPage">
         <div>
           {/* SLIDER */}
-          <div className="carousel  bg-red-500">{<MyCarousel />}</div>
+          <div className="carousel  bg-red-500">
+            {<MyCarousel events={events} />}
+          </div>
           {/* RECUITMENT */}
           <div className="recuitment my-10">
             <div className="bg-[#F8F9FA] px-20 py-10 text-[#333333]">

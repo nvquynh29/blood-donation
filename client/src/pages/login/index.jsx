@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox, notification } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
@@ -41,6 +41,11 @@ const Login = () => {
         }
       }
     } catch (error) {
+      return notification.error({
+        message: 'Đăng nhập thất bại',
+        description: 'Tài khoản hoặc mật khẩu không đúng',
+      })
+
       console.log(error)
     }
   }
@@ -66,8 +71,16 @@ const Login = () => {
               name="email"
               rules={[
                 {
+                  validator: async (rule, value) => {
+                    console.log(value.includes('@'))
+                    if (!value.includes('@')) {
+                      return Promise.reject('Email không hợp lệ')
+                    }
+                    return Promise.resolve()
+                  },
+
                   required: true,
-                  message: 'Please input your Username!',
+                  message: 'Tài khoản không hợp lệ!',
                 },
               ]}
             >
@@ -80,8 +93,15 @@ const Login = () => {
               name="password"
               rules={[
                 {
+                  validator: (rule, value) => {
+                    if (value.length < 8) {
+                      return Promise.reject('Mật khẩu phải có ít nhất 6 ký tự')
+                    }
+                    return Promise.resolve()
+                  },
+
                   required: true,
-                  message: 'Please input your Password!',
+                  message: 'Mật khẩu không hợp lệ!',
                 },
               ]}
             >

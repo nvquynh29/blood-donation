@@ -22,7 +22,7 @@ import { Empty, notification, Select as AntSelect } from 'antd'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { getEventDonation } from '../../api/donation'
+import { getDonation, updateDonation } from '../../api/donation'
 import { getAllEvent, getEventDetail } from '../../api/event'
 import DatePicker from '../datepicker'
 import Gifts from '../list-gift'
@@ -149,7 +149,7 @@ const initialQuestions = [
 ]
 const { Option } = AntSelect
 
-function allstep(props) {
+function AllStepForm(props) {
   const [data, setData] = useState([])
   const router = useRouter()
   const [done_date, setDone_date] = useState([])
@@ -157,7 +157,7 @@ function allstep(props) {
   const [questions, setQuestions] = useState(initialQuestions)
   const [disable, setDisable] = useState(true)
   const [bloodData, setBloodData] = useState('')
-  const [isDone, setIsDone] = useState('')
+  const [isDone, setIsDone] = useState('false')
   const [ans, setAns] = useState({})
   const handleFormSubmit = () => {}
   const handleChange = (e) => {
@@ -206,20 +206,17 @@ function allstep(props) {
     setAns(all)
   }
   useEffect(async () => {
+    if (!props.donationId) return
     try {
-      const res = await getEventDonation(
-        props.eventId || '61a8fd1d907eb0af1e7b5708',
-      )
-      const list_answer = Object.entries(res.data[0].list_answer)
+      const res = await getDonation(props.donationId)
+      const list_answer = Object.entries(res.data.list_answer)
       setAnswer(list_answer)
 
-      res.data[0].done_date = new Date(
-        res.data[0].done_date,
-      ).toLocaleDateString()
+      res.data.done_date = moment(res.data.done_date).format('DD/MM/YYYY')
 
-      setData(res.data[0])
+      setData(res.data)
     } catch (error) {}
-  }, [])
+  }, [props.donationId])
 
   useEffect(async () => {
     const res1 = await getEventDetail(
@@ -253,18 +250,40 @@ function allstep(props) {
     }
     const newAddress = childState?.data
     setDisable(!disable)
-    console.log({ ...data, bloodData, isDone, ...newAddress })
-
+    await updateDonation(props.donationId, {
+      ...data,
+      bloodData,
+      isDone,
+      ...newAddress,
+    })
     return notification.success({
       message: 'Thông báo',
       description: 'Cập nhật thành công',
     })
   }
+  const handleChangeBlood = async (e) => {
+    if (bloodData === '' || isDone === '') {
+      return notification.error({
+        message: 'Thông báo',
+        description: 'Vui lòng chọn nhóm máu',
+      })
+    }
+    await updateDonation(props.donationId, {
+      blood_type: bloodData,
+      is_done: isDone,
+    })
+    console.log(bloodData, isDone)
+    //  return notification.success({
+    //    message: 'Thông báo',
+    //    description: 'Cập nhật thành công',
+    //  })
+    // setBloodData(e.target.value)
+  }
   return (
     <div>
       {disable ? (
         <div
-          className="sticky z-50 flex items-center justify-center top-10 right-10 bg-[#1976d2] rounded-[50%] w-11 h-11 mr-0 ml-auto shadow-lg hover:cursor-pointer "
+          className="sticky z-50 flex items-center justify-center top-[20%] right-10 bg-[#1976d2] rounded-[50%] w-11 h-11 mr-0 ml-auto shadow-lg hover:cursor-pointer "
           onClick={() => {
             setDisable(!disable)
           }}
@@ -272,7 +291,7 @@ function allstep(props) {
           <EditIcon />
         </div>
       ) : (
-        <div className="flex sticky z-50 gap-4 items-center justify-end top-10 right-10 mr-5">
+        <div className="flex sticky z-50 gap-4 items-center justify-end top-[20%] right-10 mr-5">
           <div
             className=" flex items-center justify-center text-[#f5f5dc] bg-[#adff2f] rounded-[50%] w-11 h-11  shadow-lg hover:cursor-pointer "
             onClick={handleSubmit}
@@ -748,12 +767,18 @@ function allstep(props) {
             </Typography>
             <div className="flex">
               <AntSelect
-                placeholder="-- Chọn sự loại máu --"
+                // defaultValue={null}
+                {...(data.blood_type
+                  ? { value: data.blood_type }
+                  : { value: null })}
                 style={{ width: 240 }}
                 onChange={(e) => {
                   setBloodData(e)
                 }}
               >
+                <Option disabled key={null} value={null}>
+                  {'Chọn nhóm máu '}
+                </Option>
                 {bloodType.map((type, index) => {
                   return (
                     <Option key={index} value={type}>
@@ -773,13 +798,7 @@ function allstep(props) {
                 <Option value="true">Đã hoàn thành</Option>
                 <Option value="false">Chưa hoàn thành</Option>
               </AntSelect>
-              <Button
-                onClick={(e) => {
-                  console.log(e)
-                }}
-              >
-                Update
-              </Button>
+              <Button onClick={handleChangeBlood}>Cập nhật</Button>
             </div>
           </Box>
         </Paper>
@@ -788,4 +807,4 @@ function allstep(props) {
   )
 }
 
-export default allstep
+export default AllStepForm

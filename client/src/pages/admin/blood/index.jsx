@@ -35,10 +35,10 @@ function BloodRequestAccepted() {
   }, [])
 
   const addRequest = () => {
-    router.push('blood/request/add')
+    router.push('/admin/blood/request/add')
   }
   const editRequest = (id) => {
-    router.push(`blood/request/${id}`)
+    router.push(`/admin/blood/request/${id}`)
   }
 
   const removeRequest = (id) => {
@@ -212,7 +212,7 @@ function BloodRequestAccepted() {
     <MiniDrawer>
       <div className="volunteers">
         <div className="adminTitle">Danh sách đơn xin hỗ trợ máu</div>
-        <Link href="blood/request">
+        <Link href="/admin/blood/request">
           <Button style={{ marginBottom: "20px" }}>Danh sách đơn đăng ký</Button>
         </Link>
         <CustomTable

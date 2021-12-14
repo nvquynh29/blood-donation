@@ -1,8 +1,8 @@
 import QRCode from 'qrcode'
 
-const generateQRCode = async (payload) => {
+const generateQRCode = async (payload, width = 300) => {
   try {
-    const qrCode = await QRCode.toDataURL(payload)
+    const qrCode = await QRCode.toDataURL(payload, { width })
     return qrCode
   } catch (error) {
     console.log(error)
@@ -10,7 +10,8 @@ const generateQRCode = async (payload) => {
 }
 
 const getImgFromQRCode = (qrCode, size) => {
-  const img = `<image style="width:${size}px;height:${size}px;" src="${qrCode}" /> `
+  const style = size ? `style="width:${size}px;height:${size}px;"` : ''
+  const img = `<img ${style} src="${qrCode}" /> `
   return img
 }
 

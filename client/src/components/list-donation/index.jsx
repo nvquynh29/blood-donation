@@ -12,6 +12,7 @@ import {
   getEventDonation,
   deleteDonation,
   updateDonationStatus,
+  updateDonation,
 } from '../../api/donation'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -45,7 +46,7 @@ function DonationList() {
   const editDonation = (id) => {
     // TODO: implement function
     // await volunteerApi.updateVolunteer(id, newVolunteer)
-    router.push(`/volunteers/${id}`)
+    router.push(`/admin/event/${router.query.id}/setting/${id}/view-donation`)
   }
 
   const removeDonation = (id) => {
@@ -108,12 +109,7 @@ function DonationList() {
       title: 'Họ và tên',
       dataIndex: 'name',
       key: 'name',
-    },
-    {
-      title: 'Ngày sinh',
-      dataIndex: 'date_of_birth',
-      key: 'date_of_birth',
-      render: (dob) => moment(dob).format('DD/MM/YYYY'),
+      width: '17%',
     },
     {
       title: 'SĐT',
@@ -129,6 +125,7 @@ function DonationList() {
       title: 'Lượng máu (ml)',
       dataIndex: 'amount',
       key: 'amount',
+      width: '7%',
     },
     {
       title: 'Số chứng minh nhân dân',
@@ -136,9 +133,18 @@ function DonationList() {
       key: 'citizenID',
     },
     {
+      title: 'Ngày hiến',
+      dataIndex: 'done_date',
+      key: 'done_date',
+      render: (done_date) => {
+        return <span>{moment(done_date).format('YYYY/MM/DD')}</span>
+      },
+    },
+    {
       title: 'Thời gian',
       dataIndex: 'time',
       key: 'time',
+      width: '10%',
     },
     {
       title: 'Trạng thái',
@@ -156,10 +162,31 @@ function DonationList() {
         </Select>
       ),
     },
+
+    {
+      title: 'Nhóm máu',
+      dataIndex: 'blood_type',
+      key: 'blood_type',
+      align: 'center',
+
+      render: (bloodType, record) => (
+        <Select
+          defaultValue={bloodType ?? 'A'}
+          onChange={(blood_type) => updateDonation(record._id, { blood_type })}
+          style={{ width: 70 }}
+        >
+          <Option value="A">A</Option>
+          <Option value="B">B</Option>
+          <Option value="O">O</Option>
+          <Option value="AB">AB</Option>
+        </Select>
+      ),
+    },
     {
       title: 'Hành động',
       key: 'action',
       dataIndex: '_id',
+      width: '7%',
       render: (id) => (
         <Space size="middle">
           <EditOutlined
@@ -183,6 +210,7 @@ function DonationList() {
         columns={columns}
         addBtnText="Thêm đơn hiến máu"
         onAddBtnClick={addDonation}
+        disableExcel={true}
         searchPlaceHolder="Tìm kiếm đơn hiến máu"
         onChange={searchDonation}
       />

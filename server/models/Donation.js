@@ -30,7 +30,7 @@ const schema = new mongoose.Schema(
     },
     foreigner: {
       type: Boolean,
-      required: true,
+      default: false,
     },
     fulladdress_1: String,
     fulladdress_2: String,
@@ -119,7 +119,7 @@ const schema = new mongoose.Schema(
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-  }
+  },
 )
 
 const Donation = mongoose.model('Donation', schema)

@@ -5,16 +5,16 @@ export default function EventList({ events }) {
   return (
     <div className="mx-auto container">
       <div className="title mt-10 ml-10 text-red-400 text-4xl font-bold">
-        Các sự kiện sắp diễn ra{' '}
+        Các sự kiện sắp diễn ra
       </div>
       <div className="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 px-10 py-10 eventListUser">
-        {events.map((event) => {
-          console.log(event)
+        {events.map((event, index) => {
           const startDate = new Date(event.start_date)
           const endDate = new Date(event.start_date)
           endDate.setDate(startDate.getDate() + event.duration - 1)
           return (
             <Link
+              key={index}
               href={`event/${event._id}/donate-booking`}
               className="cursor-pointer"
             >
