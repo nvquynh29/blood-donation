@@ -3,23 +3,30 @@ import { Form, Input, Button, Select, DatePicker, notification, message } from '
 import * as bloodApi from '../../../../../api/requestBlood'
 import router from 'next/router'
 import MiniDrawer from '../../../../../layouts/trial/MiniDrawer'
+import moment from 'moment';
 
 function EditBloodRequest({ props }) {
-  console.log(props)
   const { Option } = Select
   const { TextArea } = Input
+
+
+  props.date_of_birth = moment(props.date_of_birth)
+
   const onFinish = async (values) => {
-    values.birthday = values.birthday._d.toLocaleDateString('en-CA')
-    values.date_of_birth = values.birthday
-    console.log(values)
-    delete values.birthday
-    //await bloodApi.updateRequestBlood(values)
-    notification.open({
-      type: 'success',
-      message: "Ghi nhận thành công",
-      description: "Chúng tôi đã tiếp nhận đơn yêu cầu đơn vị máu của bạn!"
-    })
-    router.push('/admin/blood/request')
+    try {
+      values.date_of_birth = values.date_of_birth._d.toLocaleDateString('en-CA')
+      console.log(values)
+      await bloodApi.updateRequestBlood(props._id, JSON.stringify(values))
+      notification.open({
+        type: 'success',
+        message: "Ghi nhận thành công",
+        description: "Chúng tôi đã tiếp nhận đơn yêu cầu đơn vị máu của bạn!"
+      })
+      router.push('/admin/blood')
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
   const onFinishFailed = () => {
     console.log('finish failed')
@@ -40,6 +47,7 @@ function EditBloodRequest({ props }) {
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
+              initialValues={props}
             >
               <Form.Item
                 name="name"
@@ -54,7 +62,7 @@ function EditBloodRequest({ props }) {
               </Form.Item>
               <div className="flex flex-row gap-x-5 flex-wrap">
                 <Form.Item
-                  name="birthday"
+                  name="date_of_birth"
                   rules={[
                     {
                       required: true,
@@ -180,12 +188,11 @@ function EditBloodRequest({ props }) {
 }
 
 EditBloodRequest.getInitialProps = async (ctx) => {
-  const test = await bloodApi.getPendingRequests();
-  console.log(test);
-  // const res = await bloodApi.getRequest(ctx.query.id)
-  // return {
-  //   props: res.data
-  // }
+  const res = await bloodApi.getRequest(ctx.query.id)
+  return {
+    props: res.data
+  }
+
 }
 
 export default EditBloodRequest

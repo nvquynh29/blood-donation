@@ -30,20 +30,22 @@ function CustomTable({
 
   return (
     <div className='customTable'>
-      <div className="flex flex-row justify-between">
-        {disableExcel ? null : (
-          <FileHelper
-            tableData={data}
-            header={header}
-            callback={callback}
-            mapFields={mapFields}
-            additionalFields={additionalFields}
-            disableImport={disableImport}
-          />
-        )}
-        <Button className="mb-4" onClick={onAddBtnClick}>
-          {addBtnText}
-        </Button>
+      <div className="flex flex-row justify-between" style={{ marginBottom: "20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+          {disableExcel ? null : (
+            <FileHelper
+              tableData={data}
+              header={header}
+              callback={callback}
+              mapFields={mapFields}
+              additionalFields={additionalFields}
+              disableImport={disableImport}
+            />
+          )}
+          <Button className="mb-4" onClick={onAddBtnClick}>
+            {addBtnText}
+          </Button>
+        </div>
         <Search
           allowClear
           placeholder={searchPlaceHolder}
