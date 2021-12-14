@@ -1,0 +1,95 @@
+.footer {
+    color: white;
+    background: #1a1a1a;
+    margin-top: 50px;
+    img {
+        flex: 2;
+        width: 50px;
+        height: 50px;
+    }
+    .title {
+        flex: 4;
+    }
+    .footer-widget-area {
+        width: 80%;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 20px;
+        padding-top: 50px;
+    }
+    .about-footer {
+        border-bottom: 1 px solid #2c2c2c;
+        margin-bottom: 60 px;
+        padding-bottom: 50 px;
+    }
+    .row {
+        display: flex;
+        margin-right: -15 px;
+        margin-left: -15 px;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    p {
+        font-size: 18px;
+        color: white;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        margin: 0 0 12 px;
+        padding: 0;
+    }
+    .textwidget p {
+        position: relative;
+        left: 20px;
+        bottom: 10px;
+    }
+    .footer-widget-area .footer-widget-header h3 {
+        position: relative;
+        font-size: 24px;
+        margin-bottom: 24 px;
+        text-transform: uppercase;
+        font-family: "Dosis", sans-serif;
+        letter-spacing: 0.03em;
+        font-weight: 500;
+        display: inline-block;
+        color: #ffffff;
+    }
+    a {
+        color: #ffffff;
+    }
+    .footer-widget-area .fa-footer {
+        display: inline;
+        text-align: center;
+        width: 12 px;
+        height: 12 px;
+        color: #fe555f;
+        padding: 4 px 6 px 6 px 0;
+        margin-right: 0 px;
+    }
+    .footer-widget-area .fa-contact {
+        width: 18 px !important;
+        height: 18 px !important    ;
+        color: #fe555f;
+        padding: 6 px 6 px 6 px 0;
+        margin-right: 6 px;
+        position: relative;
+        top: 10px;
+    }
+    .footer-useful-links {
+        position: relative;
+        top: 10px;
+        right: 10px;
+    }
+    .footer-useful-links li {
+        padding: 5px;
+        letter-spacing: 0.05rem;
+        font-size: 18px;
+    }
+    .footer-useful-links li a i {
+        margin-right: 10px;
+    }
+    .copyright p {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

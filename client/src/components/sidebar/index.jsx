@@ -8,7 +8,7 @@ const SideBar = () => {
     return (
         <SideNav
             onSelect={(selected) => {
-                // Add your code here
+                console.log("a");
             }}
         >
             <SideNav.Toggle />
@@ -48,7 +48,7 @@ const SideBar = () => {
                     <NavText>
                         Sự kiện
                     </NavText>
-                   
+
                 </NavItem>
                 <NavItem eventKey="waitForBlood">
                     <NavIcon>
@@ -56,7 +56,7 @@ const SideBar = () => {
                         <FontAwesomeIcon icon={faTint} style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText>
-                        Đơn đợi máu 
+                        Đơn đợi máu
                     </NavText>
                 </NavItem>
                 <NavItem eventKey="organization">
@@ -65,11 +65,11 @@ const SideBar = () => {
                         <FontAwesomeIcon icon={faUniversity} style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText>
-                    Tổ chức  
+                        Tổ chức
                     </NavText>
                 </NavItem>
             </SideNav.Nav>
-        </SideNav>          
+        </SideNav>
     )
 }
 export default SideBar

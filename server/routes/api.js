@@ -2,7 +2,7 @@ import express from 'express'
 import { check } from 'express-validator'
 import isAuth from '../middleware/AuthMiddleware.js'
 import { AuthController } from '../controllers/AuthController.js'
-import { sendOTP } from '../helpers/otp.helper.js'
+import { sendOTP, verifyOTP } from '../helpers/otp.helper.js'
 import { OrganizationController } from '../controllers/OrganizationController.js'
 import { EventController } from '../controllers/EventController.js'
 
@@ -29,12 +29,12 @@ const initAPIs = (app) => {
     AuthController.login,
   )
   router.post('/otp', sendOTP)
+  router.post('/verify-otp', verifyOTP)
   router.get('/refresh-token', AuthController.refreshToken)
   // organization route
   router.get('/organization', OrganizationController.getAllOrganizations)
   router.get('/organization/:id', OrganizationController.getOrganization)
   router.get('/getFile', OrganizationController.getImage)
-  router.get('/event', EventController.getAllEvent)
   // middleware routes
   router.use(isAuth)
   return app.use('/', router)

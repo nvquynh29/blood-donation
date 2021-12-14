@@ -1,7 +1,12 @@
 import instance from './axios'
-import { API_URL } from './auth'
 
-export const getEvent = (limit) => instance.get(`${API_URL}/event?limit=${limit}`)
-export const getAllEvent = () => instance.get(`${API_URL}/event`)
+export const getEvent = (limit) => instance.get(`/event?limit=${limit}`)
+export const getOngoingEvent = () => instance.get(`/event/ongoing`)
+export const getAllEvent = () => instance.get(`/event`)
+export const updateEvent = (id, arg) => instance.put(`/event/${id}`, arg)
+export const deleteEvent = (id) => instance.delete(`/event/${id}`)
+export const addEvent = (arg) => instance.post('/event', arg)
+export const getEventDetail = (id) => instance.get(`/event/detail/${id}`)
+export const getEventVolunteer = (id) => instance.get(`/event/listVolunteer/${id}`)
 
  

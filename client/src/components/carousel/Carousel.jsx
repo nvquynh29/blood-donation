@@ -1,43 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Carousel } from 'antd'
-import { LeftOutlined, RightOutlined, SwapRightOutlined } from '@ant-design/icons'
+import {
+  LeftOutlined,
+  RightOutlined,
+  SwapRightOutlined,
+} from '@ant-design/icons'
 import Link from 'next/link'
+import { getAllEvent, getOngoingEvent } from '../../api/event'
+import { env } from '../../../next.config'
 
 // import './styles.scss'
-function MyCarousel() {
-  const events = [
-    {
-      id: 1,
-      name: 'Hiến máu, cứu người !',
-      sologan: 'Sự đóng góp của bạn Có thể mang lại cơ hội cho người khác',
-      imgUrl: '/images/slider-1.jpg',
-    },
-    {
-      id: 2,
-      name: 'Hiến máu, cứu người !',
-      sologan: 'Sự đóng góp của bạn Có thể mang lại cơ hội cho người khác',
-      imgUrl: '/images/slider-1.jpg',
-    },
-    {
-      id: 3,
-      name: 'Hiến máu, cứu người !',
-      sologan: 'Sự đóng góp của bạn Có thể mang lại cơ hội cho người khác',
-      imgUrl: '/images/slider-1.jpg',
-    },
-  ]
+function MyCarousel({ events }) {
   return (
-    <div className="carousel">
-      <Carousel autoplay arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />}>
+    <div className="carousel !font-Dosis">
+      <Carousel
+        // autoplay
+        arrows
+        prevArrow={<LeftOutlined />}
+        nextArrow={<RightOutlined />}
+      >
         {events.map((event) => (
           <div className="relative" key={event.id}>
-            <div className="slider-info absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50 h-1/2 w-3/4 ">
+            <div className="slider-info absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50  w-3/4 !z-50">
               <div className="content text-center">
-                <h3 className="xl:text-5xl lg:text-3xl md:text-2xl text-base">{event.name}</h3>
-                <h2 className="font-SourceSans md:text-2xl lg:text-4xl lg:mt-[1rem] xl:text-[3.6rem]">
-                  {event.sologan}
+                <h3 className="text-[2vw] text-base !tracking-widest">
+                  {event.name}
+                </h3>
+                <h2 className="font-Dosis text-[3.6vw] !mt-0">
+                  {event.organization_id.name}
                 </h2>
+                <p className="text-center text-sm italic ">
+                  Địa chỉ:{event.organization_id.address}
+                </p>
 
-                <Link href="/">
+                <Link href={'/event/' + event._id + '/donate-booking/'}>
                   <a className="custom-btn inline-flex items-center p-2 mr-4 mt-5">
                     <span className="px-2">Đăng ký hiến máu</span>{' '}
                     <SwapRightOutlined className="text-3xl" />
@@ -45,8 +41,22 @@ function MyCarousel() {
                 </Link>
               </div>
             </div>
-            <div className="block object-contain ">
-              <img src={event.imgUrl} alt="" />
+            <div className="block  h-full object-contain bg-slidePlaceHolder">
+              {/* <img src={'/' + event.organization_id.img_path} alt="" /> */}
+              <img
+                className="block absolute z-10 h-full object-contain"
+                src={
+                  event.organization_id.img_path
+                    ? `${env.API_URL}/getFile?img_path=${event.organization_id.img_path}`
+                    : '/images/slider-1.jpg'
+                }
+                alt="Man looking at item at a store"
+              />
+              <img
+                src="/images/slider-1.jpg"
+                alt=""
+                className="opacity-0 z-0"
+              />
             </div>
           </div>
         ))}

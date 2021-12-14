@@ -1,16 +1,15 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  description: String,
-  image_path: String,
-  level: {
+  type: {
     type: String,
     required: true,
   },
+  image_path: String,
 })
 
 const Gift = mongoose.model('Gift', schema)

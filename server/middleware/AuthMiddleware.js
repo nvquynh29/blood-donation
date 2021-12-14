@@ -4,22 +4,32 @@ const isAuth = async (req, res, next) => {
   const tokenFromClient = req.headers['x-access-token'] || req.headers['X-ACCESS-TOKEN']
   if (tokenFromClient) {
     try {
-      const decoded = await jwtHelper.verifyToken(tokenFromClient, process.env.ACCESS_TOKEN_SECRET)
+      const decoded = await jwtHelper.verifyToken(
+        tokenFromClient,
+        process.env.ACCESS_TOKEN_SECRET,
+        {},
+      )
       req.user = decoded
       next()
     } catch (error) {
       if (error.name === 'TokenExpiredError') {
-        return res.status(401).json({
-          msg: error.message,
-        })
+        if (error.message === 'jwt expired') {
+          res.msg = error.message
+          const decoded = await jwtHelper.verifyToken(
+            tokenFromClient,
+            process.env.ACCESS_TOKEN_SECRET,
+            { ignoreExpiration: true },
+          )
+          req.user = decoded
+          return next()
+        }
       }
 
       return res.status(500).json({ error })
     }
   } else {
-    return res.sendStatus(403)
+    return res.status(403).json({ msg: 'forbidden' })
   }
-  return res.sendStatus(403)
 }
 
 export default isAuth

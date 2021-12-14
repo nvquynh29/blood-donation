@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { Form, Input, Button, notification, DatePicker } from 'antd';
+import { Form, Input, Button, notification, DatePicker, Select } from 'antd';
 import { ReactReduxContext, useSelector } from 'react-redux'
 import { removeVolunteer }  from '../../store/actions/volunteerAction'
 import router from 'next/router'
@@ -7,13 +7,14 @@ import { AddVolunteer } from '../../api/volunteer'
 
 export default function VolunteerForm() {
     const { store } = useContext(ReactReduxContext)
+    const {Option} = Select
     const volunteer = useSelector((state) => state.volunteer)
     const onFinish =async (values) => {
         const { id } = router.query
         values.organization_id = id
         values.birthday = values.birthday._d.toLocaleDateString('en-CA')
         await AddVolunteer(values)
-
+        console.log(values)
         store.dispatch(removeVolunteer())
         notification.open({
             type: "success",
@@ -78,17 +79,34 @@ export default function VolunteerForm() {
                             <Input placeholder='Email' style={{ height: '40px' }} />
                         </Form.Item>
 
-                        <Form.Item
-                            name="birthday"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Nhập ngày sinh!',
-                                },
-                            ]}
-                        >
-                            <DatePicker placeholder='Ngày sinh' style={{ height: '40px' }} />
-                        </Form.Item>
+                        <div className="flex gap-4">
+                            <Form.Item
+                                name="birthday"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Nhập ngày sinh!',
+                                    },
+                                ]}
+                            >
+                                <DatePicker placeholder='Ngày sinh' style={{ height: '40px' }} />
+                            </Form.Item>
+                            <Form.Item 
+                                name="gender"    
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Nhập giới tính!"
+                                    }
+                                ]}
+                            >
+                                <Select placeholder="Giới tính" style={{ height: '40px', width: '90px' }}
+                                    >
+                                    <Option value="male">Nam</Option>
+                                    <Option value="female">Nữ</Option>
+                                </Select>
+                            </Form.Item>
+                        </div>
 
                         <Form.Item
                             name="address"

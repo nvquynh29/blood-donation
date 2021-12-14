@@ -1,28 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox, notification } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import * as auth from '../../api/auth'
 import { useForm } from 'antd/lib/form/Form'
 import Cookies from 'universal-cookie'
+import { ReactReduxContext } from 'react-redux'
+import { requestUserApi } from '../../store/actions/userAction'
 
 const Login = () => {
+  const { store } = useContext(ReactReduxContext)
   const router = useRouter()
   const cookies = new Cookies()
 
-  const onFinish = (values) => {
-    console.log(values)
-    // login(values)
+  const onFinish = async (values) => {
+    await login(values)
   }
   const form = useForm()
 
-  // TODO: signup check status code 400, 409
-
   const writeCookies = ({ accessToken, refreshToken }) => {
-    cookies.set('accessToken', accessToken)
+    cookies.set('accessToken', accessToken, { path: '/' })
     if (refreshToken) {
-      cookies.set('refreshToken', refreshToken)
+      cookies.set('refreshToken', refreshToken, { path: '/' })
     }
   }
 
@@ -30,22 +30,32 @@ const Login = () => {
     try {
       const res = await auth.login(credential)
       if (res.status === 200) {
-        writeCookies(res.data)
-        router.push('/home')
+        writeCookies({ accessToken: res.data.accessToken, refreshToken: res.data.refreshToken })
+        store.dispatch(requestUserApi(res.data.accessToken))
+        if (res.data.role === 'admin') {
+          router.push('/admin/dashboard')
+        } else {
+          router.push('/super-admin/organization')
+        }
       }
     } catch (error) {
+      return notification.error({
+        message: 'Đăng nhập thất bại',
+        description: 'Tài khoản hoặc mật khẩu không đúng',
+      })
+
       console.log(error)
     }
   }
 
   return (
     <div className="loginContainer">
-      <div className="asidepic">
-        <img src="https://wallpapercave.com/wp/wp4323511.jpg" alt="pic" />
+      <div className="asidepic rounded-tl-md rounded-bl-md">
+        <img className="bg-white" src="/logo-giot-hong.png" alt="pic" />
       </div>
-      <div className="loginForm">
+      <div className="loginForm flex flex-col items-center justify-center rounded-r-md rounded-b-md">
         <div className="loginMain">
-          <h1 className="loginTitle">Log In</h1>
+          <h1 className="loginTitle text-center !font-Dosis">Đăng nhập</h1>
           <Form
             size="large"
             name="normal_login"
@@ -59,8 +69,16 @@ const Login = () => {
               name="email"
               rules={[
                 {
+                  validator: async (rule, value) => {
+                    console.log(value.includes('@'))
+                    if (!value.includes('@')) {
+                      return Promise.reject('Email không hợp lệ')
+                    }
+                    return Promise.resolve()
+                  },
+
                   required: true,
-                  message: 'Please input your Username!',
+                  message: 'Tài khoản không hợp lệ!',
                 },
               ]}
             >
@@ -73,8 +91,15 @@ const Login = () => {
               name="password"
               rules={[
                 {
+                  validator: (rule, value) => {
+                    if (value.length < 8) {
+                      return Promise.reject('Mật khẩu phải có ít nhất 6 ký tự')
+                    }
+                    return Promise.resolve()
+                  },
+
                   required: true,
-                  message: 'Please input your Password!',
+                  message: 'Mật khẩu không hợp lệ!',
                 },
               ]}
             >
@@ -87,16 +112,21 @@ const Login = () => {
             <Form.Item>
               <div className="loginDetail">
                 <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox>Ghi nhớ tài khoản</Checkbox>
                 </Form.Item>
                 <a className="login-form-forgot" href="">
-                  Forgot password
+                  Quên mật khẩu
                 </a>
               </div>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" size="middle" htmlType="submit" className="loginBtn">
-                Log in
+              <Button
+                type="primary"
+                size="middle"
+                htmlType="submit"
+                className="loginBtn"
+              >
+                Đăng nhập
               </Button>
             </Form.Item>
           </Form>
@@ -105,5 +135,4 @@ const Login = () => {
     </div>
   )
 }
-
 export default Login

@@ -13,5 +13,11 @@ module.exports = {
   },
   env: {
     API_URL: 'http://localhost:5000',
+    MODE: 'DEV',
   },
+  // experimental: {
+  //   urlImports: [
+  //     'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js',
+  //   ],
+  // },
 }

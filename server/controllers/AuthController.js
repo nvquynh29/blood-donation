@@ -22,17 +22,17 @@ const login = async (req, res) => {
     const passwordMatch = bcrypt.compareSync(password, user.password)
     if (passwordMatch) {
       const accessToken = await jwtHelper.generateToken(
-        { _id: user._id },
+        { _id: user._id, role: user.role },
         process.env.ACCESS_TOKEN_SECRET,
         '1h',
       )
       const refreshToken = await jwtHelper.generateToken(
-        { _id: user._id },
+        { _id: user._id, role: user.role },
         process.env.REFRESH_TOKEN_SECRET,
         '30d',
       )
       updateRefreshToken(user._id, refreshToken)
-      return res.status(200).json({ accessToken, refreshToken })
+      return res.status(200).json({ accessToken, refreshToken, role: user.role })
     }
     return res.status(401).json('Password incorrect')
   } catch (error) {
@@ -71,7 +71,6 @@ const signup = async (req, res) => {
     await newUser.save()
     return res.status(200).json({ message: 'Account created' })
   } catch (error) {
-    console.error(error)
     return res.status(500).json(error)
   }
 }
@@ -87,7 +86,11 @@ const refreshToken = async (req, res) => {
   }
   try {
     jwt.verify(refreshTokenFromClient, process.env.REFRESH_TOKEN_SECRET)
-    const accessToken = await jwtHelper.generateToken(user, process.env.ACCESS_TOKEN_SECRET, '1h')
+    const accessToken = await jwtHelper.generateToken(
+      { _id: user._id, role: user.role },
+      process.env.ACCESS_TOKEN_SECRET,
+      '1h',
+    )
     return res.status(200).json({ accessToken })
   } catch (error) {
     console.error(error)

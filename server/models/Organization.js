@@ -12,44 +12,14 @@ const schema = new mongoose.Schema({
   img_path: String,
   description: String,
   is_blood_bank: {
-    type: String,
+    type: Boolean,
     required: true,
+    default: false,
   },
   admin: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-    },
-  ],
-  list_blood_requests: [
-    {
-      amount: {
-        type: Number,
-        required: true,
-      },
-      register_date: {
-        type: Date,
-        required: true,
-      },
-      subscriber_info: {
-        name: {
-          type: String,
-          required: true,
-        },
-        identity_id: {
-          type: String,
-          required: true,
-        },
-        phone: {
-          type: String,
-          required: true,
-        },
-
-      },
-      blood_type: {
-        type: String,
-        required: true,
-      },
     },
   ],
 })

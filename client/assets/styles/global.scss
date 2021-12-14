@@ -1,5 +1,14 @@
 @import "../fonts/fonts.scss";
 @import "../../src/components/advise-section/advise.scss";
+@import "../../src/pages/organization/[id]/style.scss";
+@import "../../src/components/search-result/styles.scss";
+@import "../../src/pages/admin/volunteers/styles.scss";
+@import "../../src/layouts/trial/styles.scss";
+@import "../../src/pages/admin/event/add/styles.scss";
+@import "../../src/pages/admin/organization-info/styles.scss";
+@import "../../src/pages/donate-history/styles.scss";
+@import "../../src/components/custom-table/styles.scss";
+@import "../../src/components/footer/styles.scss";
 * {
   margin: 0;
   padding: 0;
@@ -250,6 +259,15 @@ img {
 }
 .volunteerForm {
   grid-column: span 1 / span 1;
+  .ant-select-selector {
+    height: 40px !important;
+  }
+  .ant-select-selection-item,
+  .ant-select-selection-placeholder {
+    display: table;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 }
 .asidePicVolunterForm {
   height: 650px;
@@ -282,7 +300,17 @@ img {
   background-color: #eaedf1;
   padding: 50px;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 .requestBloodForm {
   .ant-select-selector {
     height: 40px !important;
@@ -312,12 +340,135 @@ img {
     }
   }
 }
+.eventListUser {
+  div {
+    cursor: pointer;
+  }
+}
 
-.landingPage {
+.landingPage,
+.volunteerAdd,
+.volunteerEdit {
   .formContain {
     width: 90%;
   }
   .volunteerForm {
     width: 600px;
+  }
+}
+// search donate history
+.historySearch {
+  .ant-form-item-label > label {
+    float: left;
+  }
+
+  .ant-select-selector {
+    height: calc(2.25rem + 2px) !important;
+    border-radius: 5px !important;
+  }
+
+  .ant-form-item-explain.ant-form-item-explain-error {
+    margin-left: 10px;
+    position: relative;
+  }
+}
+
+.historySearchForm {
+  width: 95%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.27);
+  -moz-box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.27);
+  box-shadow: 0px 5px 10px 0px rgba(50, 50, 50, 0.27);
+}
+
+.hisFormInputs {
+  display: flex;
+  flex-direction: row !important;
+  margin: 0 !important;
+}
+
+.hisFormLabel {
+  display: flex;
+  flex-direction: column;
+}
+
+.hisFormInput {
+  margin-left: 10px;
+  width: 200px !important ;
+  height: calc(2.25rem + 2px) !important;
+  border-radius: 5px !important;
+  margin-bottom: 20px;
+}
+
+.hisSearchFormBtns {
+  width: 20%;
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hisSearchFormBtns button {
+  border: none;
+  height: 40px;
+  width: 100px;
+  border-radius: 10px 10px 10px 0px;
+  padding-left: 7px;
+}
+
+.hisSearchB:hover {
+  background-color: #c71f27 !important;
+}
+
+@media (max-width: 1024px) {
+  .hisFormInputs {
+    flex-direction: column !important;
+  }
+  .hisSearchFormBtns {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hisFormLabel {
+    flex-direction: row;
+  }
+}
+.ant-notification {
+  z-index: 99999999;
+}
+
+.profile {
+  .title {
+    margin-top: 1.5rem !important;
+    font-size: 2.5rem !important;
+    margin-bottom: 0.5rem;
+    font-weight: 550 !important;
+    line-height: 1.2;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    color: #212529 !important;
+    font-family: sans-serif;
+  }
+  .form {
+    margin-top: 100px;
+    .ant-btn-primary {
+      background: #fc3e47;
+      border: none;
+      height: 40px;
+      margin-top: 10px;
+      border-radius: 3px;
+      margin-left: 137px;
+      width: 40%;
+    }
+    .ant-btn-primary:hover,
+    .ant-btn-primary:focus {
+      background: #d64047;
+    }
   }
 }
