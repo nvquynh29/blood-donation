@@ -48,13 +48,11 @@ const Home = () => {
               <div className="container flex flex-wrap justify-evenly items-center">
                 <div className="w-2/3">
                   <h2 className="font-Dosis text-4xl">
-                    Chúng tôi đã giúp đỡ mọi người suốt 40 năm qua
+                    Chúng luôn cố gắng giúp đỡ mọi người
                   </h2>
                   <p className=" text-[#777777] font-[400] tracking-widest	text-[18px/28px]">
                     Bạn có thể cho máu tại bất kỳ địa điểm hiến máu nào của
-                    chúng tôi trên toàn thế giới. Chúng tôi có tổng cộng 60
-                    nghìn trung tâm hiến máu và đến thăm hàng nghìn địa điểm
-                    khác vào nhiều dịp khác nhau.
+                    chúng tôi. Hiến máu hôm nay, giọt máu bạn cho đi có thể cứu mạng sống của nhiều người.
                   </p>
                 </div>
                 <div className="w-1/3">
