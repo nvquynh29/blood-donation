@@ -4,10 +4,14 @@ import NavigatorBar from '../../components/navigator-bar/NavigatorBar'
 import Carousel from '../../components/carousel/Carousel'
 import dynamic from 'next/dynamic'
 import Footer from '../../components/footer/Footer'
+<<<<<<< HEAD
 const ContactBar = dynamic(
   () => import('../../components/contact-bar/ContactBar'),
   { ssr: false },
 )
+=======
+const ContactBar = dynamic(() => import('../../components/contact-bar/ContactBar'), { ssr: false })
+>>>>>>> 5bef568 (styling footer)
 
 function MainLayout({ children }) {
   return (
@@ -22,6 +26,10 @@ function MainLayout({ children }) {
       </div>
       <NavigatorBar />
       <div className="content block">{children}</div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5bef568 (styling footer)
       <hr />
       <Footer />
     </div>
