@@ -30,6 +30,7 @@ import { ReactReduxContext } from 'react-redux'
 import Cookies from 'universal-cookie'
 import { getUser } from '../../api/user'
 import { removeUser } from '../../store/actions/userAction'
+import { checkBloodBank } from '../../api/organization'
 
 const drawerWidth = 240
 
@@ -102,6 +103,7 @@ export default function MiniDrawer({ children }) {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
   const [user, setUser] = useState({})
+  const [bloodBank, setBloodBank] = useState(false)
   const { store } = useContext(ReactReduxContext)
 
   const handleDrawerOpen = () => {
@@ -148,6 +150,15 @@ export default function MiniDrawer({ children }) {
   }
 
   const userDropDown = useRef(null)
+
+  useEffect(async () => {
+    try {
+      const { data: { is_blood_bank } } = await checkBloodBank()
+      setBloodBank(is_blood_bank)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [bloodBank])
 
   useEffect(() => {
     getCurrentUser()
@@ -260,14 +271,16 @@ export default function MiniDrawer({ children }) {
               <ListItemText primary="Tình nguyện viên" />
             </ListItem>
           </Link>
-          <Link href="/admin/blood">
-            <ListItem button key="Đơn đăng ký tiếp nhận máu">
-              <ListItemIcon>
-                <Bloodtype style={{ color: '#fe3c47' }} />
-              </ListItemIcon>
-              <ListItemText primary="Đơn vị hiến máu" />
-            </ListItem>
-          </Link>
+          <div className={bloodBank ? '' : 'hidden'}>
+            <Link href="/admin/blood">
+              <ListItem button key="Đơn đăng ký tiếp nhận máu">
+                <ListItemIcon>
+                  <Bloodtype style={{ color: '#fe3c47' }} />
+                </ListItemIcon>
+                <ListItemText primary="Đơn xin nhận máu" />
+              </ListItem>
+            </Link>
+          </div>
           <Link href="/admin/organization-info">
             <ListItem button key="Tổ chức">
               <ListItemIcon>

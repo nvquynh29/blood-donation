@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import path from 'path'
 import mongodb from 'mongodb'
 import fs from 'fs'
@@ -162,6 +163,17 @@ const getOrgAdmins = async (req, res) => {
   }
 }
 
+const isBloodBank = async (req, res) => {
+  try {
+    const { _id } = req.user
+    const { organization_id } = await User.findOne({ _id })
+    const { is_blood_bank } = await Organization.findOne({ _id: organization_id })
+    return res.status(200).json({ is_blood_bank })
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 const getImage = async (req, res) => res.sendFile(path.join(path.resolve(), req.query.img_path))
 export const OrganizationController = {
   createOrganization,
@@ -173,4 +185,5 @@ export const OrganizationController = {
   updateOrganization,
   deleteOrganization,
   getOrgAdmins,
+  isBloodBank,
 }

@@ -6,7 +6,6 @@ import {
   SwapRightOutlined,
 } from '@ant-design/icons'
 import Link from 'next/link'
-import { getAllEvent } from '../../api/event'
 
 // import './styles.scss'
 function MyCarousel() {
@@ -30,10 +29,6 @@ function MyCarousel() {
       imgUrl: '/images/slider-1.jpg',
     },
   ]
-  useEffect(async () => {
-    const res = await getAllEvent()
-    console.log(res.data)
-  }, [])
   return (
     <div className="carousel !font-Dosis">
       <Carousel

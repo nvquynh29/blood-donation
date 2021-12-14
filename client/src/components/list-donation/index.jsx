@@ -12,7 +12,7 @@ import {
   getEventDonation,
   deleteDonation,
   updateDonationStatus,
-  updateDonation
+  updateDonation,
 } from '../../api/donation'
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -109,6 +109,18 @@ function DonationList() {
       title: 'Họ và tên',
       dataIndex: 'name',
       key: 'name',
+      width: '18%',
+    },
+    {
+      title: 'Ngày sinh',
+      dataIndex: 'date_of_birth',
+      key: 'date_of_birth',
+      render: (dob) => moment(dob).format('DD/MM/YYYY'),
+    },
+    {
+      title: 'Căn cước công dân',
+      dataIndex: 'citizenID',
+      key: 'citizenID',
     },
     {
       title: 'SĐT',
@@ -124,26 +136,21 @@ function DonationList() {
       title: 'Lượng máu (ml)',
       dataIndex: 'amount',
       key: 'amount',
-    },
-    {
-      title: 'Số chứng minh nhân dân',
-      dataIndex: 'citizenID',
-      key: 'citizenID',
+      width: '10%',
     },
     {
       title: 'Ngày hiến',
       dataIndex: 'done_date',
       key: 'done_date',
       render: (done_date) => {
-        return (
-          <span>{moment(done_date).format("YYYY/MM/DD")}</span>
-        )
-      }
+        return <span>{moment(done_date).format('DD/MM/YYYY')}</span>
+      },
     },
     {
       title: 'Thời gian',
       dataIndex: 'time',
       key: 'time',
+      width: '10%',
     },
     {
       title: 'Trạng thái',
@@ -161,7 +168,7 @@ function DonationList() {
         </Select>
       ),
     },
-    
+
     {
       title: 'Nhóm máu',
       dataIndex: 'blood_type',
@@ -170,13 +177,13 @@ function DonationList() {
       render: (bloodType, record) => (
         <Select
           defaultValue={bloodType ?? 'A'}
-          onChange={(blood_type) => updateDonation(record._id, {blood_type})}
-          style={{ width: 140 }}
+          onChange={(blood_type) => updateDonation(record._id, { blood_type })}
+          style={{ width: 70 }}
         >
-          <Option value='A'>A</Option>
-          <Option value='B'>B</Option>
-          <Option value='O'>O</Option>
-          <Option value='AB'>AB</Option>
+          <Option value="A">A</Option>
+          <Option value="B">B</Option>
+          <Option value="O">O</Option>
+          <Option value="AB">AB</Option>
         </Select>
       ),
     },
@@ -184,6 +191,7 @@ function DonationList() {
       title: 'Hành động',
       key: 'action',
       dataIndex: '_id',
+      width: '5%',
       render: (id) => (
         <Space size="middle">
           <EditOutlined
@@ -199,15 +207,80 @@ function DonationList() {
     },
   ]
 
+  const header = {
+    name: 'Họ và tên',
+    date_of_birth: 'Ngày sinh',
+    citizenID: 'Căn cước công dân',
+    phone: 'SĐT',
+    email: 'Email',
+    amount: 'Lượng máu (ml)',
+    done_date: 'Ngày hiến',
+    time: 'Thời gian',
+    is_done: 'Trạng thái',
+    blood_type: 'Nhóm máu',
+    gender: 'Giới tính',
+    city_1: 'Tỉnh/Thành phố',
+    district_1: 'Quận/Huyện',
+    ward_1: 'Phường/Xã',
+  }
+
+  const mapFields = {
+    truthy: 'Đã hiến máu',
+    falsy: 'Đang tiến hành',
+    male: 'Nam',
+    female: 'Nữ',
+  }
+
+  const listAnswer = {
+    'Trước đây bạn đã từng hiến máu chưa?': 'true',
+    'Quý vị đã từng mắc các bệnh  như  thần kinh, hô hấp, vàng da/viêm gan, tim mạch, huyết áp thấp/cao, bệnh thận, ho kéo dài, bệnh máu,  lao, ung thư,v.v??':
+      'false',
+    'Sút cân >= 4kg không rõ nguyên nhân? Nổi hạch kéo dài?': 'true',
+    'Phẫu thuật?': 'true',
+    'Được truyền máu, chế phẩm máu?': 'true',
+    'Sử dụng ma túy, tiêm chích?': 'true',
+    'Quan hệ tình dục với người nhiễm hoặc có nguy cơ nhiễm HIV/AIDS, viêm gan':
+      'true',
+    'Quan hệ tình dục với nhiều người và/hoặc không có biện pháp an toàn tránh lây nhiễm?':
+      'false',
+    'Tiêm vác xin phòng bệnh?': 'false',
+    'Có liên quan đến/ở vùng có dịch lưu hành(sốt xuất huyết, sốt rét, bò điên,...?':
+      'false',
+    'Bị cúm, ho, nhức đầu, sốt?': 'false',
+    'Dùng thuốc khác sinh, Aspirin, Corticoid?': 'false',
+    'Xăm hình, xỏ lỗ tai, xỏ lỗ mũi,châm cứu?': 'true',
+    'Đi khám sức khỏe, làm xét nghiệm, chữa răng?': 'false',
+    ' Quý vị hiện là đối tượng tàn tật hoặc hưởng trợ cấp tàn tật hoặc nạn nhân chất độc màu da cam không?':
+      'false',
+  }
+
+  const additionalFields = {
+    address_1: ' ',
+    fulladdress_1: ' ',
+    address_2: ' ',
+    city_2: ' ',
+    district_2: ' ',
+    ward_2: ' ',
+    is_done: true,
+    major: ' ',
+    uid_place: ' ',
+    user_role_uid: ' ',
+    event_id: id,
+    list_answer: listAnswer,
+    model: 'donation',
+  }
+
   return (
     <div className="volunteers">
       <div className="adminTitle">Danh sách đơn hiến máu</div>
       <CustomTable
         data={filterData}
         columns={columns}
+        header={header}
+        mapFields={mapFields}
+        additionalFields={additionalFields}
         addBtnText="Thêm đơn hiến máu"
         onAddBtnClick={addDonation}
-        disableExcel={true}
         searchPlaceHolder="Tìm kiếm đơn hiến máu"
         onChange={searchDonation}
       />

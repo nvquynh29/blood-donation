@@ -221,7 +221,7 @@ function BloodRequestAccepted() {
           header={header}
           mapFields={mapFields}
           additionalFields={additionalFields}
-          addBtnText="Thêm yêu cầu"
+          addBtnText="Thêm đơn"
           onAddBtnClick={addRequest}
           searchPlaceHolder="Tìm kiếm đơn xin hỗ trợ"
           onChange={searchRequest}

@@ -9,4 +9,3 @@ export const verifyOTP = (phoneNumber, otp) => instance.post('/verify-otp', { ph
 export const getEventDonation = (event_id) => instance.get(`/donation/event/${event_id}`)
 export const getDonation = (id) => instance.get(`/donation/${id}`)
 export const deleteDonation = (id) => instance.delete(`/donation/${id}`)
-export const getDonation = (id) => instance.get(`/donation/${id}`)
