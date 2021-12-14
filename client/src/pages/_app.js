@@ -19,7 +19,7 @@ import "../layouts/trial/styles.scss"
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
-export const config = { amp: true }
+// export const config = { amp: true }
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
