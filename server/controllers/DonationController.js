@@ -82,6 +82,8 @@ export const findDonation = async (req, res) => {
 
 export const createDonation = async (req, res) => {
   const { date_of_birth } = req.body
+  let { done_date } = req.body[1].step2
+  done_date = moment(done_date, 'DD/MM/YYYY')
   try {
     const newDonation = new Donation({
       ...req.body[0].step1,
@@ -89,6 +91,7 @@ export const createDonation = async (req, res) => {
       list_answer: req.body[2].step3,
       event_id: req.body.event_id,
       date_of_birth: moment(date_of_birth).startOf('day').utcOffset('+00:00', true),
+      done_date: done_date.format('YYYY-MM-DD'),
     })
     await newDonation.save()
     return res.status(200).json(newDonation)
@@ -136,7 +139,7 @@ export const updateDonationStatus = async (req, res) => {
     const response = await Donation.findOneAndUpdate(
       { _id: id },
       { is_done: status },
-      { new: true }
+      { new: true },
     )
     return res.status(200).json(response)
   } catch (error) {

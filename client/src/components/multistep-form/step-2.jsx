@@ -132,7 +132,12 @@ function index({ eventId }) {
             </FormControl>
             <Grid container spacing={4}>
               <Grid item xs={6}>
-                <FormControl sx={{ m: 1 }} variant="standard" className="block">
+                <FormControl
+                  sx={{ m: 1 }}
+                  variant="standard"
+                  className="block"
+                  fullWidth
+                >
                   <InputLabel id="time">Khung giờ</InputLabel>
                   <Select
                     labelId="time"
@@ -156,7 +161,12 @@ function index({ eventId }) {
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
-                <FormControl sx={{ m: 1 }} variant="standard" className="block">
+                <FormControl
+                  sx={{ m: 1 }}
+                  variant="standard"
+                  className="block"
+                  fullWidth
+                >
                   <InputLabel id="amount">Lượng máu</InputLabel>
                   <Select
                     labelId="amount"
@@ -182,7 +192,12 @@ function index({ eventId }) {
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl sx={{ m: 1 }} variant="standard" className="block">
+              <FormControl
+                sx={{ m: 1 }}
+                variant="standard"
+                className="block"
+                fullWidth
+              >
                 <InputLabel id="done_date">Ngày hiến </InputLabel>
                 <Select
                   labelId="done_date"

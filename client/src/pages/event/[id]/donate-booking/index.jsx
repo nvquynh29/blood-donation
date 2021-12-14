@@ -3,9 +3,9 @@ import MainLayout from '../../../../layouts/main-layout/Default'
 
 export default function DonationBook(props) {
   return (
-    // <MainLayout>
-    <MultistepForm eventId={props.id} />
-    // </MainLayout>
+    <MainLayout>
+      <MultistepForm eventId={props.id} />
+    </MainLayout>
   )
 }
 export async function getServerSideProps(ctx) {
