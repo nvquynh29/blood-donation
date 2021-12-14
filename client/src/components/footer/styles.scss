@@ -1,31 +1,21 @@
 .footer {
     color: white;
-<<<<<<< HEAD
-    img {
-        flex: 1;
-=======
     background: #1a1a1a;
     margin-top: 50px;
     img {
         flex: 2;
->>>>>>> 5bef568 (styling footer)
         width: 50px;
         height: 50px;
     }
     .title {
         flex: 4;
     }
-<<<<<<< HEAD
-    .footer-widget-area-bg {
-        background: #1a1a1a;
-=======
     .footer-widget-area {
         width: 80%;
         margin-right: auto;
         margin-left: auto;
         padding: 20px;
         padding-top: 50px;
->>>>>>> 5bef568 (styling footer)
     }
     .about-footer {
         border-bottom: 1 px solid #2c2c2c;
@@ -36,11 +26,8 @@
         display: flex;
         margin-right: -15 px;
         margin-left: -15 px;
-<<<<<<< HEAD
-=======
         justify-content: space-between;
         padding: 20px;
->>>>>>> 5bef568 (styling footer)
     }
     p {
         font-size: 18px;
@@ -51,18 +38,10 @@
         margin: 0 0 12 px;
         padding: 0;
     }
-<<<<<<< HEAD
-    .footer-widget-area .textwidget p {
-        padding-left: 42 px;
-    }
-    .fa-envelope-o:before {
-        content: "\f003";
-=======
     .textwidget p {
         position: relative;
         left: 20px;
         bottom: 10px;
->>>>>>> 5bef568 (styling footer)
     }
     .footer-widget-area .footer-widget-header h3 {
         position: relative;
@@ -88,23 +67,6 @@
         margin-right: 0 px;
     }
     .footer-widget-area .fa-contact {
-<<<<<<< HEAD
-        display: inline-block;
-        text-align: center;
-        width: 12 px;
-        height: 12 px;
-        color: #fe555f;
-        padding: 6 px 6 px 6 px 0;
-        margin-right: 6 px;
-    }
-    .fa {
-        display: inline-block;
-        font: normal normal normal 14 px / 1 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-=======
         width: 18 px !important;
         height: 18 px !important    ;
         color: #fe555f;
@@ -129,6 +91,5 @@
     .copyright p {
         padding: 10px;
         font-size: 14px;
->>>>>>> 5bef568 (styling footer)
     }
 }
