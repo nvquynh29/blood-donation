@@ -91,7 +91,7 @@ function Event() {
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => (
-        <Link href={`/admin/event/${record._id}`}>
+        <Link href={`/admin/event/${record._id}/setting`}>
           <a>{text}</a>
         </Link>
       ),
